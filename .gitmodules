@@ -1,6 +1,6 @@
-[submodule "images-rust-backend"]
-	path = images-rust-backend
-	url = https://github.com/Tricked-dev/images-rust-backend
-[submodule "image-svelte"]
-	path = image-svelte
-	url = https://github.com/Tricked-dev/image-svelte
+[submodule "backend"]
+path = backend
+url = https://github.com/Tricked-dev/images-rust-backend
+[submodule "frontend"]
+path = frontend
+url = https://github.com/Tricked-dev/image-svelte
