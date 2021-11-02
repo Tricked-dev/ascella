@@ -2,6 +2,8 @@
 
 This repo contains submodules to the frontend and backend of the image uploader
 
+Discord: https://discord.gg/mY8zTARu4g
+
 ### Donating
 
 <img src="https://cryptologos.cc/logos/monero-xmr-logo.png?v=014" alt="" height="15px">`89prBkdG58KU15jv5LTbP3MgdJ2ikrcyu1vmdTKTGEVdhKRvbxgRN671jfFn3Uivk4Er1JXsc1xFZFbmFCGzVZNLPQeEwZc`
