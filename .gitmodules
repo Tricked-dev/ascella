@@ -4,3 +4,6 @@ url = https://github.com/Tricked-dev/images-rust-backend
 [submodule "frontend"]
 path = frontend
 url = https://github.com/Tricked-dev/image-svelte
+[submodule "dashboard"]
+path = dashboard
+url = https://github.com/Tricked-dev/ascella-dashboard
