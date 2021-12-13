@@ -1,0 +1,14 @@
+[package]
+name = "ascella-ratelimit"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ascella-util = { path = "../util" }
+
+actix-web = "4.0.0-beta.14"
+futures = "0.3.18"
+governor = "0.3.2"
+log = "0.4.14"

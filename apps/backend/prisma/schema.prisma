@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model domains {
+  domain  String   @id @db.VarChar(200)
+  apex    Boolean
+  owner   Int
+  created DateTime @default(now())
+}
+
+model codes {
+  id         Int      @id @default(autoincrement())
+  created    DateTime @default(now())
+  claimed_by Int?
+  owner      Int
+  key        String   @db.VarChar(200)
+}
+
+model embeds {
+  color       String?
+  description String?  @db.VarChar(2000)
+  owner       Int      @id
+  title       String?  @db.VarChar(2000)
+  url         String?  @db.VarChar(200)
+  created     DateTime @default(now())
+}
+
+model images {
+  content_type String   @db.VarChar(50)
+  id           Int      @id @default(autoincrement())
+  owner        Int
+  redirect     String?  @db.VarChar(200)
+  vanity       String   @db.VarChar(200)
+  public       Boolean?
+  created      DateTime @default(now())
+}
+
+model pastes {
+  id      String   @id
+  content String   @db.VarChar(50000)
+  created DateTime @default(now())
+}
+
+model users {
+  discord_id String   @unique
+  domain     String   @db.VarChar(200)
+  id         Int      @id @default(autoincrement())
+  key        String   @db.VarChar(200)
+  name       String   @db.VarChar(200)
+  emojis     Boolean?
+  created    DateTime @default(now())
+}
+
+model gallery {
+  id      Int      @id @default(autoincrement())
+  public  Boolean?
+  images  Int[]
+  owner   Int
+  created DateTime @default(now())
+}

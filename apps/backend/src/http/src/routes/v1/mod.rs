@@ -1,0 +1,15 @@
+mod catcher;
+pub mod config;
+pub mod delete;
+pub mod domains;
+pub mod paste;
+pub mod public;
+pub mod stats;
+pub mod upload;
+pub mod verify;
+pub mod view;
+pub use catcher::*;
+pub mod domain;
+pub mod embed;
+pub mod redirect;
+// pub mod uploads;

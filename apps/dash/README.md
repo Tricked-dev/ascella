@@ -1,8 +1,6 @@
-# Ascella Monorepo
+# Ascella - Dashboard
 
-- [Backend](./apps/backend/README.md)
-- [Dashboard](./apps/dash/README.md)
-- [Frontend](./apps/web/README.md)
+Discord: https://discord.gg/mY8zTARu4g
 
 ### Donating
 

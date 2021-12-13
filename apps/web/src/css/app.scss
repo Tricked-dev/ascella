@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+	background-color: #1f2937;
+}
+body {
+	margin: 0 auto;
+	font-family: Roboto, serif;
+	color: #eee;
+	line-height: 1;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+	overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a .link {
+	float: left;
+	color: #f2f2f2;
+	text-align: center;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover .link {
+	background-color: #ddd;
+	color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active .link {
+	background-color: #04aa6d;
+	color: white;
+}
+
+/* i think i did what you want here, this isn't necessary but i think it looks better, so you can see it better and decide if you want to keep it or not*/
+
+.title {
+	text-align: center;
+	font-size: 25px !important;
+	margin-block: 20px;
+}
+
+.desc {
+	font-weight: lighter;
+}
+
+.footer {
+	padding-bottom: 20px;
+	transition: 0.3s ease-in-out;
+}
+
+.footer > div {
+	width: fit-content;
+	margin: auto;
+}
+
+.footer > div > div > u {
+	display: flex;
+}
+
+#main > div > a,
+.footer > div > div > u > li > a {
+	transition: all 0.3s ease-in-out;
+}

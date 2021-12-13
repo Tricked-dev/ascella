@@ -1,0 +1,30 @@
+[package]
+name = "ascella-util"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ascella-database = { path = "../database" }
+tokio = { version = "1.14.0", features = ["full"] }
+tracing = "0.1.29"
+futures = "0.3.18"
+once_cell = "1.8.0"
+dotenv = "0.15.0"
+serde_json = "1.0.72"
+serde = { version = "1.0.131", features = ["derive"] }
+rand = "0.8.4"
+lazy_static = "1.4.0"
+reqwest = { version = "0.11.7", features = ["json", "gzip", "brotli"] }
+base64 = "0.13.0"
+log = "0.4.14"
+anyhow = "1.0.51"
+http = "0.2.5"
+tokio-postgres = "0.7.5"
+tokio-pg-mapper-derive = "0.2.0"
+tokio-pg-mapper = "0.2.0"
+openssl = { version = "0.10.38", optional = true }
+actix-web = "4.0.0-beta.14"
+url = "2.2.2"
+cached = "0.26.2"

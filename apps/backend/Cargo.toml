@@ -1,0 +1,26 @@
+[workspace]
+resolver = "2"
+members = [
+    "src/core",
+    "src/bot",
+    "src/database",
+    "src/http",
+    "src/ratelimit",
+    "src/util",
+]
+
+[profile.release]
+codegen-units = 1
+incremental = true
+lto = true
+panic = "abort"
+opt-level = 3
+
+[profile.dev]
+opt-level = 0
+overflow-checks = true
+debug-assertions = true
+debug = false
+codegen-units = 256
+lto = false
+incremental = true
