@@ -11,37 +11,7 @@ env:
 jobs:
   dist:
     name: Dist
-    runs-on: ${{ matrix.os }}
-    defaults:
-      run:
-        working-directory: apps/backend
-    strategy:
-      fail-fast: false # don't fail other jobs if one fails
-      matrix:
-        # build: [x86_64-linux, aarch64-linux, x86_64-macos, x86_64-windows] #, x86_64-win-gnu, win32-msvc
-        build: [x86_64-linux]
-        include:
-          - build: x86_64-linux
-            os: ubuntu-20.04
-            rust: stable
-            target: x86_64-unknown-linux-gnu
-            cross: false
-          # - build: aarch64-linux
-          #   os: ubuntu-20.04
-          #   rust: stable
-          #   args: --features openssl-vendored
-          #   target: aarch64-unknown-linux-gnu
-          #   cross: true
-          # - build: x86_64-macos
-          #   os: macos-latest
-          #   rust: stable
-          #   target: x86_64-apple-darwin
-          #   cross: false
-          # - build: x86_64-windows
-          #   os: windows-2019
-          #   rust: stable
-          #   target: x86_64-pc-windows-msvc
-          #   cross: false
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -51,54 +21,33 @@ jobs:
       - name: Setup | Cache
         uses: Swatinem/rust-cache@v1
 
-      - name: Install ${{ matrix.rust }} toolchain
+      - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: ${{ matrix.rust }}
-          target: ${{ matrix.target }}
+          toolchain: stable
           override: true
 
       - name: do funny apt install
-        if: matrix.build == 'x86_64-linux' || matrix.build == 'aarch64-linux'
         run: sudo apt-get install libssl-dev pkg-config libxcb-composite0-dev libx11-dev
 
       - name: Build release binary
         uses: actions-rs/cargo@v1
         with:
-          use-cross: ${{ matrix.cross }}
           command: build
-          args: --release --locked --target ${{ matrix.target }}  ${{ matrix.args }}
+          args: --release --locked --manifest-path ./apps/backend/Cargo.toml
 
       - name: Strip release binary (linux and macos)
-        if: matrix.build == 'x86_64-linux' || matrix.build == 'x86_64-macos'
-        run: strip "target/${{ matrix.target }}/release/$BIN_NAME"
-
-      - name: Strip release binary (arm)
-        if: matrix.build == 'aarch64-linux'
-        run: |
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            rustembedded/cross:${{ matrix.target }} \
-            aarch64-linux-gnu-strip \
-            /target/${{ matrix.target }}/release/$BIN_NAME
+        run: strip "apps/backend/target/release/$BIN_NAME"
 
       - name: make dist
         run: mkdir dist
 
       - name: Build archive
         shell: bash
-        run: |
-
-          if [ "${{ matrix.os }}" = "windows-2019" ]; then
-            ls target
-            ls target/${{ matrix.target }}
-            cp "target/${{ matrix.target }}/release/$BIN_NAME.exe" "dist/"
-          else
-            cp "target/${{ matrix.target }}/release/$BIN_NAME" "dist/"
-          fi
+        run: cp "apps/backend/target/release/$BIN_NAME" "dist/"
 
       - uses: actions/upload-artifact@v2.2.4
         with:
-          name: ascella-${{ matrix.build }}
+          name: ascella-x86_64-unknown-linux-gnu
           path: dist
