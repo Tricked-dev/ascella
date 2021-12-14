@@ -4,6 +4,10 @@
 - [Dashboard](./apps/dash/README.md)
 - [Frontend](./apps/web/README.md)
 
+### Copyright
+
+Every project has its own license
+
 ### Donating
 
 <img src="https://tricked.pro/crypto/monero-xmr-logo.png" alt="" height="15px">`89prBkdG58KU15jv5LTbP3MgdJ2ikrcyu1vmdTKTGEVdhKRvbxgRN671jfFn3Uivk4Er1JXsc1xFZFbmFCGzVZNLPQeEwZc`

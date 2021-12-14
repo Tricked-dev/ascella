@@ -146,19 +146,19 @@
 			<div class="lg:text-lg text-md font-bold text-green-500  lg:flex-grow">
 				<a
 					href="https://dash.ascella.host"
-					class="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
+					class="block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
 				>
 					Dashboard
 				</a>
 				<a
 					href="/"
-					class=" block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
+					class="block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
 				>
 					Home
 				</a>
 				<a
 					href="https://discord.gg/mY8zTARu4g"
-					class="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
+					class="block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
 				>
 					Discord
 				</a>
@@ -208,7 +208,7 @@
 			<div class="flex">
 				<a
 					href="/docs/signup"
-					class="lg:text-lg text-md block px-4 py-2 rounded text-green-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
+					class="border-b-4 border-blue-300 hover:border-orange-600 lg:text-lg text-md block px-4 py-2 rounded text-green-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
 					>Create a account</a
 				>
 			</div>
