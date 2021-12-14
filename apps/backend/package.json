@@ -1,22 +1,23 @@
 {
-	"name": "ascella",
-	"version": "0.1.0",
-	"description": "A cool image uploader with a rust backend",
-	"main": "-",
-	"repository": "https://github.com/SkyBlockDev/ascella-backend",
-	"author": "Tricked <72335827+SkyBlockDev@users.noreply.github.com>",
-	"license": "UNLICENSED",
-	"private": true,
-	"scripts": {
-		"prisma:push": "prisma db push",
-		"cargo:run": "cargo run",
-		"cargo:build": "cargo build --release",
-		"cargo:run:release": "cargo run --release"
-	},
-	"dependencies": {
-		"@prisma/client": "^3.6.0"
-	},
-	"devDependencies": {
-		"prisma": "^3.6.0"
-	}
+  "name": "ascella",
+  "version": "0.1.0",
+  "description": "A cool image uploader with a rust backend",
+  "main": "-",
+  "repository": "https://github.com/SkyBlockDev/ascella-backend",
+  "author": "Tricked <72335827+SkyBlockDev@users.noreply.github.com>",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "build": "cargo build --release",
+    "prisma:push": "prisma db push",
+    "cargo:run": "cargo run",
+    "cargo:build": "cargo build --release",
+    "cargo:run:release": "cargo run --release"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.6.0"
+  },
+  "devDependencies": {
+    "prisma": "^3.6.0"
+  }
 }

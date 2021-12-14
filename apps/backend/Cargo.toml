@@ -1,12 +1,12 @@
 [workspace]
 resolver = "2"
 members = [
-    "src/core",
-    "src/bot",
-    "src/database",
-    "src/http",
-    "src/ratelimit",
-    "src/util",
+  "src/core",
+  "src/bot",
+  "src/database",
+  "src/http",
+  "src/ratelimit",
+  "src/util",
 ]
 
 [profile.release]

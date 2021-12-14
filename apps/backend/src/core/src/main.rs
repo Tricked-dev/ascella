@@ -1,9 +1,7 @@
-// use actix_cors::Cors;
 use actix_web::{middleware, web, App, HttpServer, ResponseError};
 use ascella_bot::start_bot;
 use ascella_http::{routes::v2::*, Error};
 use ascella_ratelimit::{Governor, GovernorConfigBuilder};
-// use ascella_ratelimit::*;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -64,12 +62,12 @@ async fn main() -> std::io::Result<()> {
                             .service(paste::post),
                     ),
             )
-        // .default_service(web::route().to(|| {
-        //     Error::Four04 {
-        //         message: "Path not found.".to_owned(),
-        //     }
-        //     .error_response()
-        // }))
+            .default_service(web::route().to(|| {
+                Error::Four04 {
+                    message: "Path not found.".to_owned(),
+                }
+                .error_response()
+            }))
     })
     .bind("0.0.0.0:7878")?
     .run()

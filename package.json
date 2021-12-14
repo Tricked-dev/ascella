@@ -10,10 +10,10 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "dprint"
   },
   "devDependencies": {
-    "prettier": "^2.5.1",
+    "dprint": "^0.19.1",
     "turbo": "^1.0.7"
   },
   "turbo": {
@@ -24,6 +24,7 @@
         ],
         "outputs": [
           "dist/**",
+          "target/release/**",
           ".next/**"
         ]
       },
@@ -37,7 +38,6 @@
   },
   "engines": {
     "npm": ">=7.0.0",
-    "pnpm": ">=3.7.0",
     "node": ">=14.0.0"
   }
 }
