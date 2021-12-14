@@ -146,19 +146,19 @@
 			<div class="lg:text-lg text-md font-bold text-green-500  lg:flex-grow">
 				<a
 					href="https://dash.ascella.host"
-					class="block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
+					class="duration-500 block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
 				>
 					Dashboard
 				</a>
 				<a
 					href="/"
-					class="block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
+					class="duration-500 block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
 				>
 					Home
 				</a>
 				<a
 					href="https://discord.gg/mY8zTARu4g"
-					class="block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
+					class="duration-500 block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
 				>
 					Discord
 				</a>
