@@ -21,7 +21,7 @@
 		],
 		[
 			{
-				href: 'https://github.com/Tricked-dev/uploader',
+				href: 'https://github.com/Tricked-dev/ascella',
 				a: 'Github'
 			}
 		],
@@ -102,7 +102,7 @@
 		type: 'website',
 		description:
 			'Ascella Uploader is an extremely fast image uploader built with the newest technologies.  ' +
-			'Ascella is a OpenSource image uploader you can find the source code at https://github.com/Tricked-dev/ascella-backend',
+			'Ascella is OpenSource you can find the source code at https://github.com/Tricked-dev/ascella',
 		title: 'Ascella Uploader - The fastest image uploader',
 		keywords: 'javascript typescript programming discord matrix',
 		viewport: 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no',
@@ -162,6 +162,7 @@
 				>
 					Discord
 				</a>
+
 				<div class=" relative inline-block text-left dropdown">
 					<span class="rounded-md shadow-sm"
 						><button
