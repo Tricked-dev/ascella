@@ -209,8 +209,8 @@
 			<div class="flex">
 				<a
 					href="/docs/signup"
-					class="border-b-4 border-blue-300 hover:border-orange-600 lg:text-lg text-md block px-4 py-2 rounded text-green-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
-					>Create a account</a
+					class="duration-500 border-b-4 border-blue-300 hover:border-orange-600 lg:text-lg text-md block px-4 py-2 rounded text-green-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
+					>Create an account</a
 				>
 			</div>
 		</div>
