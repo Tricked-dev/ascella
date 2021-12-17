@@ -5,7 +5,7 @@ use http::{HeaderValue, StatusCode};
 use lazy_static::lazy_static;
 use rand::{distributions::Alphanumeric, prelude::SliceRandom, Rng};
 use serde::Serialize;
-use serde_json::Value;
+use serde_json::{json, Value};
 use std::fmt::Display;
 lazy_static! {
     pub static ref CLIENT: reqwest::Client = reqwest::Client::new();
@@ -51,6 +51,27 @@ impl std::error::Error for Error {
     }
 }
 
+impl Error {
+    const fn message(&self) -> &str {
+        match &self {
+            Error::FileTooLarge { .. } => "File too large",
+            Error::FileTypeNotAllowed => "Bad request",
+            Error::NotAuthorized => "Not authorized",
+            Error::FailedToReceive => "Failed to receive",
+            Error::DatabaseError => "Database Error",
+            Error::MissingData => "Missing data",
+            Error::ProbeError => "Probe error",
+            Error::NotFound => "Not found",
+            Error::BlockingError => "Internal server error",
+            Error::IOError => "",
+            Error::BadRequest => "Bad request",
+            Error::RateLimit { .. } => "Rate limit exceeded",
+            Error::Four04 { .. } => "404",
+            _ => "",
+        }
+    }
+}
+
 impl ResponseError for Error {
     fn status_code(&self) -> StatusCode {
         match &self {
@@ -73,8 +94,13 @@ impl ResponseError for Error {
     }
 
     fn error_response(&self) -> HttpResponse {
-        let body = serde_json::to_string(&self).unwrap();
-
+        // let body = serde_json::to_string(&self).unwrap();
+        let body = serde_json::to_string(&json!({
+            "code": &self.status_code().as_u16(),
+            "error": &self.message(),
+            "success": false
+        }))
+        .unwrap();
         HttpResponse::build(self.status_code())
             .content_type("application/json")
             .body(body)
