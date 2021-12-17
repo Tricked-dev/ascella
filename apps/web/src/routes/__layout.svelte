@@ -138,30 +138,18 @@
 			class="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-5 lg:pb-0"
 		>
 			<div class="flex items-center flex-shrink-0 text-slate-100 mr-16">
-				<span class="font-semibold text-xl tracking-tight">Ascella.host</span>
+				<span
+					class="font-semibold text-xl tracking-tight hover:text-lime-500 duration-200 hover:border-b-2 border-indigo-700"
+					><a href="https://ascella.host">Ascella.host</a></span
+				>
 			</div>
 		</div>
 
 		<div class="menu w-full flex-grow lg:flex lg:items-center lg:w-auto lg:px-3 px-8">
 			<div class="lg:text-lg text-md font-bold text-green-500  lg:flex-grow">
-				<a
-					href="https://dash.ascella.host"
-					class="duration-500 block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
-				>
-					Dashboard
-				</a>
-				<a
-					href="/"
-					class="duration-500 block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
-				>
-					Home
-				</a>
-				<a
-					href="https://discord.gg/mY8zTARu4g"
-					class="duration-500 block border-b-4 border-blue-300 hover:border-orange-600 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
-				>
-					Discord
-				</a>
+				<a href="https://dash.ascella.host" class="a-btn"> Dashboard </a>
+				<a href="/" class="a-btn"> Home </a>
+				<a href="https://discord.gg/mY8zTARu4g" class="a-btn"> Discord </a>
 
 				<div class=" relative inline-block text-left dropdown">
 					<span class="rounded-md shadow-sm"
@@ -209,7 +197,7 @@
 			<div class="flex">
 				<a
 					href="/docs/signup"
-					class="duration-500 border-b-4 border-blue-300 hover:border-orange-600 lg:text-lg text-md block px-4 py-2 rounded text-green-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
+					class="a-btn duration-500 border-b-4 border-blue-300 hover:border-orange-600 lg:text-lg text-md block px-4 py-2 rounded text-green-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
 					>Create an account</a
 				>
 			</div>
@@ -242,7 +230,10 @@
 	</div>
 </template>
 
-<style>
+<style lang="postcss">
+	.a-btn {
+		@apply duration-500 block border-b-4 border-blue-300 hover:border-teal-500 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-teal-800 mr-2;
+	}
 	.dropdown:focus-within .dropdown-menu {
 		opacity: 1;
 		transform: translate(0) scale(1);

@@ -6,8 +6,6 @@
 	export const router = false;
 </script>
 
-<template>
-	<div class="doc max-w-[80rem] m-auto">
-		<slot />
-	</div>
-</template>
+<div class="max-w-[80rem] m-auto prose-invert prose-pink doc">
+	<slot />
+</div>
