@@ -1,0 +1,14 @@
+{
+  "name": "prisma-rust",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.1",
+    "typescript": "^4.4.4"
+  }
+}
