@@ -151,25 +151,24 @@
 				<a href="/" class="a-btn"> Home </a>
 				<a href="https://discord.gg/mY8zTARu4g" class="a-btn"> Discord </a>
 
-				<div class=" relative inline-block text-left dropdown">
-					<span class="rounded-md shadow-sm"
-						><button
+				<div class="more-css-tips relative inline-block text-left dropdown">
+					<span class="rounded-md shadow-sm">
+						<div
 							class="inline-flex justify-center w-full px-4 py-2 leading-5 bg-slate-500 text-white hover:bg-slate-700 transition duration-150 ease-in-out border border-gray-300 hover:text-gray-100 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800"
-							type="button"
 							aria-haspopup="true"
 							aria-expanded="true"
 							aria-controls="headlessui-menu-items-117"
 						>
 							<span>Other</span>
-							<svg class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor"
-								><path
+							<svg class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
+								<path
 									fill-rule="evenodd"
 									d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
 									clip-rule="evenodd"
-								/></svg
-							>
-						</button></span
-					>
+								/>
+							</svg>
+						</div>
+					</span>
 					<div
 						class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95"
 					>
@@ -179,16 +178,18 @@
 							id="headlessui-menu-items-117"
 							role="menu"
 						>
-							<div class="py-1">
+							<ul class="py-1">
 								{#each otherLinks as link}
-									<a
-										href={link.href}
-										tabindex="0"
-										class="text-gray-200 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
-										role="menuitem">{link.a}</a
-									>
+									<li>
+										<a
+											href={link.href}
+											tabindex="0"
+											class="text-gray-200 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+											role="menuitem">{link.a}</a
+										>
+									</li>
 								{/each}
-							</div>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -232,7 +233,7 @@
 
 <style lang="postcss">
 	.a-btn {
-		@apply duration-500 block border-b-4 border-blue-300 hover:border-teal-500 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-teal-800 mr-2;
+		@apply duration-500 block border-b-4 border-blue-300 "hover:border-teal-500" mt-4 "lg:inline-block" "lg:mt-0" "hover:text-white" px-4 py-2 rounded "hover:bg-teal-800" mr-2;
 	}
 	.dropdown:focus-within .dropdown-menu {
 		opacity: 1;

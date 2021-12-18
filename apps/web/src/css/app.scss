@@ -67,3 +67,29 @@ body {
 .footer > div > div > u > li > a {
 	transition: all 0.3s ease-in-out;
 }
+
+// e
+
+.more-css-tips {
+	cursor: pointer;
+}
+
+.more-css-tips * {
+	font-weight: initial !important;
+	transition: all 0.2s ease-in-out;
+}
+
+.more-css-tips > span:hover * {
+	color: #1f2937;
+}
+
+.more-css-tips:hover > div {
+	opacity: 1 !important;
+	visibility: visible !important;
+	scale: 1 !important;
+	transform: translateY(0);
+}
+
+.more-css-tips ul li:hover {
+	background-color: rgb(37, 48, 63);
+}
