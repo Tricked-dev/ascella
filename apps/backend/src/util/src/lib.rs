@@ -7,6 +7,7 @@ use rand::{distributions::Alphanumeric, prelude::SliceRandom, Rng};
 use serde::Serialize;
 use serde_json::{json, Value};
 use std::fmt::Display;
+pub mod image_effects;
 lazy_static! {
     pub static ref CLIENT: reqwest::Client = reqwest::Client::new();
 }
@@ -124,7 +125,30 @@ fn get_header(val: Option<&HeaderValue>) -> Result<&str> {
     }
     Err(anyhow!(""))
 }
+pub async fn validate_request_upload(req: &HttpRequest) -> Result<(Users, Result<&str>), Error> {
+    let headers = req.headers();
+    let user_id = get_header(headers.get("x-user-id"))
+        .unwrap_or("-1")
+        .parse::<i32>()
+        .unwrap_or(-1);
+    let user_token = get_header(headers.get("x-user-token"))
+        .unwrap_or_else(|_| get_header(headers.get("x-user-key")).unwrap_or(""));
 
+    if user_id == -1 || user_token.is_empty() {
+        Err(Error::NotAuthorized)
+    } else if let Ok(user) = get_user_token::exec(user_id, user_token.to_owned()).await {
+        log::info!("{} {}", &user.name, &user.id);
+        actix_web::rt::spawn(send_text_webhook(format!(
+            "**{}** {} {}",
+            &req.path(),
+            &user.name,
+            &user.id
+        )));
+        Ok((user, get_header(headers.get("x-image-effects"))))
+    } else {
+        Err(Error::NotAuthorized)
+    }
+}
 pub async fn validate_request(req: &HttpRequest) -> Result<Users, Error> {
     let headers = req.headers();
     let user_id = get_header(headers.get("x-user-id"))
