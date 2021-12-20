@@ -1,0 +1,1 @@
+some weird stuff is adding /static to urls this fixes it!
