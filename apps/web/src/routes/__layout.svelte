@@ -131,79 +131,47 @@
 </svelte:head>
 
 <template bind:this={menu} class="flex-1 flex flex-col">
-	<nav
-		class="flex items-center justify-between flex-wrap bg-slate-700 py-4 lg:px-12 shadow border-solid border-t-2 border-lime-500"
-	>
-		<div
-			class="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-5 lg:pb-0"
-		>
-			<div class="flex items-center flex-shrink-0 text-slate-100 mr-16">
-				<span
-					class="font-semibold text-xl tracking-tight hover:text-lime-500 duration-200 hover:border-b-2 border-indigo-700"
-					><a href="https://ascella.host">Ascella.host</a></span
-				>
-			</div>
-		</div>
-
-		<div class="menu w-full flex-grow lg:flex lg:items-center lg:w-auto lg:px-3 px-8">
-			<div class="lg:text-lg text-md font-bold text-green-500  lg:flex-grow">
-				<a href="https://dash.ascella.host" class="a-btn"> Dashboard </a>
-				<a href="/" class="a-btn"> Home </a>
-				<a href="https://discord.gg/mY8zTARu4g" class="a-btn"> Discord </a>
-
-				<div class="more-css-tips relative inline-block text-left dropdown">
-					<span class="rounded-md shadow-sm">
-						<div
-							class="inline-flex justify-center w-full px-4 py-2 leading-5 bg-slate-500 text-white hover:bg-slate-700 transition duration-150 ease-in-out border border-gray-300 hover:text-gray-100 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800"
-							aria-haspopup="true"
-							aria-expanded="true"
-							aria-controls="headlessui-menu-items-117"
-						>
-							<span>Other</span>
-							<svg class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
-								<path
-									fill-rule="evenodd"
-									d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-									clip-rule="evenodd"
-								/>
-							</svg>
-						</div>
-					</span>
-					<div
-						class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95"
-					>
-						<div
-							class="absolute left-0 w-56 mt-2 origin-top-left  bg-slate-600 border border-gray-500 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
-							aria-labelledby="headlessui-menu-button-1"
-							id="headlessui-menu-items-117"
-							role="menu"
-						>
-							<ul class="py-1">
-								{#each otherLinks as link}
-									<li>
-										<a
-											href={link.href}
-											tabindex="0"
-											class="text-gray-200 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
-											role="menuitem">{link.a}</a
-										>
-									</li>
-								{/each}
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="flex">
-				<a
-					href="/docs/signup"
-					class="a-btn duration-500 border-b-4 border-blue-300 hover:border-orange-600 lg:text-lg text-md block px-4 py-2 rounded text-green-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
-					>Create an account</a
-				>
-			</div>
-		</div>
-	</nav>
+  <nav>
+    <div class="all">
+      <a class="ascella" href="https://ascella.host">Ascella.host</a>
+      <div class="btns">
+        <ul>
+          <li><a class="btn" href="https://dash.ascella.host" > Dashboard </a></li>
+          <li><a class="btn" href="/"> Home </a></li>
+          <li><a class="btn" href="https://discord.gg/mY8zTARu4g" > Discord </a></li>
+        </ul>
+      </div>
+        <div class="other">
+          <input id="input" type="checkbox" checked>
+          <label for="input">Other
+            <svg class="w-5 h-5 -mr-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </label>
+          <div class="list">
+            <ul>
+				    {#each otherLinks as link}
+              <li>
+                <div>
+                  <slide><a
+				  	  	    href={link.href}
+				  	    	  tabindex="0"
+				  	  	    role="menuitem">{link.a}</a
+				  	      ></slide>
+                  <a
+				  	  	    href={link.href}
+				  	    	  tabindex="0"
+				  	  	    role="menuitem">{link.a}</a
+				  	      >
+                </div>
+              </li>
+				    {/each}
+				    </ul>      
+          </div>
+        </div>
+      <a class="btn" href="/docs/signup">Create an account</a>
+    </div>
+  </nav>
 
 	<div class="pb-4" />
 	<slot />
@@ -232,12 +200,12 @@
 </template>
 
 <style lang="postcss">
-	.a-btn {
-		@apply duration-500 block border-b-4 border-blue-300 "hover:border-teal-500" mt-4 "lg:inline-block" "lg:mt-0" "hover:text-white" px-4 py-2 rounded "hover:bg-teal-800" mr-2;
+	/* .a-btn {
+		@apply duration-500 block border-b-4 border-blue-300 hover:border-teal-500 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-teal-800 mr-2;
 	}
 	.dropdown:focus-within .dropdown-menu {
 		opacity: 1;
 		transform: translate(0) scale(1);
 		visibility: visible;
-	}
+	} */
 </style>

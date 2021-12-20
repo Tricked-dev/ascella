@@ -51,7 +51,7 @@ pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<HttpRespon
                                 match ff[0] {
                                     "cali" => end_effects.push(Attrs::Cali),
                                     "dramatic" => end_effects.push(Attrs::Dramatic),
-                                    // "filter" => end_effects.push(Attrs::Filter()),
+                                    "filter" => end_effects.push(Attrs::Filter(ff[1].to_string())),
                                     "firenze" => end_effects.push(Attrs::Firenze),
                                     "golden" => end_effects.push(Attrs::Golden),
                                     "lix" => end_effects.push(Attrs::Lix),

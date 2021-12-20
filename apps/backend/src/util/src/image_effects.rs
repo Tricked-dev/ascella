@@ -9,7 +9,7 @@ use crate::Error;
 pub enum Attrs {
     Cali,
     Dramatic,
-    Filter(&'static str),
+    Filter(String),
     Firenze,
     Golden,
     Lix,
@@ -26,7 +26,7 @@ pub fn apply_effects(buf: Vec<u8>, attrs: Vec<Attrs>, save: String) -> Result<()
         match attribute {
             Attrs::Cali => cali(&mut image),
             Attrs::Dramatic => dramatic(&mut image),
-            Attrs::Filter(overlay) => filter(&mut image, overlay),
+            Attrs::Filter(overlay) => filter(&mut image, overlay.as_str()),
             Attrs::Firenze => firenze(&mut image),
             Attrs::Golden => golden(&mut image),
             Attrs::Lix => lix(&mut image),
