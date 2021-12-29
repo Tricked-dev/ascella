@@ -7,14 +7,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
-    "format": "dprint"
+    "build": "npx turbo run build",
+    "dev": "npx turbo run dev --parallel",
+    "lint": "npx turbo run lint",
+    "format": "npx dprint"
   },
   "devDependencies": {
     "dprint": "^0.19.1",
-    "turbo": "^1.0.7"
+    "turbo": "^1.0.23"
   },
   "turbo": {
     "pipeline": {
