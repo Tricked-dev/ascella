@@ -1,13 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+	--clr-neon-0: #16f1b0;
+    --clr-neon-1: rgb(195, 37, 209);
+    --clr-bg-0: #39393f;
+	--clr-bg-1: #1f2937;
+}
+
 body {
-	background-color: #1f2937;
+	background-color: var(--clr-bg-1);
 }
 body {
 	margin: 0 auto;
 	font-family: Roboto, serif;
-	color: #eee;
+	color: var(--clr-neon-0);
 	line-height: 1;
 }
 
@@ -19,25 +27,22 @@ body {
 /* Style the links inside the navigation bar */
 .topnav a .link {
 	float: left;
-	color: #f2f2f2;
+	color: var(--clr-neon-0);
 	text-align: center;
 	text-decoration: none;
 	font-size: 17px;
 }
 
-/* Change the color of links on hover */
-.topnav a:hover .link {
-	background-color: #ddd;
-	color: black;
+.topnav a:hover .link,
+.topnav a:active .link {
+	background-color: var(--clr-neon-0);
+	color: var(--clr-bg-0);
 }
 
-/* Add a color to the active/current link */
 .topnav a.active .link {
-	background-color: #04aa6d;
-	color: white;
+	background-color: var(--clr-neon-0);
+	color: var(--clr-bg-0);
 }
-
-/* i think i did what you want here, this isn't necessary but i think it looks better, so you can see it better and decide if you want to keep it or not*/
 
 .title {
 	text-align: center;
@@ -97,11 +102,6 @@ nav {
 		border-bottom: solid 2px transparent;
 	}
 
-	.ascella:hover {
-		color: rgb(132 204 22);
-		border-color: rgb(67 56 202);
-	}
-
 	.btns {
 		grid-area: btns;
 	}
@@ -115,11 +115,11 @@ nav {
 		display: block;
 		border-radius: 0.25rem;
 		border-bottom-width: 4px;
-		border-color: rgb(147 197 253);
+		border-color: var(--clr-neon-0);
 		font-weight: 700;
 		padding: 0.5rem 1rem;
 		transition-duration: 500ms;
-		color: rgb(34 197 94);
+		color: var(--clr-neon-0);
 		margin-inline: 0.5rem;
 	}
 
@@ -160,7 +160,8 @@ nav {
 			transform: rotate(90deg) !important;
 		}
 
-		#input:hover ~ label {
+		#input:hover ~ label,
+		#input:active ~ label {
 			background-color: rgb(51 65 85);
 			color: #1f2937;
 		}
@@ -192,14 +193,15 @@ nav {
 				div {
 					transition: 0.2s ease-in-out;
 					> a {
-						color: rgb(229 231 235);
+						color: var(--clr-neon-0);
 						padding: 0.5rem 1rem;
 						line-height: 1.25rem;
 						display: inline-block;
 					}
 				}
 
-				div:hover {
+				div:hover,
+				div:active {
 					transform: translateX(210px);
 				}
 
@@ -228,7 +230,8 @@ nav {
 					transform-origin: bottom left;
 				}
 
-				slide:hover::before {
+				slide:hover::before,
+				slide:active::before {
 					transform: scaleX(1);
 					transform-origin: bottom right;
 				}
@@ -236,7 +239,8 @@ nav {
 		}
 	}
 
-	.btn:hover {
+	.btn:hover,
+	.btn:active {
 		border-color: rgb(20 184 166);
 		background-color: rgb(17 94 89);
 		color: rgb(255 255 255) !important;
