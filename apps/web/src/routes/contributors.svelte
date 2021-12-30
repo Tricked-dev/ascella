@@ -29,10 +29,10 @@
 	<div class="grid auto-rows-auto gap-4 auto-cols-auto">
 		{#each contributors as contributor}
 			<div
-				class="py-4 bg-gray-700 hover:bg-slate-600 duration-300 border-4 border-lime-500 w-50 justify-center items-center text-center m-auto contributor p-4"
+				class="py-4 duration-200 border-4 w-50 justify-center items-center text-center m-auto contributor p-4"
 			>
 				<img
-					class="border-2 border-lime-200 w-40 h-40 m-auto"
+					class="w-40 h-40 m-auto"
 					alt={contributor.name}
 					src={`/assets/contributors/${contributor.name.toLowerCase()}.png`}
 				/>
@@ -40,7 +40,7 @@
 					<h3 class="text-2xl">
 						{contributor.name}
 					</h3>
-					<p class="text-teal-400">{contributor.description}</p>
+					<p class="">{contributor.description}</p>
 				</div>
 			</div>
 		{/each}
