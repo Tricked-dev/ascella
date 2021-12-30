@@ -7,13 +7,18 @@ $clr-neon-1: rgb(195, 37, 209);
 $clr-bg-0: #39393f;
 
 body {
-	background-color: #39393f;
+	background-color: $clr-bg-0;
 }
 body {
 	margin: 0 auto;
 	font-family: Roboto, serif;
 	color: $clr-neon-0;
 	line-height: 1;
+}
+
+.url {
+	color: $clr-neon-1;
+	text-shadow: 0 0 0.2em currentColor;
 }
 
 .topnav {
@@ -31,12 +36,12 @@ body {
 .topnav a:hover .link,
 .topnav a:active .link {
 	background-color: $clr-neon-0;
-	color: #39393f;
+	color: $clr-bg-0;
 }
 
 .topnav a.active .link {
 	background-color: $clr-neon-0;
-	color: #39393f;
+	color: $clr-bg-0;
 }
 
 .title {
@@ -46,12 +51,12 @@ body {
 }
 
 .desc {
-	font-weight: lighter;
+	color: inherit;
 }
 
 .footer {
 	padding-bottom: 20px;
-	transition: 0.3s ease-in-out;
+	transition: 100ms;
 }
 
 .footer > div {
@@ -65,16 +70,16 @@ body {
 
 #main > div > a,
 .footer > div > div > u > li > a {
-	transition: all 0.3s ease-in-out;
+	transition: all 100ms;
 }
 
 // e
 
 nav {
-	background-color: #39393f;
+	background-color: $clr-bg-0;
 
 	* {
-		transition: 0.2s ease-in-out;
+		transition: 100ms;
 	}
 
 	.all {
@@ -93,8 +98,13 @@ nav {
 		font-size: 1.25rem;
 		line-height: 1.75rem;
 		letter-spacing: -0.025em;
-		transition-duration: 200ms;
+		transition-duration: 100ms;
 		border-bottom: solid 2px transparent;
+		text-shadow: 0 0 0.5em $clr-neon-0;
+	}
+
+	.ascella:hover {
+		text-shadow: 0 0 2em $clr-neon-0;
 	}
 
 	.btns {
@@ -113,28 +123,34 @@ nav {
 		border-color: $clr-neon-0;
 		font-weight: 700;
 		padding: 0.5rem 1rem;
-		transition-duration: 500ms;
+		transition-duration: 100ms;
 		color: $clr-neon-0;
 		margin-inline: 0.5rem;
 		box-shadow: inset 0 0 0.75em $clr-neon-0, 0 0 0.75em $clr-neon-0;
 	}
 
 	.other {
+		display: flex;
 		grid-area: other;
-		width: 82px;
-		height: 32px;
+		width: 1rem;
+		height: 2.5rem;
 		margin-inline: 0.5rem;
 
 		svg {
-			transition: 0.2s ease-in-out;
+			transition: 100ms;
 		}
 
 		label {
 			display: inline-flex;
 			padding: 0.4rem 0.7rem;
-			background-color: #39393f;
-			border: 1px solid white;
-			transition: 0.2s ease-in-out;
+			padding-top: 0.6rem;
+			background-color: $clr-bg-0;
+			border: var(--clr-neon-0) 0.25em solid;
+			border-radius: 0.25rem;
+			transition: 100ms;
+			box-shadow: 
+				inset 0 0 .75em var(--clr-neon-0),
+				0 0 .75em var(--clr-neon-0);
 		}
 
 		#input {
@@ -159,11 +175,13 @@ nav {
 		#input:hover ~ label,
 		#input:active ~ label {
 			background-color: $clr-neon-0;
-			color: #39393f;
+			color: $clr-bg-0;
+			box-shadow: 
+				0 0 3em var(--clr-neon-0);
 		}
 
 		.list {
-			transition: 0.6s ease-in-out;
+			transition: 100ms;
 			position: relative;
 			z-index: 10;
 			margin-top: 15px;
@@ -173,7 +191,7 @@ nav {
 			ul {
 				position: absolute;
 				right: -85%;
-				background-color: #39393f;
+				background-color: $clr-bg-0;
 				width: max-content;
 				padding-block: 0.25rem;
 				overflow: hidden;
@@ -187,7 +205,7 @@ nav {
 				position: relative;
 
 				div {
-					transition: 0.2s ease-in-out;
+					transition: 100ms;
 					> a {
 						color: $clr-neon-0;
 						padding: 0.5rem 1rem;
@@ -198,13 +216,13 @@ nav {
 
 				div:hover,
 				div:active {
-					transform: translateX(210px);
+					color: $clr-bg-0;
+					background-color: $clr-neon-0;
 				}
 
 				slide {
 					position: absolute;
 					overflow: unset;
-					transform: translateX(-100%);
 					padding: 0.5rem 1rem;
 					line-height: 1.25rem;
 					top: 0;
@@ -214,22 +232,22 @@ nav {
 
 				slide:before {
 					content: ' ';
-					background-color: #39393f;
+					background-color: $clr-bg-0;
 					position: absolute;
 					top: 0;
 					right: 0;
 					bottom: 0;
 					left: 0;
 					z-index: -1;
-					transition: 0.3s ease-in-out;
+					transition: 100ms;
 					transform: scaleX(0);
 					transform-origin: bottom left;
 				}
 
 				slide:hover::before,
 				slide:active::before {
-					transform: scaleX(1);
-					transform-origin: bottom right;
+					color: $clr-bg-0;
+					background-color: $clr-neon-0;
 				}
 			}
 		}
@@ -237,10 +255,9 @@ nav {
 
 	.btn:hover,
 	.btn:active {
-		border-color: $clr-neon-1;
-		background-color: #39393f;
-		color: $clr-neon-1;
-		box-shadow: inset 0 0 0.75em $clr-neon-1, 0 0 0.75em $clr-neon-1;
+		background-color: $clr-neon-0;
+		color: $clr-bg-0;
+		box-shadow: inset 0 0 0.75em $clr-neon-0, 0 0 0.75em $clr-neon-0;
 	}
 
 	.ascella ~ .btn {
