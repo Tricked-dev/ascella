@@ -33,7 +33,6 @@
 			<p class="text-3xl text-white">Welcome to the Ascella uploader</p>
 			<p class="text-xl font-bold text-white">
 				Looking to score an invite? Join the <a
-					class="text-red-600"
 					href="https://discord.gg/mY8zTARu4g">Discord.</a
 				>
 			</p>
