@@ -9,14 +9,14 @@
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
-	export async function load({ page }) {
-		const { image } = page.params;
-		let params = image?.split('/');
+	export async function load({ params }) {
+		const { image } = params;
+		let imgParams = image?.split('/');
 
-		if (params && params[params?.length - 1].split('.')?.[1]) {
+		if (imgParams && imgParams[imgParams?.length - 1].split('.')?.[1]) {
 			return;
 		}
-		let data = await getImage(params[params?.length - 1]);
+		let data = await getImage(imgParams[imgParams?.length - 1]);
 		if (data.error)
 			return {
 				status: 302,
@@ -29,7 +29,7 @@
 			};
 		}
 		return {
-			props: { ...data, url: params[params?.length - 1] }
+			props: { ...data, url: imgParams[imgParams?.length - 1] }
 		};
 	}
 </script>
