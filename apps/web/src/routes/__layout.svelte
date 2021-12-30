@@ -69,6 +69,10 @@
 		{
 			href: '/domains',
 			a: 'Domains'
+		},
+		{
+			href: '/contributors',
+			a: 'Contributors'
 		}
 	];
 

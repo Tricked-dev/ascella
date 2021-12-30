@@ -16,6 +16,10 @@ body {
 	line-height: 1;
 }
 
+.contributor {
+	box-shadow: inset 0 0 0.75em $clr-neon-0, 0 0 0.75em $clr-neon-0;
+}
+
 .url {
 	color: $clr-neon-1;
 	text-shadow: 0 0 0.2em currentColor;
@@ -148,9 +152,7 @@ nav {
 			border: var(--clr-neon-0) 0.25em solid;
 			border-radius: 0.25rem;
 			transition: 200ms;
-			box-shadow: 
-				inset 0 0 .75em var(--clr-neon-0),
-				0 0 .75em var(--clr-neon-0);
+			box-shadow: inset 0 0 0.75em var(--clr-neon-0), 0 0 0.75em var(--clr-neon-0);
 		}
 
 		#input {
@@ -176,8 +178,7 @@ nav {
 		#input:active ~ label {
 			background-color: $clr-neon-0;
 			color: $clr-bg-0;
-			box-shadow: 
-				0 0 3em var(--clr-neon-0);
+			box-shadow: 0 0 3em var(--clr-neon-0);
 		}
 
 		.list {
