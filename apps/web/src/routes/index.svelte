@@ -31,10 +31,9 @@
 	<div class="m-auto">
 		<div class="text-center">
 			<p class="text-3xl text-white">Welcome to the Ascella uploader</p>
-			<p class="text-xl font-bold text-white">
+			<p class="text-xl font-bold">
 				Looking to score an invite? Join the <a
-					class="text-red-600"
-					href="https://discord.gg/mY8zTARu4g">Discord.</a
+					class="url" href="https://discord.gg/mY8zTARu4g">Discord.</a
 				>
 			</p>
 		</div>
@@ -44,7 +43,7 @@
 					<div class="pb-2 max-w-full">
 						<img alt="" src={feature.image} class="max-w-full object-cover w-full h-40" />
 					</div>
-					<div class="text-white w-full h-full max-w-full css-tips-with-abd">
+					<div class="w-full h-full max-w-full css-tips-with-abd">
 						<div>
 							<p class="text-xl title">{feature.title}</p>
 						</div>

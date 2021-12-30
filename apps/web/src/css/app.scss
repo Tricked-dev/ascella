@@ -1,43 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+$clr-neon-0: #16f1b0;
+$clr-neon-1: rgb(195, 37, 209);
+$clr-bg-0: #39393f;
+
 body {
-	background-color: #1f2937;
+	background-color: $clr-bg-0;
 }
 body {
 	margin: 0 auto;
 	font-family: Roboto, serif;
-	color: #eee;
+	color: $clr-neon-0;
 	line-height: 1;
 }
 
-/* Add a black background color to the top navigation */
+.url {
+	color: $clr-neon-1;
+	text-shadow: 0 0 0.2em currentColor;
+}
+
 .topnav {
 	overflow: hidden;
 }
 
-/* Style the links inside the navigation bar */
 .topnav a .link {
 	float: left;
-	color: #f2f2f2;
+	color: $clr-neon-0;
 	text-align: center;
 	text-decoration: none;
 	font-size: 17px;
 }
 
-/* Change the color of links on hover */
-.topnav a:hover .link {
-	background-color: #ddd;
-	color: black;
+.topnav a:hover .link,
+.topnav a:active .link {
+	background-color: $clr-neon-0;
+	color: $clr-bg-0;
 }
 
-/* Add a color to the active/current link */
 .topnav a.active .link {
-	background-color: #04aa6d;
-	color: white;
+	background-color: $clr-neon-0;
+	color: $clr-bg-0;
 }
-
-/* i think i did what you want here, this isn't necessary but i think it looks better, so you can see it better and decide if you want to keep it or not*/
 
 .title {
 	text-align: center;
@@ -46,12 +51,12 @@ body {
 }
 
 .desc {
-	font-weight: lighter;
+	color: inherit;
 }
 
 .footer {
 	padding-bottom: 20px;
-	transition: 0.3s ease-in-out;
+	transition: 200ms;
 }
 
 .footer > div {
@@ -65,16 +70,16 @@ body {
 
 #main > div > a,
 .footer > div > div > u > li > a {
-	transition: all 0.3s ease-in-out;
+	transition: all 200ms;
 }
 
 // e
 
 nav {
-	background-color: rgb(51 65 85);
+	background-color: $clr-bg-0;
 
 	* {
-		transition: 0.2s ease-in-out;
+		transition: 200ms;
 	}
 
 	.all {
@@ -95,11 +100,11 @@ nav {
 		letter-spacing: -0.025em;
 		transition-duration: 200ms;
 		border-bottom: solid 2px transparent;
+		text-shadow: 0 0 0.5em $clr-neon-0;
 	}
 
 	.ascella:hover {
-		color: rgb(132 204 22);
-		border-color: rgb(67 56 202);
+		text-shadow: 0 0 2em $clr-neon-0;
 	}
 
 	.btns {
@@ -108,37 +113,44 @@ nav {
 
 	.btns > ul {
 		display: flex;
-		color: rgb(255 255 255);
+		color: $clr-neon-0;
 	}
 
 	.btn {
 		display: block;
 		border-radius: 0.25rem;
-		border-bottom-width: 4px;
-		border-color: rgb(147 197 253);
+		border: 0.25em solid;
+		border-color: $clr-neon-0;
 		font-weight: 700;
 		padding: 0.5rem 1rem;
-		transition-duration: 500ms;
-		color: rgb(34 197 94);
+		transition-duration: 200ms;
+		color: $clr-neon-0;
 		margin-inline: 0.5rem;
+		box-shadow: inset 0 0 0.75em $clr-neon-0, 0 0 0.75em $clr-neon-0;
 	}
 
 	.other {
+		display: flex;
 		grid-area: other;
-		width: 82px;
-		height: 32px;
+		width: 1rem;
+		height: 2.5rem;
 		margin-inline: 0.5rem;
 
 		svg {
-			transition: 0.2s ease-in-out;
+			transition: 200ms;
 		}
 
 		label {
 			display: inline-flex;
 			padding: 0.4rem 0.7rem;
-			background-color: rgb(100 116 139);
-			border: 1px solid white;
-			transition: 0.2s ease-in-out;
+			padding-top: 0.6rem;
+			background-color: $clr-bg-0;
+			border: var(--clr-neon-0) 0.25em solid;
+			border-radius: 0.25rem;
+			transition: 200ms;
+			box-shadow: 
+				inset 0 0 .75em var(--clr-neon-0),
+				0 0 .75em var(--clr-neon-0);
 		}
 
 		#input {
@@ -160,13 +172,16 @@ nav {
 			transform: rotate(90deg) !important;
 		}
 
-		#input:hover ~ label {
-			background-color: rgb(51 65 85);
-			color: #1f2937;
+		#input:hover ~ label,
+		#input:active ~ label {
+			background-color: $clr-neon-0;
+			color: $clr-bg-0;
+			box-shadow: 
+				0 0 3em var(--clr-neon-0);
 		}
 
 		.list {
-			transition: 0.6s ease-in-out;
+			transition: 200ms;
 			position: relative;
 			z-index: 10;
 			margin-top: 15px;
@@ -176,7 +191,7 @@ nav {
 			ul {
 				position: absolute;
 				right: -85%;
-				background-color: rgb(71 85 105);
+				background-color: $clr-bg-0;
 				width: max-content;
 				padding-block: 0.25rem;
 				overflow: hidden;
@@ -190,23 +205,24 @@ nav {
 				position: relative;
 
 				div {
-					transition: 0.2s ease-in-out;
+					transition: 200ms;
 					> a {
-						color: rgb(229 231 235);
+						color: $clr-neon-0;
 						padding: 0.5rem 1rem;
 						line-height: 1.25rem;
 						display: inline-block;
 					}
 				}
 
-				div:hover {
-					transform: translateX(210px);
+				div:hover,
+				div:active {
+					color: $clr-bg-0;
+					background-color: $clr-neon-0;
 				}
 
 				slide {
 					position: absolute;
 					overflow: unset;
-					transform: translateX(-100%);
 					padding: 0.5rem 1rem;
 					line-height: 1.25rem;
 					top: 0;
@@ -216,35 +232,37 @@ nav {
 
 				slide:before {
 					content: ' ';
-					background-color: #1f2937;
+					background-color: $clr-bg-0;
 					position: absolute;
 					top: 0;
 					right: 0;
 					bottom: 0;
 					left: 0;
 					z-index: -1;
-					transition: 0.3s ease-in-out;
+					transition: 200ms;
 					transform: scaleX(0);
 					transform-origin: bottom left;
 				}
 
-				slide:hover::before {
-					transform: scaleX(1);
-					transform-origin: bottom right;
+				slide:hover::before,
+				slide:active::before {
+					color: $clr-bg-0;
+					background-color: $clr-neon-0;
 				}
 			}
 		}
 	}
 
-	.btn:hover {
-		border-color: rgb(20 184 166);
-		background-color: rgb(17 94 89);
-		color: rgb(255 255 255) !important;
+	.btn:hover,
+	.btn:active {
+		background-color: $clr-neon-0;
+		color: $clr-bg-0;
+		box-shadow: inset 0 0 0.75em $clr-neon-0, 0 0 0.75em $clr-neon-0;
 	}
 
 	.ascella ~ .btn {
 		grid-area: account;
-		color: rgb(21 128 61);
+		color: $clr-neon-0;
 		width: fit-content;
 		height: fit-content;
 		font-size: 1.125rem;
