@@ -2,19 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-	--clr-neon-0: #16f1b0;
-    --clr-neon-1: rgb(195, 37, 209);
-    --clr-bg-0: #39393f;
-}
+$clr-neon-0: #16f1b0;
+$clr-neon-1: rgb(195, 37, 209);
+$clr-bg-0: #39393f;
 
 body {
-	background-color: var(--clr-bg-0);
+	background-color: #39393f;
 }
 body {
 	margin: 0 auto;
 	font-family: Roboto, serif;
-	color: var(--clr-neon-0);
+	color: $clr-neon-0;
 	line-height: 1;
 }
 
@@ -24,7 +22,7 @@ body {
 
 .topnav a .link {
 	float: left;
-	color: var(--clr-neon-0);
+	color: $clr-neon-0;
 	text-align: center;
 	text-decoration: none;
 	font-size: 17px;
@@ -32,13 +30,13 @@ body {
 
 .topnav a:hover .link,
 .topnav a:active .link {
-	background-color: var(--clr-neon-0);
-	color: var(--clr-bg-0);
+	background-color: $clr-neon-0;
+	color: #39393f;
 }
 
 .topnav a.active .link {
-	background-color: var(--clr-neon-0);
-	color: var(--clr-bg-0);
+	background-color: $clr-neon-0;
+	color: #39393f;
 }
 
 .title {
@@ -73,7 +71,7 @@ body {
 // e
 
 nav {
-	background-color: var(--clr-bg-0);
+	background-color: #39393f;
 
 	* {
 		transition: 0.2s ease-in-out;
@@ -105,22 +103,20 @@ nav {
 
 	.btns > ul {
 		display: flex;
-		color: var(--clr-neon-0);
+		color: $clr-neon-0;
 	}
 
 	.btn {
 		display: block;
 		border-radius: 0.25rem;
 		border: 0.25em solid;
-		border-color: var(--clr-neon-0);
+		border-color: $clr-neon-0;
 		font-weight: 700;
 		padding: 0.5rem 1rem;
 		transition-duration: 500ms;
-		color: var(--clr-neon-0);
+		color: $clr-neon-0;
 		margin-inline: 0.5rem;
-		box-shadow: 
-			inset 0 0 .75em var(--clr-neon-0),
-			0 0 .75em var(--clr-neon-0);
+		box-shadow: inset 0 0 0.75em $clr-neon-0, 0 0 0.75em $clr-neon-0;
 	}
 
 	.other {
@@ -136,7 +132,7 @@ nav {
 		label {
 			display: inline-flex;
 			padding: 0.4rem 0.7rem;
-			background-color: var(--clr-bg-0);
+			background-color: #39393f;
 			border: 1px solid white;
 			transition: 0.2s ease-in-out;
 		}
@@ -162,8 +158,8 @@ nav {
 
 		#input:hover ~ label,
 		#input:active ~ label {
-			background-color: var(--clr-neon-0);
-			color: var(--clr-bg-0)
+			background-color: $clr-neon-0;
+			color: #39393f;
 		}
 
 		.list {
@@ -177,7 +173,7 @@ nav {
 			ul {
 				position: absolute;
 				right: -85%;
-				background-color: var(--clr-bg-0);
+				background-color: #39393f;
 				width: max-content;
 				padding-block: 0.25rem;
 				overflow: hidden;
@@ -193,7 +189,7 @@ nav {
 				div {
 					transition: 0.2s ease-in-out;
 					> a {
-						color: var(--clr-neon-0);
+						color: $clr-neon-0;
 						padding: 0.5rem 1rem;
 						line-height: 1.25rem;
 						display: inline-block;
@@ -218,7 +214,7 @@ nav {
 
 				slide:before {
 					content: ' ';
-					background-color: var(--clr-bg-0);
+					background-color: #39393f;
 					position: absolute;
 					top: 0;
 					right: 0;
@@ -241,14 +237,15 @@ nav {
 
 	.btn:hover,
 	.btn:active {
-		border-color: var(--clr-neon-0);
-		background-color: var(--clr-bg-0);
-		color: var(--clr-neon-0) !important;
+		border-color: $clr-neon-1;
+		background-color: #39393f;
+		color: $clr-neon-1;
+		box-shadow: inset 0 0 0.75em $clr-neon-1, 0 0 0.75em $clr-neon-1;
 	}
 
 	.ascella ~ .btn {
 		grid-area: account;
-		color: var(--clr-neon-0);
+		color: $clr-neon-0;
 		width: fit-content;
 		height: fit-content;
 		font-size: 1.125rem;
