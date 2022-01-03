@@ -9,9 +9,9 @@ on:
     ## - release
 
 env:
-  BIN_NAME: diplo
-  PROJECT_NAME: diplo
-  REPO_NAME: Tricked-dev/diplo
+  BIN_NAME: ascella
+  PROJECT_NAME: ascella
+  REPO_NAME: Tricked-dev/ascella
 
 jobs:
   dist:
@@ -133,7 +133,7 @@ jobs:
 
       - name: cp deb file
         if: matrix.build == 'x86_64-linux'
-        run: cp target/debian/diplo_* dist/
+        run: cp target/debian/ascella_* dist/
 
       - name: Run install pkgbuild
         if: matrix.build == 'x86_64-linux'
@@ -157,7 +157,7 @@ jobs:
             ls target/${{ matrix.target }}
 
 
-            cp target/wix/diplo* dist/
+            cp target/wix/ascella* dist/
             cp "target/${{ matrix.target }}/release/$BIN_NAME.exe" "dist/"
           else
             cp "target/${{ matrix.target }}/release/$BIN_NAME" "dist/"
@@ -165,7 +165,7 @@ jobs:
 
       - uses: actions/upload-artifact@v2.2.4
         with:
-          name: diplo-${{ matrix.build }}
+          name: ascella-${{ matrix.build }}
           path: dist
 
   publish:
@@ -183,7 +183,7 @@ jobs:
         # with:
         #   path: dist
       # - run: ls -al ./dist
-      - run: ls -al diplo-*
+      - run: ls -al ascella-*
 
       - name: Calculate tag name
         run: |
@@ -205,8 +205,8 @@ jobs:
           mkdir dist
 
 
-          for dir in diplo-* ; do
-              platform=${dir#"diplo-"}
+          for dir in ascella-* ; do
+              platform=${dir#"ascella-"}
               if [[ $platform =~ "windows" ]]; then
                   exe=".exe"
               fi
@@ -215,12 +215,12 @@ jobs:
               mkdir tmp/$pkgname
               # cp LICENSE README.md tmp/$pkgname
 
-              [ -f diplo-$platform/diplo-* ] && mv diplo-$platform/diplo-* tmp/$pkgname/
-              [ -f diplo-$platform/diplo_* ] && mv diplo-$platform/diplo_* tmp/$pkgname/
-              [ -f diplo-$platform/diplo-*.msi ] && mv diplo-$platform/*.msi tmp/$pkgname/
-              [ -f diplo-$platform/PKGBUILD ] && mv diplo-$platform/PKGBUILD tmp/$pkgname/
+              [ -f ascella-$platform/ascella-* ] && mv ascella-$platform/ascella-* tmp/$pkgname/
+              [ -f ascella-$platform/ascella_* ] && mv ascella-$platform/ascella_* tmp/$pkgname/
+              [ -f ascella-$platform/ascella-*.msi ] && mv ascella-$platform/*.msi tmp/$pkgname/
+              [ -f ascella-$platform/PKGBUILD ] && mv ascella-$platform/PKGBUILD tmp/$pkgname/
 
-              mv diplo-$platform/$BIN_NAME$exe tmp/$pkgname
+              mv ascella-$platform/$BIN_NAME$exe tmp/$pkgname
               chmod +x tmp/$pkgname/$BIN_NAME$exe
 
               if [ "$exe" = "" ]; then

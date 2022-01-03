@@ -1,5 +1,5 @@
 [package]
-name = "ascella-desktop"
+name = "ascella"
 version = "0.1.0"
 edition = "2021"
 
