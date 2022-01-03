@@ -5,6 +5,7 @@ use ascella::ui::app::AscellaDesktop;
 use ascella::util::screenshot;
 use ascella::ScreenshotKind;
 
+
 pub fn main() -> iced::Result {
     let app = App::new(crate_name!())
         .version(crate_version!())
