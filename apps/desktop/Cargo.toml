@@ -18,6 +18,7 @@ toml = "0.5.8"
 reqwest = {version = "0.9.10", features=[]}
 clipboard = "0.5.0"
 clap = {version = "3.0.0", features = ["cargo", "color"]}
+home = "0.5.3"
 
 [dependencies.native-dialog]
 version= "0.6.1"

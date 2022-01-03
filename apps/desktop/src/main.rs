@@ -1,8 +1,9 @@
-use ascella::{home::home_dir, screenshot_area};
+use ascella::screenshot_area;
 use ascella::{take_ss, ScreenshotKind};
 use clap::{crate_authors, crate_description, crate_name, crate_version, App, Arg};
 use clipboard::ClipboardContext;
 use clipboard::ClipboardProvider;
+use home::home_dir;
 use iced::{
     button, futures::executor::block_on, scrollable, slider, text_input, Alignment, Button,
     Checkbox, Column, Container, Element, Length, ProgressBar, Radio, Row, Rule, Sandbox,
