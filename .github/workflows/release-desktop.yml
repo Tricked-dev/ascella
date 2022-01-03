@@ -113,18 +113,18 @@ jobs:
 
       - run: mv ./apps/desktop/target .
 
-      - name: Run install pkgbuild
-        if: matrix.build == 'x86_64-linux'
-        uses: actions-rs/cargo@v1
-        with:
-          command: install
-          args: cargo-pkgbuild
-      - name: Make pkgbuild
-        if: matrix.build == 'x86_64-linux'
-        run: cargo pkgbuild
-      - name: cp pkgbuild
-        if: matrix.build == 'x86_64-linux'
-        run: mv PKGBUILD dist/
+      # - name: Run install pkgbuild
+      #   if: matrix.build == 'x86_64-linux'
+      #   uses: actions-rs/cargo@v1
+      #   with:
+      #     command: install
+      #     args: cargo-pkgbuild
+      # - name: Make pkgbuild
+      #   if: matrix.build == 'x86_64-linux'
+      #   run: cargo pkgbuild
+      # - name: cp pkgbuild
+      #   if: matrix.build == 'x86_64-linux'
+      #   run: mv PKGBUILD dist/
 
       - name: Build archive
         shell: bash
