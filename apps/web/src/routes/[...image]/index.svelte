@@ -1,22 +1,19 @@
 <script context="module" lang="ts">
 	import { getImage } from '$lib/api';
-
+	import type { Load } from '@sveltejs/kit';
 	export const ssr = true;
 	export const prerender = true;
 	export const hydrate = false;
 	export const router = true;
-	// export const prerender = true;
-	/**
-	 * @type {import('@sveltejs/kit').Load}
-	 */
-	export async function load({ page }) {
-		const { image } = page.params;
-		let params = image?.split('/');
 
-		if (params && params[params?.length - 1].split('.')?.[1]) {
+	export const load: Load = async ({ params }) => {
+		const { image } = params;
+		let imgParams = image?.split('/');
+
+		if (imgParams && imgParams[imgParams?.length - 1].split('.')?.[1]) {
 			return;
 		}
-		let data = await getImage(params[params?.length - 1]);
+		let data = await getImage(imgParams[imgParams?.length - 1]);
 		if (data.error)
 			return {
 				status: 302,
@@ -29,9 +26,9 @@
 			};
 		}
 		return {
-			props: { ...data, url: params[params?.length - 1] }
+			props: { ...data, url: imgParams[imgParams?.length - 1] }
 		};
-	}
+	};
 </script>
 
 <script lang="ts">

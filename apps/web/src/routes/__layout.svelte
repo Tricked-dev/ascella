@@ -67,6 +67,10 @@
 			a: 'Installing'
 		},
 		{
+			href: '/docs/ascella-desktop',
+			a: 'Desktop-App'
+		},
+		{
 			href: '/domains',
 			a: 'Domains'
 		},

@@ -28,6 +28,7 @@
   "type": "module",
   "dependencies": {
     "@fontsource/fira-mono": "^4.5.0",
+    "@fontsource/righteous": "^4.5.0",
     "@novacbn/svelte-codejar": "^0.1.1",
     "@sveltejs/adapter-cloudflare": "^1.0.0-next.2",
     "@sveltejs/adapter-vercel": "^1.0.0-next.32",
