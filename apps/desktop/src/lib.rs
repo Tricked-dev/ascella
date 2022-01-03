@@ -3,6 +3,9 @@ use std::fs;
 use std::process::Command;
 use std::process::Stdio;
 
+pub mod ui;
+pub mod util;
+
 static SELECTION_TEMPORARY_FILE: &str = "/tmp/selection-tmp.png";
 
 pub enum ScreenshotKind {
@@ -26,6 +29,7 @@ enum DesktopKind {
     Macos,
     Flameshot,
 }
+
 #[cfg(target_os = "windows")]
 fn session_type() -> SessionKind {
     SessionKind::Windows
@@ -35,6 +39,7 @@ fn session_type() -> SessionKind {
 fn session_type() -> SessionKind {
     SessionKind::Macos
 }
+
 #[cfg(not(any(target_os = "macos", target_os = "windows")))]
 fn session_type() -> SessionKind {
     return match env::var("XDG_SESSION_TYPE") {
@@ -103,6 +108,7 @@ pub fn screenshot_area(file: String, freeze: bool) {
         DesktopKind::Flameshot => flameshot(ScreenshotKind::Area, file),
     }
 }
+
 pub fn screenshot_window(file: String) {
     match screenshot_tool_selection(session_type()) {
         DesktopKind::GNOME => gnome(ScreenshotKind::Window, file, false),
@@ -113,6 +119,7 @@ pub fn screenshot_window(file: String) {
         DesktopKind::Flameshot => flameshot(ScreenshotKind::Window, file),
     }
 }
+
 pub fn screenshot_full(file: String) {
     match screenshot_tool_selection(session_type()) {
         DesktopKind::GNOME => gnome(ScreenshotKind::Full, file, false),
@@ -123,6 +130,7 @@ pub fn screenshot_full(file: String) {
         DesktopKind::Flameshot => flameshot(ScreenshotKind::Full, file),
     }
 }
+
 fn flameshot(option: ScreenshotKind, file: String) {
     let output = match option {
         ScreenshotKind::Area => Command::new("flameshot")
@@ -196,6 +204,7 @@ fn gnome(option: ScreenshotKind, file: String, freeze: bool) {
         }
     };
 }
+
 fn kde(option: ScreenshotKind, file: String) {
     match option {
         ScreenshotKind::Area => {
@@ -218,6 +227,7 @@ fn kde(option: ScreenshotKind, file: String) {
         }
     };
 }
+
 fn sway(option: ScreenshotKind, file: String) {
     match option {
         ScreenshotKind::Area => {
@@ -246,6 +256,7 @@ fn sway(option: ScreenshotKind, file: String) {
         }
     };
 }
+
 fn mac(option: ScreenshotKind, file: String) {
     match option {
         ScreenshotKind::Area => {
@@ -268,6 +279,7 @@ fn mac(option: ScreenshotKind, file: String) {
         }
     };
 }
+
 fn scrot(option: ScreenshotKind, file: String, freeze: bool) {
     match option {
         ScreenshotKind::Area => {

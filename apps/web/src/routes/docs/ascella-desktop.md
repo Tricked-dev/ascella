@@ -11,7 +11,7 @@ description: Ascella Desktop app guide
     - [Macos](#macos)
     - [Linux](#linux)
 
-You can download the ascella desktop app from the [Ascella Releases](https://github.com/Tricked-dev/ascella/releases) tab!
+You can download the ascella desktop app from the [Ascella Releases](https://github.com/Tricked-dev/ascella/releases) tab.
 
 ![Gui Preview](/static/gui.png)
 
