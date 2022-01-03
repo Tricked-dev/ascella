@@ -1,8 +1,8 @@
 name: Release Ascella Desktop
+
 on:
   push:
-    tags:
-      tags: ['v[0-9]+.[0-9]+.[0-9]+*']
+    tags: ['v[0-9]+.[0-9]+.[0-9]+*']
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
