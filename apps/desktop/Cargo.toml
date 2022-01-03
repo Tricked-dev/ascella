@@ -1,0 +1,63 @@
+[package]
+name = "ascella"
+version = "0.1.0"
+edition = "2021"
+description = "Ascella desktop app uploader"
+authors = ["Tricked-dev"]
+license = "AGPL-3"
+readme = "README.md"
+repository = "https://github.com/Tricked-dev/ascella"
+homepage = "https://tricked.pro/ascella"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+iced = {git="https://github.com/iced-rs/iced" , rev="4db0f4a570a1fb3398062c78770c542d9efb8a64", features = ["canvas", "tokio", "debug"]}
+tokio = { version = "1.0", features = ["sync"] }
+itertools = "0.9"
+rustc-hash = "1.1"
+chrono = "0.4"
+serde ={version= "1.0.133", features=["derive"]}
+serde_json = "1.0.74"
+toml = "0.5.8"
+#use sync version of reqwest cause i cba to deal witht his shit tbfh
+reqwest = {version = "0.9.10", features=[]}
+clipboard = "0.5.0"
+clap = {version = "3.0.0", features = ["cargo", "color"]}
+home = "0.5.3"
+
+[dependencies.native-dialog]
+version= "0.6.1"
+features = ["windows_dpi_awareness", "windows_visual_styles"]
+
+[build-dependencies]
+embed-resource = "1.3"
+
+[target.'cfg(unix)'.dependencies]
+openssl = { version = "0.10.38", features = ["vendored"] }
+libc = "0.2.107"
+
+[target.'cfg(windows)'.build-dependencies]
+winapi = "0.3.9"
+
+
+
+[package.metadata.deb]
+maintainer = "Tricked-dev"
+copyright = "2022, Tricked-dev"
+license-file = ["LICENSE", "4"]
+extended-description = """https://github.com/Tricked-dev/diplo"""
+depends = "$auto"
+section = "utility"
+priority = "optional"
+assets = [
+    [
+        "target/release/ascella",
+        "usr/bin/",
+        "755",
+    ],
+    [
+        "README.md",
+        "usr/share/doc/ascella/README",
+        "644",
+    ],
+]
