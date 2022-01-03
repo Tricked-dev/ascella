@@ -5,13 +5,13 @@
 - [Frontend](./apps/web/README.md)
 - [Desktop](./apps/desktop/README.md)
 
-###
+---
 
 Formatting we use [dprint](https://dprint.dev/install/) for formatting files `npm i dprint -g`
 
 ### Copyright
 
-Every project has its own license
+please contact me via discord (tricked#3777) before using any of the code i would greatly appreciate this.
 
 ### Donating
 
