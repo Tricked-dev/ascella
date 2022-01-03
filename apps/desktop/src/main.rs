@@ -1,5 +1,5 @@
-use ascella_desktop::{home::home_dir, screenshot_area};
-use ascella_desktop::{take_ss, ScreenshotKind};
+use ascella::{home::home_dir, screenshot_area};
+use ascella::{take_ss, ScreenshotKind};
 use clap::{crate_authors, crate_description, crate_name, crate_version, App, Arg};
 use clipboard::ClipboardContext;
 use clipboard::ClipboardProvider;
