@@ -11,12 +11,12 @@ env:
 
 jobs:
   dist:
-    name: Dist
+    name: Build Ascella Desktop
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false # don't fail other jobs if one fails
+      fail-fast: false
       matrix:
-        build: [x86_64-linux, aarch64-linux, x86_64-macos, x86_64-windows] #, x86_64-win-gnu, win32-msvc
+        build: [x86_64-linux, aarch64-linux, x86_64-macos, x86_64-windows]
         include:
           - build: x86_64-linux
             os: ubuntu-20.04
@@ -176,11 +176,6 @@ jobs:
 
       - uses: actions/download-artifact@v2
 
-        # with:
-        #   path: dist
-      # - run: ls -al ./dist
-      - run: ls -al ascella-*
-
       - name: Calculate tag name
         run: |
           name=dev
@@ -240,20 +235,3 @@ jobs:
         id: extract-version
         run: |
           printf "::set-output name=%s::%s\n" tag-name "${GITHUB_REF#refs/tags/}"
-
-  # publish-cargo:
-  #   name: Publishing to Cargo
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@master
-  #     - uses: actions-rs/toolchain@v1
-  #       with:
-  #         toolchain: stable
-  #         override: true
-  #     - run: |
-  #         sudo apt-get update
-  #         sudo apt-get install -y -qq pkg-config libssl-dev libxcb1-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
-  #     - uses: actions-rs/cargo@v1
-  #       with:
-  #         command: publish
-  #         args: --token ${{ secrets.CARGO_API_KEY }} --allow-dirty
