@@ -13,7 +13,15 @@ description: Guide on how to install Ascella Images
 - Press "Yes" when prompted
 - Adjust the keybinds as needed in ShareX, and you're ready to take screenshots!
 
-### Linux
+### Linux/Macos
+
+Follow the [ascella desktop](/docs/ascella-desktop) installing guide
+
+---
+
+---
+
+### Alternative Linux
 
 - Download Sharenix [github.com/Francesco149/sharenix](https://github.com/Francesco149/sharenix)
 - Update the default imgur.com uploader to use Ascella Uploader
@@ -22,6 +30,6 @@ description: Guide on how to install Ascella Images
 - Adjust the keybinds as needed in the app
 - [example config](https://gist.github.com/Tricked-dev/c717c68d19068d0c7bcc9d3cd500d189)
 
-### MacOs
+<!-- ### MacOs
 
-- Switch to linux it's better
+- Switch to linux it's better  -->

@@ -1,13 +1,11 @@
-use ascella::screenshot_area;
+
 use ascella::{take_ss, ScreenshotKind};
-use clap::{crate_authors, crate_description, crate_name, crate_version, App, Arg};
+use clap::{crate_authors, crate_description, crate_name, crate_version, App};
 use clipboard::ClipboardContext;
 use clipboard::ClipboardProvider;
 use home::home_dir;
 use iced::{
-    button, futures::executor::block_on, scrollable, slider, text_input, Alignment, Button,
-    Checkbox, Column, Container, Element, Length, ProgressBar, Radio, Row, Rule, Sandbox,
-    Scrollable, Settings, Slider, Space, Text, TextInput, Toggler,
+    button, scrollable, slider, text_input, Button, Column, Container, Element, Length, Radio, Sandbox, Settings, Text,
 };
 use native_dialog::{FileDialog, MessageDialog, MessageType};
 use reqwest::{
@@ -187,7 +185,7 @@ impl Sandbox for Styling {
                 MessageDialog::new()
                     .set_type(MessageType::Info)
                     .set_title("Config updated")
-                    .set_text(&format!("{}", &path_string))
+                    .set_text(&(&path_string).to_string())
                     .show_alert()
                     .unwrap();
             }

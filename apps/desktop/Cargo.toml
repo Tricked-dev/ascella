@@ -27,7 +27,6 @@ home = "0.5.3"
 
 [dependencies.native-dialog]
 version= "0.6.1"
-features = ["windows_dpi_awareness", "windows_visual_styles"]
 
 [build-dependencies]
 embed-resource = "1.3"
