@@ -1,12 +1,113 @@
 use ascella_desktop::{home::home_dir, screenshot_area};
+use ascella_desktop::{take_ss, ScreenshotKind};
+use clap::{crate_authors, crate_description, crate_name, crate_version, App, Arg};
+use clipboard::ClipboardContext;
+use clipboard::ClipboardProvider;
 use iced::{
-    button, scrollable, slider, text_input, Alignment, Button, Checkbox, Column, Container,
-    Element, Length, ProgressBar, Radio, Row, Rule, Sandbox, Scrollable, Settings, Slider, Space,
-    Text, TextInput, Toggler,
+    button, futures::executor::block_on, scrollable, slider, text_input, Alignment, Button,
+    Checkbox, Column, Container, Element, Length, ProgressBar, Radio, Row, Rule, Sandbox,
+    Scrollable, Settings, Slider, Space, Text, TextInput, Toggler,
 };
+use native_dialog::{FileDialog, MessageDialog, MessageType};
+use reqwest::{
+    header::{HeaderMap, HeaderValue},
+    multipart,
+};
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 pub fn main() -> iced::Result {
-    Styling::run(Settings::default())
+    let app = App::new(crate_name!())
+        .version(crate_version!())
+        .author(crate_authors!())
+        .about(crate_description!())
+        .subcommand(App::new("area").about("Screenshot a area"))
+        .subcommand(App::new("window").about("screenshot the current window"))
+        .subcommand(App::new("full").about("screenshot all screens"));
+    let matches = app.get_matches();
+    match matches.subcommand() {
+        Some(("area", _)) => screenshot(ScreenshotKind::Area),
+        Some(("window", _)) => screenshot(ScreenshotKind::Window),
+        Some(("full", _)) => screenshot(ScreenshotKind::Full),
+        _ => Styling::run(Settings::default()),
+    }
+}
+
+pub fn screenshot(t: ScreenshotKind) -> iced::Result {
+    let mut path = home_dir().unwrap();
+
+    path.extend(&[".ascella", "images"]);
+    std::fs::create_dir_all(&path).unwrap();
+    let filename = chrono::offset::Local::now()
+        .format("%Y-%m-%d_%H-%M-%S.png")
+        .to_string();
+    path.extend(&[&filename]);
+
+    take_ss(
+        t,
+        path.clone().into_os_string().into_string().unwrap(),
+        true,
+    );
+
+    let form = multipart::Form::new().file("photo", path).unwrap();
+
+    let mut headers = HeaderMap::new();
+    let mut write_path = home_dir().unwrap();
+
+    write_path.extend(&[".ascella", "config.toml"]);
+    let config_raw = if let Ok(config_raw) = std::fs::read_to_string(write_path) {
+        config_raw
+    } else {
+        MessageDialog::new()
+            .set_type(MessageType::Info)
+            .set_title("config not detected please upload your config")
+            .set_text("config not detected please upload your config\n\nPlease add a config file you can do this using the gui")
+            .show_alert()
+            .unwrap();
+        println!("config not detected please upload your config");
+        return Ok(());
+    };
+
+    let config: AscellaConfig = if let Ok(config) = toml::from_str(&config_raw) {
+        config
+    } else {
+        MessageDialog::new()
+            .set_type(MessageType::Info)
+            .set_title("invalid config")
+            .set_text("Your config is invalid please use a valid ascella config")
+            .show_alert()
+            .unwrap();
+        println!("Your config is invalid please use a valid ascella config");
+        return Ok(());
+    };
+    headers.insert(
+        "x-user-id",
+        HeaderValue::from_str(&config.id.unwrap()).unwrap(),
+    );
+    headers.insert(
+        "x-user-token",
+        HeaderValue::from_str(&config.token.unwrap()).unwrap(),
+    );
+    headers.insert(
+        "user-agent",
+        HeaderValue::from_str("Ascella-uploader").unwrap(),
+    );
+
+    let client = reqwest::Client::new();
+    let mut resp = client
+        .post("https://ascella.wtf/v2/ascella/upload")
+        .headers(headers)
+        .multipart(form)
+        .send()
+        .unwrap();
+
+    let text = resp.text().unwrap();
+
+    let r: Value = serde_json::from_str(&text).unwrap();
+    let url = r["url"].as_str().unwrap();
+    let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
+    ctx.set_contents(url.to_owned()).unwrap();
+    Ok(())
 }
 
 #[derive(Default)]
@@ -16,20 +117,28 @@ struct Styling {
     input: text_input::State,
     input_value: String,
     button: button::State,
+    config: button::State,
     slider: slider::State,
     slider_value: f32,
     checkbox_value: bool,
     toggler_value: bool,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+struct AscellaConfig {
+    #[serde(rename = "x-user-id")]
+    id: Option<String>,
+    #[serde(rename = "x-user-token")]
+    token: Option<String>,
+    #[serde(rename = "user-agent")]
+    headers: Option<String>,
+}
+
 #[derive(Debug, Clone)]
 enum Message {
     ThemeChanged(style::Theme),
-    InputChanged(String),
+    NewConfig,
     ButtonPressed,
-    SliderChanged(f32),
-    CheckboxToggled(bool),
-    TogglerToggled(bool),
 }
 
 impl Sandbox for Styling {
@@ -40,29 +149,51 @@ impl Sandbox for Styling {
     }
 
     fn title(&self) -> String {
-        String::from("Ascella-gui")
+        String::from("Ascella - gui")
     }
 
     fn update(&mut self, message: Message) {
         match message {
             Message::ThemeChanged(theme) => self.theme = theme,
-            Message::InputChanged(value) => self.input_value = value,
-            Message::ButtonPressed => {
-                let mut path = home_dir().unwrap();
+            Message::NewConfig => {
+                let path = FileDialog::new()
+                    .add_filter("SXCU File", &["sxcu", "json"])
+                    .show_open_single_file()
+                    .unwrap();
 
-                path.extend(&[".ascella", "images"]);
-                std::fs::create_dir_all(&path).unwrap();
-                let filename = chrono::offset::Local::now()
-                    .format("%Y-%m-%d_%H-%M-%S.png")
-                    .to_string();
-                path.extend(&[&filename]);
+                let path = match path {
+                    Some(path) => path,
+                    None => return,
+                };
+                let r: Value = std::fs::read_to_string(&path)
+                    .map(|r| serde_json::from_str(&r))
+                    .unwrap()
+                    .unwrap();
 
-                screenshot_area(path.into_os_string().into_string().unwrap(), true)
+                let config: AscellaConfig =
+                    serde_json::from_str(&serde_json::to_string(&r["Headers"]).unwrap()).unwrap();
+
+                let mut write_path = home_dir().unwrap();
+
+                write_path.extend(&[".ascella", "config.toml"]);
+                std::fs::write(&write_path, toml::to_string_pretty(&config).unwrap()).unwrap();
+                // toml::toml! {
+                //     user_id = r["Headers"]["x-user-id"].as_str()
+                //     user_token = r["Headers"]["x-user-token"].as_str()
+                //     effects = r["Headers"]["x-image-effects"].as_str()
+                // }
+                let path_string = path.into_os_string().into_string().unwrap();
+                MessageDialog::new()
+                    .set_type(MessageType::Info)
+                    .set_title("Config updated")
+                    .set_text(&format!("{}", &path_string))
+                    .show_alert()
+                    .unwrap();
             }
-            Message::SliderChanged(value) => self.slider_value = value,
-            Message::CheckboxToggled(value) => self.checkbox_value = value,
-            Message::TogglerToggled(value) => self.toggler_value = value,
-        }
+            Message::ButtonPressed => {
+                screenshot(ScreenshotKind::Area).unwrap();
+            }
+        };
     }
 
     fn view(&mut self) -> Element<Message> {
@@ -81,76 +212,23 @@ impl Sandbox for Styling {
             },
         );
 
-        // let text_input = TextInput::new(
-        //     &mut self.input,
-        //     "Type something...",
-        //     &self.input_value,
-        //     Message::InputChanged,
-        // )
-        // .padding(10)
-        // .size(20)
-        // .style(self.theme);
-
         let button = Button::new(&mut self.button, Text::new("Take screenshot"))
             .padding(10)
             .on_press(Message::ButtonPressed)
             .style(self.theme);
 
-        // let slider = Slider::new(
-        //     &mut self.slider,
-        //     0.0..=100.0,
-        //     self.slider_value,
-        //     Message::SliderChanged,
-        // )
-        // .style(self.theme);
-
-        // let progress_bar = ProgressBar::new(0.0..=100.0, self.slider_value).style(self.theme);
-
-        // let scrollable = Scrollable::new(&mut self.scroll)
-        //     .width(Length::Fill)
-        //     .height(Length::Units(100))
-        //     .style(self.theme)
-        //     .push(Text::new("Scroll me!"))
-        //     .push(Space::with_height(Length::Units(800)))
-        //     .push(Text::new("You did it!"));
-
-        // let checkbox = Checkbox::new(self.checkbox_value, "Check me!", Message::CheckboxToggled)
-        //     .style(self.theme);
-
-        // let toggler = Toggler::new(
-        //     self.toggler_value,
-        //     String::from("Toggle me!"),
-        //     Message::TogglerToggled,
-        // )
-        // .width(Length::Shrink)
-        // .spacing(10)
-        // .style(self.theme);
+        let config = Button::new(&mut self.config, Text::new("Upload config"))
+            .padding(10)
+            .on_press(Message::NewConfig)
+            .style(self.theme);
 
         let content = Column::new()
             .spacing(20)
             .padding(20)
             .max_width(600)
             .push(choose_theme)
-            .push(button);
-        // .push(Rule::horizontal(38).style(self.theme))
-        // .push(Row::new().spacing(10).push(text_input).push(button))
-        // .push(slider)
-        // .push(progress_bar)
-        // .push(
-        //     Row::new()
-        //         .spacing(10)
-        //         .height(Length::Units(100))
-        //         .align_items(Alignment::Center)
-        //         .push(scrollable)
-        //         .push(Rule::vertical(38).style(self.theme))
-        //         .push(
-        //             Column::new()
-        //                 .width(Length::Shrink)
-        //                 .spacing(20)
-        //                 .push(checkbox)
-        //                 .push(toggler),
-        //         ),
-        // );
+            .push(button)
+            .push(config);
 
         Container::new(content)
             .width(Length::Fill)

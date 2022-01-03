@@ -75,7 +75,7 @@ fn screenshot_tool_selection(session: SessionKind) -> DesktopKind {
                 },
             },
         },
-        SessionKind::Macos =>match Command::new("flameshot").arg("--version").spawn() {
+        SessionKind::Macos => match Command::new("flameshot").arg("--version").spawn() {
             Ok(_) => DesktopKind::Flameshot,
             Err(_) => DesktopKind::Macos,
         },
@@ -84,6 +84,14 @@ fn screenshot_tool_selection(session: SessionKind) -> DesktopKind {
             Err(_) => panic!("Uncompatible Windows desktop (install flameshot)"),
         },
     };
+}
+
+pub fn take_ss(t: ScreenshotKind, file: String, freeze: bool) {
+    match t {
+        ScreenshotKind::Area => screenshot_area(file, freeze),
+        ScreenshotKind::Window => screenshot_window(file),
+        ScreenshotKind::Full => screenshot_full(file),
+    }
 }
 
 pub fn screenshot_area(file: String, freeze: bool) {
@@ -134,6 +142,9 @@ fn flameshot(option: ScreenshotKind, file: String) {
             .output()
             .expect("flameshot did not launch"),
     };
+    if !output.status.success() {
+        panic!("Flameshot returned a non zero return value")
+    }
     fs::write(file, output.stdout).unwrap();
 }
 

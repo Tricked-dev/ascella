@@ -11,3 +11,17 @@ tokio = { version = "1.0", features = ["sync"] }
 itertools = "0.9"
 rustc-hash = "1.1"
 chrono = "0.4"
+serde ={version= "1.0.133", features=["derive"]}
+serde_json = "1.0.74"
+toml = "0.5.8"
+#use sync version of reqwest cause i cba to deal witht his shit tbfh
+reqwest = {version = "0.9.10", features=[]}
+clipboard = "0.5.0"
+clap = {version = "3.0.0", features = ["cargo", "color"]}
+
+[dependencies.native-dialog]
+version= "0.6.1"
+features = ["windows_dpi_awareness", "windows_visual_styles"]
+
+[build-dependencies]
+embed-resource = "1.3"
