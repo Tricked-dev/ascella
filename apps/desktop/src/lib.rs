@@ -35,7 +35,7 @@ fn session_type() -> SessionKind {
 fn session_type() -> SessionKind {
     SessionKind::Macos
 }
-
+#[cfg(not(any(target_os = "macos", target_os = "windows")))]
 fn session_type() -> SessionKind {
     return match env::var("XDG_SESSION_TYPE") {
         Ok(ok) => match ok.to_lowercase().as_ref() {

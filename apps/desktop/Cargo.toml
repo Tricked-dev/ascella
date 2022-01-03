@@ -26,3 +26,31 @@ features = ["windows_dpi_awareness", "windows_visual_styles"]
 
 [build-dependencies]
 embed-resource = "1.3"
+
+[target.'cfg(unix)'.dependencies]
+openssl = { version = "0.10.38", features = ["vendored"] }
+libc = "0.2.107"
+
+[target.'cfg(windows)'.build-dependencies]
+winapi = "0.3.9"
+
+[package.metadata.deb]
+maintainer = "Tricked-dev"
+copyright = "2022, Tricked-dev"
+license-file = ["LICENSE", "4"]
+extended-description = """https://github.com/Tricked-dev/diplo"""
+depends = "$auto"
+section = "utility"
+priority = "optional"
+assets = [
+    [
+        "target/release/ascella",
+        "usr/bin/",
+        "755",
+    ],
+    [
+        "README.md",
+        "usr/share/doc/ascella/README",
+        "644",
+    ],
+]

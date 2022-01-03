@@ -93,6 +93,7 @@ jobs:
           command: build
           args: --release --target ${{ matrix.target }} --manifest-path ./apps/desktop/Cargo.toml
       - run: mv ./apps/desktop/target .
+
       - name: Strip release binary (linux and macos)
         if: matrix.build == 'x86_64-linux' || matrix.build == 'x86_64-macos'
         run: strip "target/${{ matrix.target }}/release/$BIN_NAME"
@@ -106,6 +107,8 @@ jobs:
             aarch64-linux-gnu-strip \
             /target/${{ matrix.target }}/release/$BIN_NAME
 
+      - run: mv target/ ./apps/desktop/target
+
       - name: Install Wix
         if: matrix.build == 'x86_64-windows'
         uses: actions/checkout@v2
@@ -117,15 +120,16 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.101
+
       - name: install cargo wix
         if: matrix.build == 'x86_64-windows'
         run: cargo install cargo-wix
       - name: run wix command
         if: matrix.build == 'x86_64-windows'
-        run: cargo wix init
-      - name: run wix command
-        if: matrix.build == 'x86_64-windows'
-        run: cargo wix
+        run: |
+          cd apps/desktop
+          cargo wix init
+          cargo wix
 
       - name: make dist
         run: mkdir dist
@@ -139,7 +143,9 @@ jobs:
 
       - name: Create deb file
         if: matrix.build == 'x86_64-linux'
-        run: cargo deb
+        run: cargo deb --manifest-path ./apps/desktop/Cargo.toml
+      - run: rm -rf target/
+      - run: mv ./apps/desktop/target .
 
       - name: cp deb file
         if: matrix.build == 'x86_64-linux'
