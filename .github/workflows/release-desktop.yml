@@ -113,10 +113,6 @@ jobs:
 
       - run: mv ./apps/desktop/target .
 
-      - name: cp deb file
-        if: matrix.build == 'x86_64-linux'
-        run: cp target/debian/ascella_* dist/
-
       - name: Run install pkgbuild
         if: matrix.build == 'x86_64-linux'
         uses: actions-rs/cargo@v1
