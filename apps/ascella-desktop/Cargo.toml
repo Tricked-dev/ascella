@@ -1,0 +1,13 @@
+[package]
+name = "ascella-desktop"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+iced = {git="https://github.com/iced-rs/iced" , rev="4db0f4a570a1fb3398062c78770c542d9efb8a64", features = ["canvas", "tokio", "debug"]}
+tokio = { version = "1.0", features = ["sync"] }
+itertools = "0.9"
+rustc-hash = "1.1"
+chrono = "0.4"

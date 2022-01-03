@@ -1,15 +1,12 @@
 <script context="module" lang="ts">
 	import { getImage } from '$lib/api';
-
+	import type { Load } from '@sveltejs/kit';
 	export const ssr = true;
 	export const prerender = true;
 	export const hydrate = false;
 	export const router = true;
-	// export const prerender = true;
-	/**
-	 * @type {import('@sveltejs/kit').Load}
-	 */
-	export async function load({ params }) {
+
+	export const load: Load = async ({ params }) => {
 		const { image } = params;
 		let imgParams = image?.split('/');
 
@@ -31,7 +28,7 @@
 		return {
 			props: { ...data, url: imgParams[imgParams?.length - 1] }
 		};
-	}
+	};
 </script>
 
 <script lang="ts">
