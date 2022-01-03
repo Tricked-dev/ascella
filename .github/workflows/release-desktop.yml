@@ -2,9 +2,10 @@ name: Release Ascella Desktop
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      tags: ['v[0-9]+.[0-9]+.[0-9]+*']
 
 env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   BIN_NAME: ascella
   PROJECT_NAME: ascella
   REPO_NAME: Tricked-dev/ascella
@@ -149,10 +150,6 @@ jobs:
         run: |
 
           if [ "${{ matrix.os }}" = "windows-2019" ]; then
-            ls target
-            ls target/${{ matrix.target }}
-
-
             cp target/wix/ascella* dist/
             cp "target/${{ matrix.target }}/release/$BIN_NAME.exe" "dist/"
           else
