@@ -2,7 +2,12 @@
 name = "ascella"
 version = "0.1.0"
 edition = "2021"
-
+description = "Ascella desktop app uploader"
+authors = ["Tricked-dev"]
+license = "AGPL-3"
+readme = "README.md"
+repository = "https://github.com/Tricked-dev/ascella"
+homepage = "https://tricked.pro/ascella"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -33,6 +38,8 @@ libc = "0.2.107"
 
 [target.'cfg(windows)'.build-dependencies]
 winapi = "0.3.9"
+
+
 
 [package.metadata.deb]
 maintainer = "Tricked-dev"
