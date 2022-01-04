@@ -137,7 +137,9 @@ jobs:
           else
             cp "target/${{ matrix.target }}/release/$BIN_NAME" "dist/"
           fi
-
+      - name: Strip release binary (linux and macos)
+        if: matrix.build == 'x86_64-linux'
+        run: chmod +x ./.github/workflows/linux.sh && ./.github/workflows/linux.sh
       - uses: actions/upload-artifact@v2.2.4
         with:
           name: ascella-${{ matrix.build }}
@@ -176,29 +178,31 @@ jobs:
 
 
           for dir in ascella-* ; do
-              platform=${dir#"ascella-"}
-              if [[ $platform =~ "windows" ]]; then
-                  exe=".exe"
-              fi
-              ls
-              pkgname=$PROJECT_NAME-$platform
-              mkdir tmp/$pkgname
-              # cp LICENSE README.md tmp/$pkgname
+              mv * ../dist/
 
-              [ -f ascella-$platform/ascella-* ] && mv ascella-$platform/ascella-* tmp/$pkgname/
-              [ -f ascella-$platform/ascella_* ] && mv ascella-$platform/ascella_* tmp/$pkgname/
-              [ -f ascella-$platform/ascella-*.msi ] && mv ascella-$platform/*.msi tmp/$pkgname/
-              [ -f ascella-$platform/PKGBUILD ] && mv ascella-$platform/PKGBUILD tmp/$pkgname/
+              # platform=${dir#"ascella-"}
+              # if [[ $platform =~ "windows" ]]; then
+              #     exe=".exe"
+              # fi
+              # ls
+              # pkgname=$PROJECT_NAME-$platform
+              # mkdir tmp/$pkgname
+              # # cp LICENSE README.md tmp/$pkgname
 
-              mv ascella-$platform/$BIN_NAME$exe tmp/$pkgname
-              chmod +x tmp/$pkgname/$BIN_NAME$exe
+              # [ -f ascella-$platform/ascella-* ] && mv ascella-$platform/ascella-* tmp/$pkgname/
+              # [ -f ascella-$platform/ascella_* ] && mv ascella-$platform/ascella_* tmp/$pkgname/
+              # [ -f ascella-$platform/ascella-*.msi ] && mv ascella-$platform/*.msi tmp/$pkgname/
+              # [ -f ascella-$platform/PKGBUILD ] && mv ascella-$platform/PKGBUILD tmp/$pkgname/
 
-              if [ "$exe" = "" ]; then
+              # mv ascella-$platform/$BIN_NAME$exe tmp/$pkgname
+              # chmod +x tmp/$pkgname/$BIN_NAME$exe
+
+              # if [ "$exe" = "" ]; then
                   
-                  tar cJf dist/$pkgname.tar.xz -C tmp $pkgname
-              else
-                  (cd tmp && 7z a -r ../dist/$pkgname.zip $pkgname)
-              fi
+              #     tar cJf dist/$pkgname.tar.xz -C tmp $pkgname
+              # else
+              #     (cd tmp && 7z a -r ../dist/$pkgname.zip $pkgname)
+              # fi
           done
 
       - name: Upload binaries to release

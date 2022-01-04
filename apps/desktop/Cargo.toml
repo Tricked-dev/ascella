@@ -15,7 +15,7 @@ chrono = "0.4.19"
 clap = { version = "3.0.1", features = ["cargo", "color"] }
 clipboard = "0.5.0"
 home = "0.5.3"
-iced = { git = "https://github.com/iced-rs/iced", rev = "4db0f4a570a1fb3398062c78770c542d9efb8a64", features = [ "tokio", "debug", "glow"] }
+iced = { git = "https://github.com/iced-rs/iced", rev = "4db0f4a570a1fb3398062c78770c542d9efb8a64", features = ["tokio", "debug", "glow"] }
 itertools = "0.10.3"
 native-dialog = "0.6.1"
 # use sync version of reqwest cause i cba to deal witht his shit tbfh
@@ -33,3 +33,24 @@ libc = "0.2.112"
 
 [target.'cfg(windows)'.build-dependencies]
 winapi = "0.3.9"
+
+[package.metadata.generate-rpm]
+assets = [
+  { source = "target/release/ascella", dest = "/usr/bin/ascella", mode = "0755" },
+  { source = "LICENSE", dest = "/usr/share/doc/ascella/LICENSE", doc = true, mode = "0644" },
+  { source = "README.md", dest = "/usr/share/doc/ascella/README.md", doc = true, mode = "0644" },
+]
+
+[package.metadata.appimage]
+
+[package.metadata.deb]
+license-file = ["LICENSE", "4"]
+extended-description = """Ascella desktop app"""
+depends = "$auto"
+section = "utility"
+priority = "optional"
+assets = [
+  ["target/release/ascella", "usr/bin/", "755"],
+  ["LICENSE", "usr/share/doc/ascella/LICENSE", "644"],
+  ["README.md", "usr/share/doc/ascella/README.md", "644"],
+]
