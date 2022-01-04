@@ -176,7 +176,8 @@ jobs:
           mkdir tmp
           mkdir dist
 
-          mv * dist/
+          mv ascella* dist/
+          mv LICENS* dist/
           # for dir in ascella-* ; do
           #     mv * dist/
 
