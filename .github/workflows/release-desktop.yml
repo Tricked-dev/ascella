@@ -178,7 +178,7 @@ jobs:
 
 
           for dir in ascella-* ; do
-              mv * ../dist/
+              mv * dist/
 
               # platform=${dir#"ascella-"}
               # if [[ $platform =~ "windows" ]]; then
