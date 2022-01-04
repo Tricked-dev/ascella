@@ -1,6 +1,6 @@
 [package]
 name = "ascella"
-version = "0.1.4-rc.2"
+version = "0.1.4-rc.3"
 authors = ["Tricked-dev"]
 edition = "2021"
 homepage = "https://tricked.pro/ascella"

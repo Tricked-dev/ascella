@@ -176,34 +176,34 @@ jobs:
           mkdir tmp
           mkdir dist
 
+          mv * dist/
+          # for dir in ascella-* ; do
+          #     mv * dist/
 
-          for dir in ascella-* ; do
-              mv * dist/
+          #     # platform=${dir#"ascella-"}
+          #     # if [[ $platform =~ "windows" ]]; then
+          #     #     exe=".exe"
+          #     # fi
+          #     # ls
+          #     # pkgname=$PROJECT_NAME-$platform
+          #     # mkdir tmp/$pkgname
+          #     # # cp LICENSE README.md tmp/$pkgname
 
-              # platform=${dir#"ascella-"}
-              # if [[ $platform =~ "windows" ]]; then
-              #     exe=".exe"
-              # fi
-              # ls
-              # pkgname=$PROJECT_NAME-$platform
-              # mkdir tmp/$pkgname
-              # # cp LICENSE README.md tmp/$pkgname
+          #     # [ -f ascella-$platform/ascella-* ] && mv ascella-$platform/ascella-* tmp/$pkgname/
+          #     # [ -f ascella-$platform/ascella_* ] && mv ascella-$platform/ascella_* tmp/$pkgname/
+          #     # [ -f ascella-$platform/ascella-*.msi ] && mv ascella-$platform/*.msi tmp/$pkgname/
+          #     # [ -f ascella-$platform/PKGBUILD ] && mv ascella-$platform/PKGBUILD tmp/$pkgname/
 
-              # [ -f ascella-$platform/ascella-* ] && mv ascella-$platform/ascella-* tmp/$pkgname/
-              # [ -f ascella-$platform/ascella_* ] && mv ascella-$platform/ascella_* tmp/$pkgname/
-              # [ -f ascella-$platform/ascella-*.msi ] && mv ascella-$platform/*.msi tmp/$pkgname/
-              # [ -f ascella-$platform/PKGBUILD ] && mv ascella-$platform/PKGBUILD tmp/$pkgname/
+          #     # mv ascella-$platform/$BIN_NAME$exe tmp/$pkgname
+          #     # chmod +x tmp/$pkgname/$BIN_NAME$exe
 
-              # mv ascella-$platform/$BIN_NAME$exe tmp/$pkgname
-              # chmod +x tmp/$pkgname/$BIN_NAME$exe
-
-              # if [ "$exe" = "" ]; then
+          #     # if [ "$exe" = "" ]; then
                   
-              #     tar cJf dist/$pkgname.tar.xz -C tmp $pkgname
-              # else
-              #     (cd tmp && 7z a -r ../dist/$pkgname.zip $pkgname)
-              # fi
-          done
+          #     #     tar cJf dist/$pkgname.tar.xz -C tmp $pkgname
+          #     # else
+          #     #     (cd tmp && 7z a -r ../dist/$pkgname.zip $pkgname)
+          #     # fi
+          # done
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
