@@ -5,12 +5,10 @@ $clr-bg-0: #39393f;
 .doc {
 	scroll-behavior: smooth;
 	font-family: Roboto, serif;
-	text-shadow: 0 0 0.5em currentColor;
+	text-shadow: 0 0 0.2em currentColor;
 }
 
-.doc a {
-	color: $clr-neon-1;
-}
+.doc a { color: $clr-neon-1; }
 
 .doc h1 a,
 .doc h2 a,
