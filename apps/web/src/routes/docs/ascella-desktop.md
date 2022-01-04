@@ -35,6 +35,7 @@ OPTIONS:
 
 SUBCOMMANDS:
     area      Screenshot a area
+    config    set the config file
     full      screenshot all screens
     help      Print this message or the help of the given subcommand(s)
     window    screenshot the current window
@@ -49,7 +50,13 @@ SUBCOMMANDS:
 Place the `ascella` file in your `/bin` folder
 
 ```sh
-sudo mv ./ascella /bin/
+chmod +x ./ascella && sudo mv ./ascella /bin/
+```
+
+Set the config file this can only be done via the commandline sadly
+
+```sh
+ascella config /path/to/ascella.sxcu
 ```
 
 Optionally install [Flameshot](https://flameshot.org/) for a better screenshotting experience
@@ -63,8 +70,10 @@ And rebind your prnt+screen to `ascella area` or whatever you prefer see [this g
 Place the `ascella` file in your `/bin` folder
 
 ```sh
-sudo mv ./ascella /bin/
+chmod +x ./ascella && sudo mv ./ascella /bin/
 ```
+
+Upload your config in the ascella menu and you should be set to start screenshotting!
 
 install [scrot](https://github.com/resurrecting-open-source-projects/scrot), [flameshot](https://flameshot.org/), [Spectable](https://www.spectacleapp.com/), [gnome-screenshot](https://apps.gnome.org/app/org.gnome.Screenshot/) or [grim](https://github.com/emersion/grim) any of these screenshot tools should work with ascella if theres any issues please report them in the [Discord](https://discord.gg/mY8zTARu4g)
 
