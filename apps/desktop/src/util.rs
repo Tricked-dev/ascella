@@ -1,3 +1,6 @@
+use std::io::{Error, ErrorKind};
+use std::path::PathBuf;
+
 use crate::{take_ss, ScreenshotKind};
 use clipboard::{ClipboardContext, ClipboardProvider};
 use home::home_dir;
@@ -15,6 +18,30 @@ pub struct AscellaConfig {
     pub token: Option<String>,
     #[serde(rename = "user-agent")]
     pub headers: Option<String>,
+}
+
+pub fn update_config<T: Into<PathBuf>>(path: T) -> Result<(), Error> {
+    let path: PathBuf = path.into();
+    let r: Value = std::fs::read_to_string(&path)
+        .map(|r| serde_json::from_str(&r))
+        .map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?
+        .map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?;
+
+    let config: AscellaConfig = serde_json::from_str(
+        &serde_json::to_string(&r["Headers"])
+            .map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?,
+    )
+    .map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?;
+
+    let mut write_path = home_dir().unwrap();
+
+    write_path.extend(&[".ascella", "config.toml"]);
+    std::fs::write(
+        &write_path,
+        toml::to_string_pretty(&config).map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?,
+    )
+    .map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?;
+    Ok(())
 }
 
 pub fn screenshot(t: ScreenshotKind) -> iced::Result {

@@ -8,7 +8,7 @@ use native_dialog::{FileDialog, MessageDialog, MessageType};
 use serde_json::Value;
 
 use crate::ui::style;
-use crate::util::{screenshot, AscellaConfig};
+use crate::util::{screenshot, update_config, AscellaConfig};
 use crate::ScreenshotKind;
 
 #[derive(Default)]
@@ -75,26 +75,26 @@ impl Application for AscellaDesktop {
                     None => return Command::none(),
                 };
 
-                let r: Value = std::fs::read_to_string(&path)
-                    .map(|r| serde_json::from_str(&r))
-                    .unwrap()
-                    .unwrap();
-
-                let config: AscellaConfig =
-                    serde_json::from_str(&serde_json::to_string(&r["Headers"]).unwrap()).unwrap();
-
-                let mut write_path = home_dir().unwrap();
-
-                write_path.extend(&[".ascella", "config.toml"]);
-                std::fs::write(&write_path, toml::to_string_pretty(&config).unwrap()).unwrap();
-
-                let path_string = path.into_os_string().into_string().unwrap();
-                MessageDialog::new()
-                    .set_type(MessageType::Info)
-                    .set_title("Config updated")
-                    .set_text(&(&path_string).to_string())
-                    .show_alert()
-                    .unwrap();
+                match update_config(&path) {
+                    Ok(()) => {
+                        let path_string = path.into_os_string().into_string().unwrap();
+                        MessageDialog::new()
+                            .set_type(MessageType::Info)
+                            .set_title("Config updated")
+                            .set_text(&(&path_string).to_string())
+                            .show_alert()
+                            .unwrap();
+                    }
+                    Err(e) => {
+                        let path_string = path.into_os_string().into_string().unwrap();
+                        MessageDialog::new()
+                            .set_type(MessageType::Error)
+                            .set_title(&format!("OOh no failed to update config {:?}", e))
+                            .set_text(&(&path_string).to_string())
+                            .show_alert()
+                            .unwrap();
+                    }
+                }
             }
             Message::ButtonPressed => {
                 screenshot(ScreenshotKind::Area).unwrap();
@@ -114,17 +114,28 @@ impl Application for AscellaDesktop {
         .spacing(10)
         .style(self.theme);
 
-        let button = Button::new(&mut self.button, Text::new("Take screenshot"))
-            .padding(10)
-            .on_press(Message::ButtonPressed)
-            .style(self.theme);
+        let row = if cfg!(target_os = "linux") {
+            let button = Button::new(&mut self.button, Text::new("Take screenshot"))
+                .padding(10)
+                .on_press(Message::ButtonPressed)
+                .style(self.theme);
 
-        let config = Button::new(&mut self.config, Text::new("Upload config"))
-            .padding(10)
-            .on_press(Message::NewConfig)
-            .style(self.theme);
+            let config = Button::new(&mut self.config, Text::new("Upload config"))
+                .padding(10)
+                .on_press(Message::NewConfig)
+                .style(self.theme);
 
-        let row = Row::new().push(button).push(config).spacing(20);
+            Row::new().push(button).push(config).spacing(20)
+        } else {
+            let button = Button::new(&mut self.button, Text::new("Take screenshot"))
+                .padding(10)
+                .on_press(Message::ButtonPressed)
+                .style(self.theme);
+
+            let text = Text::new("use ascella config <ascella.sxcu file> to set your config");
+            Row::new().push(button).push(text).spacing(20)
+        };
+
         let text = Text::new("© Ascella - image uploader");
 
         let content = Column::new()
