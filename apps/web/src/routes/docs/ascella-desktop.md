@@ -5,9 +5,9 @@ description: Ascella Desktop app guide
 
 # Ascella Desktop
 
-- [Ascella Desktop](#ascella-desktop)
-  - [Guide](#guide)
-  - [Installing](#installing)
+
+  - ### [- Guide](#guide)
+  - ### [- Installing](#installing)
     - [Macos](#macos)
     - [Linux](#linux)
 
@@ -25,14 +25,17 @@ With no arguments provided it will open the ascella gui in where you can upload 
 ascella 0.1.0
 Tricked-dev
 Ascella desktop app uploader
-
+```
+```none
 USAGE:
     ascella [SUBCOMMAND]
-
+```
+```none
 OPTIONS:
     -h, --help       Print help information
     -V, --version    Print version information
-
+```
+```none
 SUBCOMMANDS:
     area      Screenshot a area
     config    set the config file

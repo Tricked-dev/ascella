@@ -32,9 +32,8 @@
 		<div class="text-center">
 			<p class="text-3xl text-white">Welcome to the Ascella uploader</p>
 			<p class="text-xl font-bold">
-				Looking to score an invite? Join the <a
-					class="url" href="https://discord.gg/mY8zTARu4g">Discord.</a
-				>
+				Looking to score an invite? Join the 
+				<a class="url" href="https://discord.gg/mY8zTARu4g">Discord.</a>
 			</p>
 		</div>
 		<div class="box-container">
