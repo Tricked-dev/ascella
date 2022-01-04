@@ -1,7 +1,8 @@
 use home::home_dir;
+use iced::svg::Handle;
 use iced::{
-    button, executor, scrollable, slider, text_input, Application, Button, Column, Command,
-    Container, Element, Length, Radio, Text,
+    button, executor, scrollable, slider, svg, text_input, Application, Button, Column, Command,
+    Container, Element, Length, Radio, Row, Rule, Svg, Text, Toggler,
 };
 use native_dialog::{FileDialog, MessageDialog, MessageType};
 use serde_json::Value;
@@ -29,6 +30,7 @@ pub enum Message {
     ThemeChanged(style::Theme),
     NewConfig,
     ButtonPressed,
+    TogglerToggled(bool),
 }
 
 impl Application for AscellaDesktop {
@@ -46,6 +48,21 @@ impl Application for AscellaDesktop {
 
     fn update(&mut self, message: Message) -> Command<Self::Message> {
         match message {
+            Message::TogglerToggled(dark) => {
+                self.toggler_value = dark;
+
+                if dark {
+                    self.theme = *style::Theme::ALL
+                        .iter()
+                        .find(|x| format!("{:?}", x) == "Dark".to_owned())
+                        .unwrap();
+                } else {
+                    self.theme = *style::Theme::ALL
+                        .iter()
+                        .find(|x| format!("{:?}", x) != "Dark".to_owned())
+                        .unwrap();
+                }
+            }
             Message::ThemeChanged(theme) => self.theme = theme,
             Message::NewConfig => {
                 let path = FileDialog::new()
@@ -70,11 +87,7 @@ impl Application for AscellaDesktop {
 
                 write_path.extend(&[".ascella", "config.toml"]);
                 std::fs::write(&write_path, toml::to_string_pretty(&config).unwrap()).unwrap();
-                // toml::toml! {
-                //     user_id = r["Headers"]["x-user-id"].as_str()
-                //     user_token = r["Headers"]["x-user-token"].as_str()
-                //     effects = r["Headers"]["x-image-effects"].as_str()
-                // }
+
                 let path_string = path.into_os_string().into_string().unwrap();
                 MessageDialog::new()
                     .set_type(MessageType::Info)
@@ -92,20 +105,14 @@ impl Application for AscellaDesktop {
     }
 
     fn view(&mut self) -> Element<'_, Self::Message> {
-        let choose_theme = style::Theme::ALL.iter().fold(
-            Column::new().spacing(10).push(Text::new("Choose a theme:")),
-            |column, theme| {
-                column.push(
-                    Radio::new(
-                        *theme,
-                        format!("{:?}", theme),
-                        Some(self.theme),
-                        Message::ThemeChanged,
-                    )
-                    .style(self.theme),
-                )
-            },
-        );
+        let darkmode = Toggler::new(
+            self.toggler_value,
+            String::from("Darkmode"),
+            Message::TogglerToggled,
+        )
+        .width(Length::Shrink)
+        .spacing(10)
+        .style(self.theme);
 
         let button = Button::new(&mut self.button, Text::new("Take screenshot"))
             .padding(10)
@@ -117,13 +124,17 @@ impl Application for AscellaDesktop {
             .on_press(Message::NewConfig)
             .style(self.theme);
 
+        let row = Row::new().push(button).push(config).spacing(20);
+        let text = Text::new("© Ascella - image uploader");
+
         let content = Column::new()
             .spacing(20)
             .padding(20)
             .max_width(600)
-            .push(choose_theme)
-            .push(button)
-            .push(config);
+            .push(darkmode)
+            .push(row)
+            .push(Rule::horizontal(38).style(self.theme))
+            .push(text);
 
         Container::new(content)
             .width(Length::Fill)

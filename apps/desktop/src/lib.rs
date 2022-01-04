@@ -3,6 +3,7 @@ use std::fs;
 use std::process::Command;
 use std::process::Stdio;
 
+pub mod app;
 pub mod ui;
 pub mod util;
 

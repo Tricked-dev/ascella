@@ -92,8 +92,9 @@ pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<HttpRespon
             }
 
             actix_web::rt::spawn(
+                //Used to prevent abuse - sorry its needed
                 send_text_webhook(
-                    format!("**[IMAGE]** [image](https://ascella.wtf/v2/ascella/view/{image}) **[OWNER]** {name} ({id})",
+                    format!("**[IMAGE]** [image](<https://ascella.wtf/v2/ascella/view/{image}>) **[OWNER]** {name} ({id})",
                         image = &img.vanity,
                         name = &data.name,
                         id = &data.id

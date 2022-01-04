@@ -7,7 +7,9 @@
 
 ---
 
-Formatting we use [dprint](https://dprint.dev/install/) for formatting files `npm i dprint -g`
+## Formatting
+
+for formatting we use [dprint](https://dprint.dev/install/) for formatting files `npm i dprint -g`
 
 ### Copyright
 
