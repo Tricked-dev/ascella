@@ -136,7 +136,7 @@ jobs:
           mkdir dist
 
           mv ascella-x86_64-linux/* dist/
-          tar -czvf dist/ascella-x86_64-macos.tar.xz -C ascella-*-macos
+          tar -czvf dist/ascella-x86_64-macos.tar.xz ascella-x86_64-macos
 
 
       - name: Upload binaries to release
