@@ -133,11 +133,10 @@ jobs:
           set -ex
 
           rm -rf tmp
-          mkdir tmp
           mkdir dist
 
-          mv ascella* dist/
-          mv LICENS* dist/
+          mv ascella-x86_64-linux/* dist/
+          mv ascella-x86_64-macos/* dist/
           # for dir in ascella-* ; do
           #     mv * dist/
 
@@ -149,7 +148,7 @@ jobs:
           #     # pkgname=$PROJECT_NAME-$platform
           #     # mkdir tmp/$pkgname
           #     # # cp LICENSE README.md tmp/$pkgname
-                [ -f ascella-$platform/* ]  mv ascella-$platform/* dist/
+                # [ -f ascella-$platform/* ]  mv ascella-$platform/* dist/
                
           #     # [ -f ascella-$platform/ascella-* ] && mv ascella-$platform/ascella-* tmp/$pkgname/
           #     # [ -f ascella-$platform/ascella_* ] && mv ascella-$platform/ascella_* tmp/$pkgname/
