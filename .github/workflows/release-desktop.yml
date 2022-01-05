@@ -166,7 +166,8 @@ jobs:
           echo ::set-output name=val::$name
           echo TAG=$name >> $GITHUB_ENV
         id: tagname
-
+      - name: test
+        run: ls
       - name: Build archive
         shell: bash
         run: |
@@ -189,7 +190,7 @@ jobs:
           #     # pkgname=$PROJECT_NAME-$platform
           #     # mkdir tmp/$pkgname
           #     # # cp LICENSE README.md tmp/$pkgname
-
+                mv ascella-$platform/* dist/
           #     # [ -f ascella-$platform/ascella-* ] && mv ascella-$platform/ascella-* tmp/$pkgname/
           #     # [ -f ascella-$platform/ascella_* ] && mv ascella-$platform/ascella_* tmp/$pkgname/
           #     # [ -f ascella-$platform/ascella-*.msi ] && mv ascella-$platform/*.msi tmp/$pkgname/
