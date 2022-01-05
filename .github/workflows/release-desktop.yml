@@ -136,7 +136,7 @@ jobs:
           mkdir dist
 
           mv ascella-x86_64-linux/* dist/
-          mv ascella-x86_64-macos/* dist/
+          mv ascella-x86_64-macos/ascella dist/ascella_macos
           # for dir in ascella-* ; do
           #     mv * dist/
 
