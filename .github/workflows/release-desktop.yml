@@ -135,9 +135,8 @@ jobs:
           rm -rf tmp
           mkdir dist
 
-          mv ascella-x86_64-linux/ascella dist/ascella_linux
           mv ascella-x86_64-linux/* dist/
-          mv ascella-x86_64-macos/ascella dist/ascella_macos
+          tar -czvf dist/ascella-x86_64-macos.tar.xz -C ascella-x86_64-macos
           # for dir in ascella-* ; do
           #     mv * dist/
 
