@@ -87,6 +87,7 @@ jobs:
 
 
       - name: Build archive
+        if: matrix.build == 'x86_64-macos'
         shell: bash
         run: |
 
@@ -99,6 +100,7 @@ jobs:
       - name: Build stuff
         if: matrix.build == 'x86_64-linux'
         run: chmod +x ./.github/workflows/linux.sh && ./.github/workflows/linux.sh
+
       - uses: actions/upload-artifact@v2.2.4
         with:
           name: ascella-${{ matrix.build }}
@@ -131,40 +133,11 @@ jobs:
         shell: bash
         run: |
           set -ex
-
-          rm -rf tmp
           mkdir dist
 
           mv ascella-x86_64-linux/* dist/
-          tar -czvf dist/ascella-x86_64-macos.tar.xz -C ascella-x86_64-macos
-          # for dir in ascella-* ; do
-          #     mv * dist/
+          tar -czvf dist/ascella-x86_64-macos.tar.xz -C ascella-*-macos
 
-          #     # platform=${dir#"ascella-"}
-          #     # if [[ $platform =~ "windows" ]]; then
-          #     #     exe=".exe"
-          #     # fi
-          #     # ls
-          #     # pkgname=$PROJECT_NAME-$platform
-          #     # mkdir tmp/$pkgname
-          #     # # cp LICENSE README.md tmp/$pkgname
-                # [ -f ascella-$platform/* ]  mv ascella-$platform/* dist/
-               
-          #     # [ -f ascella-$platform/ascella-* ] && mv ascella-$platform/ascella-* tmp/$pkgname/
-          #     # [ -f ascella-$platform/ascella_* ] && mv ascella-$platform/ascella_* tmp/$pkgname/
-          #     # [ -f ascella-$platform/ascella-*.msi ] && mv ascella-$platform/*.msi tmp/$pkgname/
-          #     # [ -f ascella-$platform/PKGBUILD ] && mv ascella-$platform/PKGBUILD tmp/$pkgname/
-
-          #     # mv ascella-$platform/$BIN_NAME$exe tmp/$pkgname
-          #     # chmod +x tmp/$pkgname/$BIN_NAME$exe
-
-          #     # if [ "$exe" = "" ]; then
-                  
-          #     #     tar cJf dist/$pkgname.tar.xz -C tmp $pkgname
-          #     # else
-          #     #     (cd tmp && 7z a -r ../dist/$pkgname.zip $pkgname)
-          #     # fi
-          # done
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
