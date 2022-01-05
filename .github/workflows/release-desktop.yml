@@ -42,6 +42,9 @@ jobs:
         with:
           submodules: true
 
+      - name: Setup | Cache
+        uses: Swatinem/rust-cache@v1
+
       - name: Install ${{ matrix.rust }} toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -56,6 +59,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y -qq pkg-config libssl-dev libxcb1-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
           sudo apt-get install libssl-dev pkg-config libxcb-composite0-dev libx11-dev
+          sudo apt-get install desktop-file-utils zsync
 
       - name: Run cargo test
         uses: actions-rs/cargo@v1
@@ -70,62 +74,17 @@ jobs:
           use-cross: ${{ matrix.cross }}
           command: build
           args: --release --target ${{ matrix.target }} --manifest-path ./apps/desktop/Cargo.toml
-      - run: mv ./apps/desktop/target .
 
       - name: Strip release binary (linux and macos)
-        if: matrix.build == 'x86_64-linux' || matrix.build == 'x86_64-macos'
-        run: strip "target/${{ matrix.target }}/release/$BIN_NAME"
+        run: strip "./apps/desktop/target/${{ matrix.target }}/release/$BIN_NAME"
 
-      - name: Strip release binary (arm)
-        if: matrix.build == 'aarch64-linux'
-        run: |
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            rustembedded/cross:${{ matrix.target }} \
-            aarch64-linux-gnu-strip \
-            /target/${{ matrix.target }}/release/$BIN_NAME
 
-      - run: mv target/ ./apps/desktop/target
 
-      - name: Install Wix
-        if: matrix.build == 'x86_64-windows'
-        uses: actions/checkout@v2
-        with:
-          repository: fbarresi/wix
-          path: wix
-      - name: Setup .NET Core
-        if: matrix.build == 'x86_64-windows'
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.101
-
-      - name: install cargo wix
-        if: matrix.build == 'x86_64-windows'
-        run: cargo install cargo-wix
-      - name: run wix command
-        if: matrix.build == 'x86_64-windows'
-        run: |
-          cd apps/desktop
-          cargo wix init
-          cargo wix
+      - run: mv ./apps/desktop/target .
 
       - name: make dist
         run: mkdir dist
 
-      - run: mv ./apps/desktop/target .
-
-      # - name: Run install pkgbuild
-      #   if: matrix.build == 'x86_64-linux'
-      #   uses: actions-rs/cargo@v1
-      #   with:
-      #     command: install
-      #     args: cargo-pkgbuild
-      # - name: Make pkgbuild
-      #   if: matrix.build == 'x86_64-linux'
-      #   run: cargo pkgbuild
-      # - name: cp pkgbuild
-      #   if: matrix.build == 'x86_64-linux'
-      #   run: mv PKGBUILD dist/
 
       - name: Build archive
         shell: bash
@@ -137,7 +96,7 @@ jobs:
           else
             cp "target/${{ matrix.target }}/release/$BIN_NAME" "dist/"
           fi
-      - name: Strip release binary (linux and macos)
+      - name: Build stuff
         if: matrix.build == 'x86_64-linux'
         run: chmod +x ./.github/workflows/linux.sh && ./.github/workflows/linux.sh
       - uses: actions/upload-artifact@v2.2.4
@@ -190,7 +149,8 @@ jobs:
           #     # pkgname=$PROJECT_NAME-$platform
           #     # mkdir tmp/$pkgname
           #     # # cp LICENSE README.md tmp/$pkgname
-                mv ascella-$platform/* dist/
+                [ -f ascella-$platform/* ]  mv ascella-$platform/* dist/
+               
           #     # [ -f ascella-$platform/ascella-* ] && mv ascella-$platform/ascella-* tmp/$pkgname/
           #     # [ -f ascella-$platform/ascella_* ] && mv ascella-$platform/ascella_* tmp/$pkgname/
           #     # [ -f ascella-$platform/ascella-*.msi ] && mv ascella-$platform/*.msi tmp/$pkgname/

@@ -4,6 +4,10 @@
 # Copyright tricked-dev 2022
 #
 
+wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+chmod a+x appimagetool-x86_64.AppImage
+sudo mv appimagetool-x86_64.AppImage /bin/appimagetool
+
 cd apps/desktop
 
 run() {
