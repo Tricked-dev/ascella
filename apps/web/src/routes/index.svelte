@@ -18,6 +18,17 @@
 			image: '/dashboard.png'
 		},
 		{
+			title: 'Opensource',
+			description: "Ascella's code is fully opensource you can view the code on github.",
+			image: '/github.png'
+		},
+		{
+			title: 'DesktopApp',
+			description:
+				'Ascella has a opensource desktop app for both Linux and Macos allowing you to make screenshots on all major operating systems.',
+			image: '/desktop.png'
+		},
+		{
 			title: 'What are you waiting for?',
 			description:
 				"Start now by joining the Discord, asking for a code, and redeeming it! It's that simple.",
@@ -32,7 +43,10 @@
 		<div class="text-center">
 			<p class="text-3xl text-white">Welcome to the Ascella uploader</p>
 			<p class="text-xl font-bold">
-				Looking to score an invite? Join the 
+				Ascella is a image uploader for Sharex(Windows), Macos and linux
+			</p>
+			<p class="text-xl font-bold">
+				Looking to score an invite? Join the
 				<a class="url" href="https://discord.gg/mY8zTARu4g">Discord.</a>
 			</p>
 		</div>

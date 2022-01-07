@@ -178,7 +178,7 @@
 					</ul>
 				</div>
 			</div>
-			<a class="btn" href="/docs/signup">Create an account</a>
+			<a class="btn hover:text-black focus:text-black" href="/docs/signup">Create an account</a>
 		</div>
 	</nav>
 
