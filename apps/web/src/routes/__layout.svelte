@@ -3,7 +3,7 @@
 
 <script lang="ts">
 	import '../css/app.scss';
-	import '../css/roboto.scss';
+	import '@fontsource/roboto';
 	const bottomLinks = [
 		[
 			{

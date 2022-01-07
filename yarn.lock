@@ -807,6 +807,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/righteous/-/righteous-4.5.0.tgz#e71e760a7dc92bad43fa176acd8d21e9db319b65"
   integrity sha512-RH7QNpa9dRuAAwh62ijAsJBTH4hbJL8EadKR+gqGONEPnztbkmP1HPv14Oe4AXqRyeudiZMTaL49RIz/mM5Uig==
 
+"@fontsource/roboto@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-4.5.1.tgz#63f7b783f755d8f6727eb60198627e7e1be3ac20"
+  integrity sha512-3mhfL+eNPG/woMNqwD/OHaW5qMpeGEBsDwzmhFmjB1yUV+M+M9P0NhP/AyHvnGz3DrqkvZ7CPzNMa+UkVLeELg==
+
 "@hapi/accept@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.2.tgz#ab7043b037e68b722f93f376afb05e85c0699523"

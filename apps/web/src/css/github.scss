@@ -5,30 +5,44 @@ $clr-bg-0: #39393f;
 .doc {
 	scroll-behavior: smooth;
 	font-family: Roboto, serif;
-	text-shadow: 0 0 0.2em currentColor;
+	text-shadow: 0 0 0.02em currentColor;
 }
 
-.doc a { color: $clr-neon-1; }
+.doc a {
+	color: $clr-neon-1;
+}
 
 .doc h1 a,
 .doc h2 a,
-.doc h3 a { transition-duration: 100ms; }
+.doc h3 a {
+	transition-duration: 100ms;
+}
 
-.doc h1 a { color: $clr-neon-0; }
+.doc h1 a {
+	color: $clr-neon-0;
+}
 
 .doc h2 a,
-.doc h3 a { color: whitesmoke; }
+.doc h3 a {
+	color: whitesmoke;
+}
 
 .doc a:hover,
-.doc a:active { text-shadow: 0 0 0.8em currentColor; }
+.doc a:active {
+	text-shadow: 0 0 0.4em currentColor;
+}
 
-li h3 { margin-top: 0 !important; }
-code { color: whitesmoke; }
+li h3 {
+	margin-top: 0 !important;
+}
+code {
+	color: whitesmoke;
+}
 
-pre { 
+pre {
 	text-shadow: none;
 	border: 0.25rem whitesmoke solid;
-	box-shadow: inset 0 0 0.75em whitesmoke, 0 0 0.75em whitesmoke;
+	box-shadow: inset 0 0 0.55em whitesmoke, 0 0 0.55em whitesmoke;
 	padding: 1rem;
 	border-radius: 0.25rem;
 	transition-duration: 200ms;
@@ -43,7 +57,9 @@ pre:active {
 	background-color: whitesmoke;
 }
 
-pre code { color: inherit; }
+pre code {
+	color: inherit;
+}
 
 // .doc {
 // 	h1,
