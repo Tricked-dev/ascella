@@ -18,14 +18,14 @@
 			image: '/dashboard.png'
 		},
 		{
-			title: 'Opensource',
-			description: "Ascella's code is fully opensource you can view the code on github.",
+			title: 'Open Source',
+			description: "Ascella's code is fully opensource, and you can view the code on github.",
 			image: '/github.png'
 		},
 		{
-			title: 'DesktopApp',
+			title: 'Desktop App',
 			description:
-				'Ascella has a opensource desktop app for both Linux and Macos allowing you to make screenshots on all major operating systems.',
+				'Ascella has a open source desktop app for both Linux and MacOS, allowing you to make screenshots on all major operating systems.',
 			image: '/desktop.png'
 		},
 		{
