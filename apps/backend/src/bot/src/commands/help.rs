@@ -23,7 +23,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
                 }),
                 components: None,
                 content: Some(String::from("help help help help help.")),
-                embeds: vec![],
+                embeds: Some(vec![]),
                 flags: Some(MessageFlags::EPHEMERAL),
                 tts: Some(false),
             }),

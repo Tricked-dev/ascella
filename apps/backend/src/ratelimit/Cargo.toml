@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 ascella-util = { path = "../util" }
 
-actix-web = "4.0.0-beta.14"
-futures = "0.3.18"
-governor = "0.3.2"
+actix-web = "4.0.0-beta.19"
+futures = "0.3.19"
+governor = "0.4.0"
 log = "0.4.14"

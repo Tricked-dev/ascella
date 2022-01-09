@@ -22,7 +22,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
                 content: Some(String::from(
                     "The command you tried running **doesn't** exist...",
                 )),
-                embeds: vec![],
+                embeds: None,
                 flags: Some(MessageFlags::EPHEMERAL),
                 tts: Some(false),
             }),

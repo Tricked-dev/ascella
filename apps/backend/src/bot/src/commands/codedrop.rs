@@ -33,7 +33,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, _: Users) -> Res
                 }),
                 components: None,
                 content: Some(format!("Generated **{}** codes", users_len * code)),
-                embeds: vec![],
+                embeds: Some(vec![]),
                 flags: Some(MessageFlags::EPHEMERAL),
                 tts: Some(false),
             }),

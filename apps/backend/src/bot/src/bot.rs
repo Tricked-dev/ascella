@@ -62,7 +62,7 @@ pub async fn start_bot() -> Result<()> {
                                 }),
                                 components: None,
                                 content: Some(String::from("Not a user of the image uploader")),
-                                embeds: vec![],
+                                embeds: Some(vec![]),
                                 flags: Some(MessageFlags::EPHEMERAL),
                                 tts: Some(false),
                             }),

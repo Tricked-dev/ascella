@@ -56,7 +56,7 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
                         }),
                         components: None,
                         content: Some(String::from("Not a user of the image uploader")),
-                        embeds: vec![],
+                        embeds: Some(vec![]),
                         flags: Some(MessageFlags::EPHEMERAL),
                         tts: Some(false),
                     }),

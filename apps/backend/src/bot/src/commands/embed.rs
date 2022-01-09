@@ -54,7 +54,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
                 }),
                 components: None,
                 content: None,
-                embeds: vec![embed],
+                embeds: Some(vec![embed]),
                 flags: None,
                 tts: Some(false),
             }),

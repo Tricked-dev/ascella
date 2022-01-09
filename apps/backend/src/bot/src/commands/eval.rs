@@ -34,7 +34,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
                     user.name,
                     res.iter().map(|row| { row.columns() })
                 )),
-                embeds: vec![],
+                embeds: Some(vec![]),
                 flags: Some(MessageFlags::EPHEMERAL),
                 tts: Some(false),
             }),
