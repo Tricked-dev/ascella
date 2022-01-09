@@ -9,6 +9,8 @@ pub fn command() -> Command {
     .build()
 }
 
+#[allow(clippy::or_fun_call)]
+
 pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<()> {
     let images = get_user_image_count::exec(user.id).await?;
 

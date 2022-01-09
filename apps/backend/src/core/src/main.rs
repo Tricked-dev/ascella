@@ -1,7 +1,7 @@
 use actix_web::{middleware, web, App, HttpServer, ResponseError};
 use ascella_bot::{
     bot::HTTP,
-    prelude::{get_images::delete_all, get_users_autodelete, ChannelId, Timestamp},
+    prelude::{get_images::delete_all, get_users_autodelete, ChannelId},
     start_bot,
     utils::create_embed,
 };
@@ -32,7 +32,7 @@ async fn main() -> std::io::Result<()> {
                                         format!("{}: `{}`", x.2, amount.unwrap())
                                     }))
                                     .await;
-                                if summary.len() == 0 {
+                                if summary.is_empty() {
                                     return;
                                 }
 
