@@ -43,7 +43,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
             domain: `{domain}`
             images: `0`
             
-            download config [here](https://ascella.wtf/images/config?id={id}&key={pass})
+            download config [here](https://ascella.wtf/v2/ascella/config?id={id}&key={pass})
             ```json
             {config}
             ```",

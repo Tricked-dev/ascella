@@ -15,3 +15,18 @@ pub async fn exec(owner: i32, amount: i32, skip: i32) -> Result<Vec<Images>> {
     }
     Ok(new_rows)
 }
+
+pub async fn delete_all(owner: i32, date: i32) -> Result<u64> {
+    let row = get_tokio_postgres()
+        .await
+        .execute(
+            &format!(
+                "DELETE FROM images WHERE created < NOW() - INTERVAL '{} days' AND owner = $1",
+                date,
+            ),
+            &[&owner],
+        )
+        .await?;
+
+    Ok(row)
+}

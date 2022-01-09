@@ -1,11 +1,63 @@
 use actix_web::{middleware, web, App, HttpServer, ResponseError};
-use ascella_bot::start_bot;
+use ascella_bot::{
+    bot::HTTP,
+    prelude::{get_images::delete_all, get_users_autodelete, ChannelId, Timestamp},
+    start_bot,
+    utils::create_embed,
+};
 use ascella_http::{routes::v2::*, Error};
 use ascella_ratelimit::{Governor, GovernorConfigBuilder};
+use futures::future;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     tracing_subscriber::fmt().init();
+
+    tokio::spawn(async {
+        let mut sched = tokio_cron_scheduler::JobScheduler::new();
+
+        sched
+            .add(
+                tokio_cron_scheduler::Job::new_repeated(
+                    //one day
+                    core::time::Duration::from_secs(86400000),
+                    |_, _| {
+                        tokio::spawn(async {
+                            //This removes the startup run but it isnt needed anyway!
+                            if let Some(client) = HTTP.get() {
+                                let users = get_users_autodelete::exec().await.unwrap();
+                                let summary: Vec<String> =
+                                    future::join_all(users.iter().map(|x| async {
+                                        let amount = delete_all(x.0, x.1).await;
+                                        format!("{}: `{}`", x.2, amount.unwrap())
+                                    }))
+                                    .await;
+                                if summary.len() == 0 {
+                                    return;
+                                }
+
+                                let embed = create_embed()
+                                    .title("Deleted images summary")
+                                    .description(&summary.join("\n"))
+                                    .build()
+                                    .unwrap();
+                                client
+                                    .create_message(ChannelId::new(929698255300882522u64).unwrap())
+                                    .embeds(&vec![embed])
+                                    .unwrap()
+                                    .exec()
+                                    .await
+                                    .unwrap();
+                            }
+                        });
+                    },
+                )
+                .unwrap(),
+            )
+            .unwrap();
+
+        sched.start().await.unwrap();
+    });
 
     tokio::spawn(start_bot());
     HttpServer::new(|| {

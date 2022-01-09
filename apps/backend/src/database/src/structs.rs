@@ -54,6 +54,7 @@ pub struct Users {
     pub id: i32,
     pub key: String,
     pub name: String,
+    pub autodelete: Option<i32>,
     pub emojis: Option<bool>,
 }
 

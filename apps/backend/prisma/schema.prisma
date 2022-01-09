@@ -53,6 +53,7 @@ model users {
   id         Int      @id @default(autoincrement())
   key        String   @db.VarChar(200)
   name       String   @db.VarChar(200)
+  autodelete Int?
   emojis     Boolean?
   created    DateTime @default(now())
 }

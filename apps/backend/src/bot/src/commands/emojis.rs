@@ -21,6 +21,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
                 "on"
             }
         ))
+        .description("Emoji urls are currently disabled due to them not working sorry!")
         .build()?;
 
     client

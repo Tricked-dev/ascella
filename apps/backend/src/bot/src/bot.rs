@@ -1,5 +1,13 @@
+use std::sync::Arc;
+
+use once_cell::sync::OnceCell;
+
 use crate::commands;
 use crate::prelude::*;
+
+lazy_static! {
+    pub static ref HTTP: OnceCell<Arc<Client>> = OnceCell::new();
+}
 
 pub async fn start_bot() -> Result<()> {
     dotenv::dotenv().ok();
@@ -19,7 +27,7 @@ pub async fn start_bot() -> Result<()> {
 
     cluster.up().await;
 
-    let http = Client::new((&*token).to_string());
+    let http = Arc::new(Client::new((&*token).to_string()));
     http.set_application_id(ApplicationId(
         env::var("APPLICATION_ID")
             .unwrap()
@@ -28,6 +36,8 @@ pub async fn start_bot() -> Result<()> {
     ));
 
     let commands = get_commands(domain_options);
+
+    HTTP.set(Arc::clone(&http)).unwrap();
 
     let data = http
         .set_guild_commands(

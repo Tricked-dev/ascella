@@ -9,9 +9,10 @@ pub fn create_embed() -> EmbedBuilder {
             icon_url:Some("https://cdn.discordapp.com/attachments/811240979918618634/877975737141960724/a_a4ecfac9730946b91da3d40b0490b30f.gif".to_string()) })
 }
 
-pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 17] {
+pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 18] {
     [
         adddomain::command(),
+        autodelete::command(),
         codedrop::command(),
         codes::command(),
         delete_latest::command(),

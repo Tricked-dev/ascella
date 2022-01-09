@@ -32,6 +32,7 @@ pub mod prelude {
     pub use twilight_embed_builder::{EmbedBuilder, EmbedFieldBuilder};
     pub use twilight_gateway::{cluster::ShardScheme, Cluster, Event, Intents};
     pub use twilight_http::Client;
+    pub use twilight_model::datetime::Timestamp;
     pub use twilight_model::{
         application::{
             callback::{CallbackData, InteractionResponse::ChannelMessageWithSource},
