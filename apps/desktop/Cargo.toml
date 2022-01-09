@@ -1,6 +1,6 @@
 [package]
 name = "ascella"
-version = "0.1.4"
+version = "0.1.6"
 authors = ["Tricked-dev"]
 edition = "2021"
 homepage = "https://tricked.pro/ascella"
@@ -12,12 +12,12 @@ description = "Ascella desktop app uploader"
 
 [dependencies]
 chrono = "0.4.19"
-clap = { version = "3.0.1", features = ["cargo", "color"] }
+clap = { version = "3.0.5", features = ["cargo", "color"] }
 clipboard = "0.5.0"
 home = "0.5.3"
 iced = { git = "https://github.com/iced-rs/iced", rev = "4db0f4a570a1fb3398062c78770c542d9efb8a64", features = ["tokio", "debug", "glow"] }
 itertools = "0.10.3"
-native-dialog = "0.6.1"
+native-dialog = "0.6.2"
 # use sync version of reqwest cause i cba to deal witht his shit tbfh
 reqwest = { version = "0.9.10", features = [] }
 rustc-hash = "1.1.0"
@@ -25,7 +25,7 @@ serde = { version = "1.0.133", features = ["derive"] }
 serde_json = "1.0.74"
 tokio = { version = "1.15.0", features = ["sync"] }
 toml = "0.5.8"
-winit = "0.26"
+winit = "0.26.1"
 
 [target.'cfg(unix)'.dependencies]
 openssl = { version = "0.10.38", features = ["vendored"] }
