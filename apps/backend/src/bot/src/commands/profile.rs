@@ -15,7 +15,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
     let images = get_user_image_count::exec(user.id).await?;
 
     let message = format!(
-        "dashboard: https://dash.ascella.host\nid: `{id}`\nname: `{name}`\ndiscord_id: `{discord}`\npassword: `{pass}`autodelete images: `{auto}`\n\ndomain: `{domain}`\nimages: `{images}`\n\ndownload config [here](https://ascella.wtf/v2/ascella/config?id={id}&key={pass})\n```json\n{config}\n```",
+        "dashboard: https://dash.ascella.host\nid: `{id}`\nname: `{name}`\ndiscord_id: `{discord}`\npassword: `{pass}`\nautodelete images: `{auto}`\n\ndomain: `{domain}`\nimages: `{images}`\n\ndownload config [here](https://ascella.wtf/v2/ascella/config?id={id}&key={pass})\n```json\n{config}\n```",
             id = user.id,
             name = user.name,
             discord = user.discord_id,
