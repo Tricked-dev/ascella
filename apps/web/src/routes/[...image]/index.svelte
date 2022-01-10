@@ -68,21 +68,24 @@
 	<meta property="twitter:card" content="summary_large_image" />
 </svelte:head>
 
-<div class="nav-div">
-	<nav class="nav" style={`border-color: ${embed.color || '#00a41b'}`}>
-		<ul class="flex-center">
+<div class="flex-1 flex flex-col">
+	<nav
+		class=" px-4 flex justify-between bg-gray-700 h-8 border-b-2"
+		style={`border-color: ${embed.color || '#00a41b'}`}
+	>
+		<ul class="flex items-center">
 			<li>
 				{image_size}
 			</li>
 		</ul>
 
-		<ul class="flex-center">
+		<ul class="flex items-center">
 			<li>
 				<h1 class="pl-8 lg:pl-0"><a href="https://www.ascella.host">Ascella</a></h1>
 			</li>
 		</ul>
 
-		<ul class="flex-center">
+		<ul class="flex items-center">
 			<li>
 				{user_name}
 			</li>
@@ -91,47 +94,53 @@
 </div>
 
 <div class="main">
-	<a href={`https://ascella.wtf/v2/ascella/view/${url}`}>
-		<img class="image" alt="" src={`https://ascella.wtf/v2/ascella/view/${url}`} />
-	</a>
+	<div class="box mx-auto">
+		<a href={`https://ascella.wtf/v2/ascella/view/${url}`} target="_blank">
+			<img class="image" alt="" src={`https://ascella.wtf/v2/ascella/view/${url}`} />
+		</a>
+	</div>
 </div>
-<footer style={`border-color: ${embed.color || '#00a41b'}`} class="footer">
+<footer
+	style={`border-color: ${embed.color || '#00a41b'}`}
+	class="footer bg-gray-700 text-white border-t-2 fixed inset-x-0 bottom-0 h-8 pt-4"
+>
 	<a class="text-larger font-bold" href="https://www.ascella.host">Ascella.host</a>
 </footer>
 
 <style lang="postcss">
 	.footer {
-		@apply bg-gray-700 text-white border-t-2 fixed inset-x-0 bottom-0 h-8 pt-4;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
-	.nav {
-		@apply px-4 flex justify-between bg-gray-700 h-8 border-b-2;
-	}
-	.nav-div {
-		@apply flex-1 flex flex-col;
-	}
-	.flex-center {
-		@apply flex items-center;
-	}
 	.image {
-		margin-top: auto;
-		margin-bottom: auto;
+		object-fit: contain;
+		height: 100%;
+		/* margin-top: auto; */
+		/* margin-bottom: auto; */
+		/* display: flex; */
+		/* padding: auto; */
+		/* padding-top: auto; */
+		/* max-width: 80rem; */
+		/* max-height: 60rem; */
+		/* max-height: 50rem; */
+		/* min-height: max-content; */
+		/* width: ; */
+		/* width: auto; */
+		/* height: auto; */
+	}
+	.box {
+		width: 20rem;
+		height: 15rem;
+		justify-content: center;
 		display: flex;
-		padding: auto;
-		padding-top: auto;
-		max-width: 80rem;
-		max-height: 60rem;
-		width: auto;
-		height: auto;
 	}
 	.main {
 		padding-top: 4rem;
-		margin-top: auto;
-		margin-bottom: auto;
+		/* margin-top: auto; */
+		/* margin-bottom: auto; */
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		/* align-items: center; */
 	}
 </style>
