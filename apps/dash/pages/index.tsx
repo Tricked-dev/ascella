@@ -1,157 +1,157 @@
 import {
-    Box,
-    Button,
-    FormControl,
-    FormHelperText,
-    Input,
-    InputGroup,
-    InputRightElement,
-    Link,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Spinner,
-    Text,
-    useDisclosure,
+  Box,
+  Button,
+  FormControl,
+  FormHelperText,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Spinner,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import withSession from "../utils/withSession";
 export default function Index() {
-    const [spinner, setSpinner] = useState(false);
-    const [show, setShow] = useState(false);
-    const handleClick = () => setShow(!show);
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [password, setPassword] = useState("");
-    const [id, setId]: any = useState();
-    const Router = useRouter();
-    let login = async (event: any) => {
-        event.preventDefault();
-        setSpinner(true);
-        let r = await fetch("/api/login", {
-            method: "POST",
-            body: JSON.stringify({
-                id: id,
-                key: password,
-            }),
-            headers: {
-                "content-type": "application/json",
-            },
-        });
-        if (r.ok) {
-            Router.push(
-                {
-                    pathname: "/dashboard",
-                },
-                undefined,
-                { shallow: true },
-            );
-        } else {
-            setSpinner(false);
-            onOpen();
-        }
-    };
+  const [spinner, setSpinner] = useState(false);
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [password, setPassword] = useState("");
+  const [id, setId]: any = useState();
+  const Router = useRouter();
+  let login = async (event: any) => {
+    event.preventDefault();
+    setSpinner(true);
+    let r = await fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({
+        id: id,
+        key: password,
+      }),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    if (r.ok) {
+      Router.push(
+        {
+          pathname: "/dashboard",
+        },
+        undefined,
+        { shallow: true },
+      );
+    } else {
+      setSpinner(false);
+      onOpen();
+    }
+  };
 
-    return (
-        <>
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Failed to log in</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        Its likely that you don&apos;t have a account you can obtain one in the discord{" "}
-                        <Link color="blue.400" href="https://discord.gg/mY8zTARu4g">
-                            https://discord.gg/mY8zTARu4g
-                        </Link>
-                    </ModalBody>
+  return (
+    <>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Failed to log in</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Its likely that you don&apos;t have a account you can obtain one in the discord{" "}
+            <Link color="blue.400" href="https://discord.gg/mY8zTARu4g">
+              https://discord.gg/mY8zTARu4g
+            </Link>
+          </ModalBody>
 
-                    <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-            <Box height="4rem"></Box>
-            <Box
-                top="10rem"
-                alignContent={"center"}
-                justifyItems={"center"}
-                maxW={"50rem"}
-                margin={"auto"}
-                backgroundColor={"gray.900"}
-                borderRadius={"10rem"}
-                padding="1.5rem"
-                borderColor={"gray.900"}
-                rounded="md"
-            >
-                <form onSubmit={login}>
-                    <Text fontSize={"3rem"}>Login</Text>
-                    <FormControl isRequired>
-                        <FormHelperText>
-                            use /profile in the discord to get your info
-                        </FormHelperText>
-                        <Input
-                            isRequired
-                            placeholder="Id"
-                            onChange={(e) => {
-                                let val = parseInt(e.target.value);
-                                if (isNaN(val)) setId("");
-                                else setId(val);
-                            }}
-                            value={id}
-                        />
-                    </FormControl>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Box height="4rem"></Box>
+      <Box
+        top="10rem"
+        alignContent={"center"}
+        justifyItems={"center"}
+        maxW={"50rem"}
+        margin={"auto"}
+        backgroundColor={"gray.900"}
+        borderRadius={"10rem"}
+        padding="1.5rem"
+        borderColor={"gray.900"}
+        rounded="md"
+      >
+        <form onSubmit={login}>
+          <Text fontSize={"3rem"}>Login</Text>
+          <FormControl isRequired>
+            <FormHelperText>
+              use /profile in the discord to get your info
+            </FormHelperText>
+            <Input
+              isRequired
+              placeholder="Id"
+              onChange={(e) => {
+                let val = parseInt(e.target.value);
+                if (isNaN(val)) setId("");
+                else setId(val);
+              }}
+              value={id}
+            />
+          </FormControl>
 
-                    <FormControl isRequired>
-                        <InputGroup size="md">
-                            <Input
-                                isRequired
-                                pr="4.5rem"
-                                type={show ? "text" : "password"}
-                                placeholder="Enter password"
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <InputRightElement width="4.5rem">
-                                <Button h="1.75rem" size="sm" onClick={handleClick}>
-                                    {show ? "Hide" : "Show"}
-                                </Button>
-                            </InputRightElement>
-                        </InputGroup>
-                    </FormControl>
+          <FormControl isRequired>
+            <InputGroup size="md">
+              <Input
+                isRequired
+                pr="4.5rem"
+                type={show ? "text" : "password"}
+                placeholder="Enter password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  {show ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
 
-                    <Button type="submit" variant="solid" isLoading={spinner}>
-                        Submit
-                    </Button>
-                </form>
-            </Box>
-        </>
-    );
+          <Button type="submit" variant="solid" isLoading={spinner}>
+            Submit
+          </Button>
+        </form>
+      </Box>
+    </>
+  );
 }
 export const getServerSideProps = withSession(async function({
-    req,
-    res,
+  req,
+  res,
 }: any) {
-    const user = req.session.get("user");
+  const user = req.session.get("user");
 
-    if (user !== undefined) {
-        return {
-            redirect: {
-                destination: "/dashboard",
-                permanent: false,
-            },
-            props: {},
-        };
-    }
-
+  if (user !== undefined) {
     return {
-        props: {},
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+      props: {},
     };
+  }
+
+  return {
+    props: {},
+  };
 });
 
 // import Head from 'next/head';

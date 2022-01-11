@@ -10,7 +10,7 @@
     "build": "npx turbo run build",
     "dev": "npx turbo run dev --parallel",
     "lint": "npx turbo run lint",
-    "format": "npx dprint"
+    "fmt": "npx dprint fmt"
   },
   "devDependencies": {
     "dprint": "^0.19.1",

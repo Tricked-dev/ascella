@@ -1,11 +1,15 @@
 {
+  "lineWidth": 160,
+  "useTabs": false,
+  "indentWidth": 2,
   "incremental": true,
+
   "typescript": {},
   "json": {},
   "markdown": {},
   "toml": {},
   "includes": ["**/*.{ts,tsx,js,jsx,cjs,mjs,json,md,toml,rs,env}"],
-  "excludes": ["**/node_modules", "**/*-lock.json"],
+  "excludes": ["**/node_modules", "**/*-lock.json", "**/target"],
   "plugins": [
     "https://plugins.dprint.dev/typescript-0.60.0.wasm",
     "https://plugins.dprint.dev/json-0.13.2.wasm",
