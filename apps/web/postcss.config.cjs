@@ -1,13 +1,14 @@
-const tailwindcss = require("tailwindcss");
-const autoprefixer = require("autoprefixer");
-
+const tailwindcss = require('tailwindcss');
+const autoprefixer = require('autoprefixer');
+const csso = require('postcss-csso');
+// const cssnano = require('cssnano');
 const config = {
-  plugins: [
-    // Some plugins, like postcss-nested, need to run before Tailwind,
-    tailwindcss(),
-    // But others, like autoprefixer, need to run after,
-    autoprefixer(),
-  ],
+	plugins: [
+		tailwindcss(),
+		autoprefixer(),
+		csso()
+		// cssnano()
+	]
 };
 
 module.exports = config;
