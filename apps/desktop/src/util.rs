@@ -1,5 +1,5 @@
 use std::io::{Error, ErrorKind};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use crate::{take_ss, ScreenshotKind};
 use clipboard::{ClipboardContext, ClipboardProvider};
@@ -50,13 +50,14 @@ pub fn screenshot(t: ScreenshotKind) -> iced::Result {
   path.extend(&[&filename]);
 
   take_ss(t, path.clone().into_os_string().into_string().unwrap(), true);
+  upload(path).unwrap();
+  Ok(())
+}
 
-  let form = multipart::Form::new().file("photo", path).unwrap();
-
-  let mut headers = HeaderMap::new();
+pub fn upload<P: AsRef<Path>>(path: P) -> Result<String, Error> {
   let mut write_path = home_dir().unwrap();
-
   write_path.extend(&[".ascella", "config.toml"]);
+
   let config_raw = if let Ok(config_raw) = std::fs::read_to_string(write_path) {
     config_raw
   } else {
@@ -67,8 +68,12 @@ pub fn screenshot(t: ScreenshotKind) -> iced::Result {
       .show_alert()
       .unwrap();
     println!("config not detected please upload your config");
-    return Ok(());
+    return Ok("".to_owned());
   };
+
+  let form = multipart::Form::new().file("photo", path).unwrap();
+
+  let mut headers = HeaderMap::new();
 
   let config: AscellaConfig = if let Ok(config) = toml::from_str(&config_raw) {
     config
@@ -80,7 +85,7 @@ pub fn screenshot(t: ScreenshotKind) -> iced::Result {
       .show_alert()
       .unwrap();
     println!("Your config is invalid please use a valid ascella config");
-    return Ok(());
+    return Ok("".to_owned());
   };
   headers.insert("x-user-id", HeaderValue::from_str(&config.id.unwrap()).unwrap());
   headers.insert("x-user-token", HeaderValue::from_str(&config.token.unwrap()).unwrap());
@@ -100,5 +105,5 @@ pub fn screenshot(t: ScreenshotKind) -> iced::Result {
   let url = r["url"].as_str().unwrap();
   let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
   ctx.set_contents(url.to_owned()).unwrap();
-  Ok(())
+  Ok(url.to_owned())
 }
