@@ -1,10 +1,17 @@
 <script context="module" lang="ts">
 	import { getImage } from '$lib/api';
-	import type { Load } from '@sveltejs/kit';
-	export const ssr = true;
+	import type { Load, Handle } from '@sveltejs/kit';
 	export const prerender = true;
 	export const hydrate = false;
 	export const router = true;
+
+	export const handle: Handle = async ({ request, resolve }) => {
+		const response = await resolve(request, {
+			ssr: true
+		});
+
+		return response;
+	};
 
 	export const load: Load = async ({ params }) => {
 		const { image } = params;
