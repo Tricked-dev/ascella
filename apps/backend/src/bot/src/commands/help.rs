@@ -5,6 +5,10 @@ pub fn command() -> Command {
 }
 
 pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
+  let commands = get_commands(vec![]);
+  let desc =   commands.iter().map(|x| {
+    format!("**{}**: {}", &x.name, &x.description)
+  }).collect::<Vec<String>>().join("\n");
   client
     .interaction_callback(
       cmd.id,
@@ -17,7 +21,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
           replied_user: true,
         }),
         components: None,
-        content: Some(String::from("help help help help help.")),
+        content: Some(desc),
         embeds: Some(vec![]),
         flags: Some(MessageFlags::EPHEMERAL),
         tts: Some(false),

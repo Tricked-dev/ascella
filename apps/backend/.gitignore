@@ -7,3 +7,4 @@ images/**/*
 node_modules
 fetch.ts
 prisma/node_modules
+.idea/
