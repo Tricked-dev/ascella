@@ -3,7 +3,6 @@ use std::path::{Path, PathBuf};
 
 use crate::{take_ss, ScreenshotKind};
 use clipboard::{ClipboardContext, ClipboardProvider};
-use fork::{daemon, Fork};
 use home::home_dir;
 use native_dialog::{MessageDialog, MessageType};
 use reqwest::header::{HeaderMap, HeaderValue};
