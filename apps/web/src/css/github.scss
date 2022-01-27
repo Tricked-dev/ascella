@@ -35,31 +35,6 @@ $clr-bg-0: #39393f;
 li h3 {
 	margin-top: 0 !important;
 }
-code {
-	color: whitesmoke;
-}
-
-pre {
-	text-shadow: none;
-	border: 0.25rem whitesmoke solid;
-	box-shadow: inset 0 0 0.55em whitesmoke, 0 0 0.55em whitesmoke;
-	padding: 1rem;
-	border-radius: 0.25rem;
-	transition-duration: 200ms;
-	color: whitesmoke;
-	background-color: #2a2a31;
-}
-
-pre:hover,
-pre:active {
-	box-shadow: 0 0 3em whitesmoke;
-	color: $clr-bg-0;
-	background-color: whitesmoke;
-}
-
-pre code {
-	color: inherit;
-}
 
 // .doc {
 // 	h1,

@@ -1,11 +1,6 @@
 <script context="module" lang="ts">
 	import { getDomains } from '$lib/api';
 
-	export const ssr = true;
-	export const prerender = true;
-	export const hydrate = false;
-	export const router = false;
-	// export const prerender = true;
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
