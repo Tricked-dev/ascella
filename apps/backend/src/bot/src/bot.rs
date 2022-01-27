@@ -10,7 +10,6 @@ lazy_static! {
 }
 
 pub async fn start_bot() -> Result<()> {
-  dotenv::dotenv().ok();
   let domains = get_domains::exec().await?;
 
   let domain_options: Vec<(String, String)> = domains.iter().map(|d| (d.domain.clone(), d.domain.clone())).collect();
