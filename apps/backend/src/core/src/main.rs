@@ -1,5 +1,3 @@
-
-
 use actix_web::{middleware, web, App, HttpServer, ResponseError};
 use ascella_bot::{
   bot::HTTP,
@@ -12,51 +10,9 @@ use ascella_http::{routes::v2::*, Error};
 use ascella_ratelimit::{Governor, GovernorConfigBuilder};
 use futures::future;
 
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
+async fn init() -> std::io::Result<()> {
   tracing_subscriber::fmt().init();
-  tokio::spawn(async {
-    let mut sched = tokio_cron_scheduler::JobScheduler::new();
-
-    sched
-      .add(
-        tokio_cron_scheduler::Job::new_repeated(
-          //one day
-          core::time::Duration::from_secs(86400000),
-          |_, _| {
-            tokio::spawn(async {
-              //This removes the startup run but it isnt needed anyway!
-              if let Some(client) = HTTP.get() {
-                let users = get_users_autodelete::exec().await.unwrap();
-                let summary: Vec<String> = future::join_all(users.iter().map(|x| async {
-                  let amount = delete_all(x.0, x.1).await;
-                  format!("{}: `{}`", x.2, amount.unwrap())
-                }))
-                .await;
-                if summary.is_empty() {
-                  return;
-                }
-
-                let embed = create_embed().title("Deleted images summary").description(&summary.join("\n")).build().unwrap();
-                client
-                  .create_message(ChannelId::new(929698255300882522u64).unwrap())
-                  .embeds(&vec![embed])
-                  .unwrap()
-                  .exec()
-                  .await
-                  .unwrap();
-              }
-            });
-          },
-        )
-        .unwrap(),
-      )
-      .unwrap();
-
-    sched.start().await.unwrap();
-  });
-
-  tokio::spawn(start_bot());
+  // tokio::spawn();
 
   HttpServer::new(|| {
     App::new()
@@ -104,4 +60,56 @@ async fn main() -> std::io::Result<()> {
   .bind("0.0.0.0:7878")?
   .run()
   .await
+}
+
+fn main() -> std::io::Result<()> {
+  let rt = tokio::runtime::Builder::new_multi_thread()
+    .worker_threads(4)
+    .thread_name("ascella-rt")
+    .thread_stack_size(3 * 1024 * 1024)
+    .enable_all()
+    .build()
+    .unwrap();
+  rt.spawn(start_bot());
+  rt.spawn(async {
+    let mut sched = tokio_cron_scheduler::JobScheduler::new();
+
+    sched
+      .add(
+        tokio_cron_scheduler::Job::new_repeated(
+          //one day
+          core::time::Duration::from_secs(86400000),
+          |_, _| {
+            tokio::spawn(async {
+              //This removes the startup run but it isnt needed anyway!
+              if let Some(client) = HTTP.get() {
+                let users = get_users_autodelete::exec().await.unwrap();
+                let summary: Vec<String> = future::join_all(users.iter().map(|x| async {
+                  let amount = delete_all(x.0, x.1).await;
+                  format!("{}: `{}`", x.2, amount.unwrap())
+                }))
+                .await;
+                if summary.is_empty() {
+                  return;
+                }
+
+                let embed = create_embed().title("Deleted images summary").description(&summary.join("\n")).build().unwrap();
+                client
+                  .create_message(ChannelId::new(929698255300882522u64).unwrap())
+                  .embeds(&vec![embed])
+                  .unwrap()
+                  .exec()
+                  .await
+                  .unwrap();
+              }
+            });
+          },
+        )
+        .unwrap(),
+      )
+      .unwrap();
+
+    sched.start().await.unwrap();
+  });
+  rt.block_on(init())
 }

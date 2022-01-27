@@ -116,7 +116,9 @@ impl S3Host {
     if let Some(r) = CACHE.lock().get(&s) {
       Ok(r.to_vec())
     } else {
-      Ok(self.bucket.get_object(s).await.map_err(|_| FileHostingError::AnError)?.0)
+      let data = self.bucket.get_object(s.clone()).await.map_err(|_| FileHostingError::AnError)?.0;
+      CACHE.lock().insert(s, (&data).to_vec(), Duration::from_secs(60));
+      Ok(data)
     }
   }
 
