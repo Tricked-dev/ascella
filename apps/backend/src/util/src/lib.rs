@@ -7,7 +7,6 @@ use rand::{distributions::Alphanumeric, prelude::SliceRandom, Rng};
 use serde::Serialize;
 use serde_json::{json, Value};
 use std::fmt::Display;
-pub mod image_effects;
 lazy_static! {
   pub static ref CLIENT: reqwest::Client = reqwest::Client::new();
 }

@@ -1,11 +1,18 @@
 use async_trait::async_trait;
 use bytes::{Buf, Bytes};
+use parking_lot::Mutex;
 use s3::bucket::Bucket;
 use s3::creds::Credentials;
 use s3::region::Region;
 use sha2::Digest;
 use std::io::Read;
+use std::ops::Deref;
+use std::ops::DerefMut;
+use std::sync::Arc;
+use std::sync::RwLock;
+use std::time::Duration;
 use thiserror::Error;
+use ttl_cache::TtlCache;
 
 #[derive(Error, Debug)]
 pub enum FileHostingError {
@@ -34,7 +41,6 @@ pub struct DeleteFileData {
   pub file_id: String,
   pub file_name: String,
 }
-
 pub struct S3Host {
   bucket: Bucket,
 }
@@ -42,16 +48,19 @@ pub struct S3Host {
 use lazy_static::lazy_static;
 
 lazy_static! {
-  pub static ref S3: S3Host = {
-    S3Host::new(
-      "ascella",
-      "EU1",
-      "https://gateway.eu1.storjshare.io",
-      &dotenv::var("S3_ID").unwrap(),
-      &dotenv::var("S3_SECRET").unwrap(),
+  pub static ref S3: Arc<S3Host> = {
+    Arc::new(
+      S3Host::new(
+        "ascella",
+        "EU1",
+        "https://gateway.eu1.storjshare.io",
+        &dotenv::var("S3_ID").unwrap(),
+        &dotenv::var("S3_SECRET").unwrap(),
+      )
+      .unwrap(),
     )
-    .unwrap()
   };
+  pub static ref CACHE: Arc<Mutex<TtlCache<String, Vec<u8>>>> = Arc::new(Mutex::new(TtlCache::new(20)));
 }
 
 impl S3Host {
@@ -77,12 +86,20 @@ impl S3Host {
     let content_sha1 = sha1::Sha1::from(&file_bytes).hexdigest();
     let content_sha512 = format!("{:x}", sha2::Sha512::digest(file_bytes.bytes()));
 
-    self
-      .bucket
-      .put_object_with_content_type(format!("/{}", file_name), &file_bytes.bytes(), content_type)
-      .await
-      .map_err(|_| FileHostingError::AnError)?;
+    let file_name_clone = file_name.clone().to_owned();
+    let content_type_clone = content_type.clone().to_owned();
+    let file_bytes_clone = file_bytes.clone().to_owned();
+    tokio::spawn(async move {
+      S3.bucket
+        .put_object_with_content_type(format!("/{}", &file_name_clone), &file_bytes_clone.bytes(), &content_type_clone)
+        .await
+        .map_err(|_| FileHostingError::AnError)
+        .unwrap();
+    });
 
+    CACHE
+      .lock()
+      .insert(file_name.to_owned(), (&file_bytes.bytes()).to_vec(), Duration::from_secs(60));
     Ok(UploadFileData {
       file_id: file_name.to_string(),
       file_name: file_name.to_string(),
@@ -96,7 +113,11 @@ impl S3Host {
   }
 
   pub async fn get_file(&self, s: String) -> Result<Vec<u8>, FileHostingError> {
-    Ok(self.bucket.get_object(s).await.map_err(|_| FileHostingError::AnError)?.0)
+    if let Some(r) = CACHE.lock().get(&s) {
+      Ok(r.to_vec())
+    } else {
+      Ok(self.bucket.get_object(s).await.map_err(|_| FileHostingError::AnError)?.0)
+    }
   }
 
   pub async fn delete_file_version(&self, file_id: &str, file_name: &str) -> Result<DeleteFileData, FileHostingError> {
