@@ -51,7 +51,7 @@ lazy_static! {
   pub static ref S3: Arc<S3Host> = {
     Arc::new(
       S3Host::new(
-        "ascella",
+        &dotenv::var("S3_BUCKET").unwrap_or("ascella".to_owned()),
         "EU1",
         "https://gateway.eu1.storjshare.io",
         &dotenv::var("S3_ID").unwrap(),
