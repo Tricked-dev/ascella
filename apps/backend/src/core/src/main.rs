@@ -5,6 +5,7 @@ use ascella_bot::{
   start_bot,
   utils::create_embed,
 };
+use ascella_database::s3::S3;
 use ascella_http::{routes::v2::*, Error};
 use ascella_ratelimit::{Governor, GovernorConfigBuilder};
 use futures::future;
@@ -12,7 +13,6 @@ use futures::future;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
   tracing_subscriber::fmt().init();
-
   tokio::spawn(async {
     let mut sched = tokio_cron_scheduler::JobScheduler::new();
 
@@ -55,6 +55,7 @@ async fn main() -> std::io::Result<()> {
   });
 
   tokio::spawn(start_bot());
+
   HttpServer::new(|| {
     App::new()
       // .wrap(

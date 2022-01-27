@@ -7,11 +7,13 @@ pub async fn get(image: web::Path<String>) -> Result<HttpResponse, Error> {
   if let Ok(image) = data {
     if let Ok(user) = get_user::exec(image.owner).await {
       let data = if image.redirect.is_none() {
-        let data = metadata(format!("./images/{}/{}", image.owner, image.id)).unwrap();
-        let bytes = Byte::from_bytes(data.len().into());
-        let adjusted_byte = bytes.get_appropriate_unit(false);
+        //TODO fix this
+        // let data = metadata(format!("./images/{}/{}", image.owner, image.id)).unwrap();
+        // let bytes = Byte::from_bytes(data.len().into());
+        // let adjusted_byte = bytes.get_appropriate_unit(false);
 
-        Some(adjusted_byte.to_string())
+        // Some(adjusted_byte.to_string())
+        Some("unknown")
       } else {
         None
       };

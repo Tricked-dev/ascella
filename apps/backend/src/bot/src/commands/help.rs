@@ -6,9 +6,11 @@ pub fn command() -> Command {
 
 pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
   let commands = get_commands(vec![]);
-  let desc =   commands.iter().map(|x| {
-    format!("**{}**: {}", &x.name, &x.description)
-  }).collect::<Vec<String>>().join("\n");
+  let desc = commands
+    .iter()
+    .map(|x| format!("**{}**: {}", &x.name, &x.description))
+    .collect::<Vec<String>>()
+    .join("\n");
   client
     .interaction_callback(
       cmd.id,

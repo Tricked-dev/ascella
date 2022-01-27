@@ -1,4 +1,5 @@
 use crate::routes::prelude::*;
+use ascella_database::s3::S3;
 use cached::proc_macro::cached;
 use std::io;
 
@@ -11,7 +12,7 @@ fn get_image(path: String) -> io::Result<Vec<u8>> {
 pub async fn get(image: web::Path<String>) -> Result<HttpResponse, Error> {
   let data = get_image_vanity_only::exec(image.to_string()).await;
   if let Ok(image) = data {
-    let data = get_image(format!("./images/{}/{}", image.owner, image.id));
+    let data = S3.get_file(format!("{}/{}", image.owner, image.id)).await;
     match data {
       Ok(data) => Ok(
         HttpResponse::Ok()

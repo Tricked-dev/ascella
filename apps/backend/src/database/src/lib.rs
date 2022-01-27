@@ -3,6 +3,7 @@ use lazy_static::lazy_static;
 use tokio::sync::OnceCell;
 use tokio_postgres::{Client, NoTls};
 pub mod queries;
+pub mod s3;
 pub mod structs;
 lazy_static! {
   static ref POSTGRES: OnceCell<Client> = OnceCell::new();
