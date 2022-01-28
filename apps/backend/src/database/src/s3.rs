@@ -1,5 +1,6 @@
 use async_trait::async_trait;
 use bytes::{Buf, Bytes};
+use cached::{proc_macro::cached, Cached, CachedAsync};
 use parking_lot::Mutex;
 use s3::bucket::Bucket;
 use s3::creds::Credentials;
@@ -81,6 +82,12 @@ impl S3Host {
   }
 }
 
+#[cached(size = 100, time = 120, result = true)]
+pub async fn get_file(s: String) -> Result<Vec<u8>, FileHostingError> {
+  let data = S3.bucket.get_object(s.clone()).await.map_err(|_| FileHostingError::AnError)?.0;
+  Ok(data)
+}
+
 impl S3Host {
   pub async fn upload_file(&self, content_type: &str, file_name: &str, file_bytes: Bytes) -> Result<UploadFileData, FileHostingError> {
     let content_sha1 = sha1::Sha1::from(&file_bytes).hexdigest();
@@ -97,9 +104,6 @@ impl S3Host {
         .unwrap();
     });
 
-    CACHE
-      .lock()
-      .insert(file_name.to_owned(), (&file_bytes.bytes()).to_vec(), Duration::from_secs(60));
     Ok(UploadFileData {
       file_id: file_name.to_string(),
       file_name: file_name.to_string(),
@@ -110,16 +114,6 @@ impl S3Host {
       content_type: content_type.to_string(),
       upload_timestamp: chrono::Utc::now().timestamp_millis() as u64,
     })
-  }
-
-  pub async fn get_file(&self, s: String) -> Result<Vec<u8>, FileHostingError> {
-    if let Some(r) = CACHE.lock().get(&s) {
-      Ok(r.to_vec())
-    } else {
-      let data = self.bucket.get_object(s.clone()).await.map_err(|_| FileHostingError::AnError)?.0;
-      CACHE.lock().insert(s, (&data).to_vec(), Duration::from_secs(60));
-      Ok(data)
-    }
   }
 
   pub async fn delete_file_version(&self, file_id: &str, file_name: &str) -> Result<DeleteFileData, FileHostingError> {
