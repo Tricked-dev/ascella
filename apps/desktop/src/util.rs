@@ -158,8 +158,7 @@ fn copy(t: String) {
                     .write_all(format!("{}", &t.clone()).as_bytes())
                     .ok();
             }
-
-            let output = child.wait_with_output().ok();
+            let _ = child.wait().ok();
         }
 
         Command::new("wl-copy").arg(&t.clone()).spawn().ok();
