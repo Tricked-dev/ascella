@@ -46,8 +46,6 @@
 	export let image_size: string = '10kb';
 	export let embed: Record<string, string> = {};
 	export let url: string;
-
-	import '../../css/app.scss';
 </script>
 
 <svelte:head>
@@ -76,11 +74,17 @@
 	<meta property="og:image" content={`https://ascella.wtf/v2/ascella/view/${url}`} />
 	<meta property="og:type" content="website" />
 	<meta property="twitter:card" content="summary_large_image" />
+
+	<script
+		async
+		defer
+		data-website-id="9d7a10ea-0ef7-4e4a-959f-bfe22fc26cfd"
+		src="https://analytics.tricked.pro/umami.js"></script>
 </svelte:head>
 
 <div class="flex-1 flex flex-col">
 	<nav
-		class=" px-4 flex justify-between bg-gray-700 h-8 border-b-2"
+		class=" px-4 flex justify-between bg-gray-700 h-8 border-b-2 text-white"
 		style={`border-color: ${embed.color || '#00a41b'}`}
 	>
 		<ul class="flex items-center">
@@ -112,7 +116,7 @@
 </div>
 <footer
 	style={`border-color: ${embed.color || '#00a41b'}`}
-	class="footer bg-gray-700 text-white border-t-2 fixed inset-x-0 bottom-0 h-8 pt-4"
+	class="footer bg-gray-700 text-white border-t-2 fixed inset-x-0 bottom-0 h-8 pt-4 pb-2"
 >
 	<a class="text-larger font-bold" href="https://www.ascella.host">Ascella.host</a>
 </footer>

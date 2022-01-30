@@ -79,7 +79,15 @@
 			a: 'Contributors'
 		}
 	];
-
+	const topLinks = [
+		{
+			href: 'https://discord.gg/mY8zTARu4g',
+			a: 'Discord'
+		},
+		{ href: 'https://dash.ascella.host', a: 'Dashboard' },
+		{ href: '/', a: 'Home' },
+		{ href: '/docs/signup', a: 'Create an account' }
+	];
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { goto } from '$app/navigation';
@@ -121,6 +129,10 @@
 		site_name: 'tricked#3777',
 		locale: 'en_US'
 	};
+	let expended = false;
+	function setExpended() {
+		expended = !expended;
+	}
 </script>
 
 <svelte:head>
@@ -140,45 +152,49 @@
 	<meta property="robots" content="index,follow" />
 	<meta property="googlebot" content="index,follow" />
 	<meta property="viewport" content="width=device-width" />
+
+	<script
+		async
+		defer
+		data-website-id="9d7a10ea-0ef7-4e4a-959f-bfe22fc26cfd"
+		src="https://analytics.tricked.pro/umami.js"></script>
 </svelte:head>
 
-<template bind:this={menu} class="flex-1 flex flex-col">
-	<nav>
-		<div class="all">
-			<a class="ascella" href="https://ascella.host">Ascella.host</a>
-			<div class="btns">
-				<ul>
-					<li><a class="btn" href="https://dash.ascella.host"> Dashboard </a></li>
-					<li><a class="btn" href="/"> Home </a></li>
-					<li><a class="btn" href="https://discord.gg/mY8zTARu4g"> Discord </a></li>
-				</ul>
+<template bind:this={menu} class="flex-1 flex">
+	<nav class="bg-cyan-800 ">
+		<div class="flex">
+			<div class="flex flex-col md:flex-row gap-4 p-2">
+				<a class="text-sky-600 text-xl" href="https://ascella.host">Ascella.host</a>
+				{#each topLinks as link}
+					<a class="hover:text-sky-600 text-sky-500 underline text-lg" href={link.href}>{link.a}</a>
+				{/each}
 			</div>
-			<div class="other">
-				<input id="input" type="checkbox" checked />
-				<label for="input"
-					>Other
-					<svg class="w-5 h-5 -mr-1" viewBox="0 0 20 20" fill="currentColor">
-						<path
-							fill-rule="evenodd"
-							d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-							clip-rule="evenodd"
-						/>
-					</svg>
-				</label>
-				<div class="list">
-					<ul>
+			<div class="p-2">
+				<button on:click={setExpended}>
+					<p class="flex text-slate-200 gap-2 hover:text-slate-300 underline">
+						<svg class="w-5 h-5 -mr-1" viewBox="0 0 20 20" fill="currentColor">
+							<path
+								fill-rule="evenodd"
+								d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+								clip-rule="evenodd"
+							/>
+						</svg>Documentation
+					</p>
+				</button>
+				{#if expended}
+					<ul class="flex gap-2 flex-col md:flex-row">
 						{#each otherLinks as link}
 							<li>
 								<div>
-									<slide><a href={link.href} tabindex="0" role="menuitem">{link.a}</a></slide>
-									<a href={link.href} tabindex="0" role="menuitem">{link.a}</a>
+									<a href={link.href} class="text-slate-300 underline hover:text-teal-500"
+										>{link.a}</a
+									>
 								</div>
 							</li>
 						{/each}
 					</ul>
-				</div>
+				{/if}
 			</div>
-			<a class="btn hover:text-black focus:text-black" href="/docs/signup">Create an account</a>
 		</div>
 	</nav>
 

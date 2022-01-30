@@ -47,13 +47,13 @@
 
 <div>
 	<div class="w-[30rem] m-auto">
-		<p class="text text-white text-center pb-7">Ascella domains</p>
+		<p class="text-xl text-white text-center pb-7">Ascella domains</p>
 		{#each data as domain}
 			<div>
 				{#if domain.apex}
-					<p class="font-mono text-sm text-gray-400 float-right">apex</p>
+					<p class="font-mono  text-sm text-gray-400 float-right">apex</p>
 				{/if}
-				<p class="font-mono text-lg ">{domain.domain}</p>
+				<p class="font-mono text-lg text-teal-600">{domain.domain}</p>
 			</div>
 		{/each}
 	</div>

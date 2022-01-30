@@ -1,11 +1,9 @@
 <script lang="ts">
-	import '../../css/github.scss';
-	export const ssr = true;
-	export const prerender = true;
-	export const hydrate = false;
-	export const router = false;
 </script>
 
-<div class="max-w-[80rem] m-auto lg:prose-2xl md:prose-lg doc prose-headings:no-underline">
+<svelte:head />
+<div
+	class="max-w-[80rem] prose m-auto lg:prose-2xl md:prose-lg prose-indigo prose-headings:prose-a:no-underline prose-invert hover:prose-a:text-indigo-400"
+>
 	<slot />
 </div>

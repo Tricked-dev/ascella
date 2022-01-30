@@ -23,26 +23,28 @@
 </script>
 
 <div class="max-w-[80rem] m-auto">
-	<div class="text-lg text-center py-5">
+	<div class="text-center py-5 text-yellow-400 text-3xl">
 		<h1>Contributors who helped make this site a better</h1>
 	</div>
-	<div class="grid auto-rows-auto gap-4 auto-cols-auto">
-		{#each contributors as contributor}
-			<div
-				class="py-4 duration-200 border-4 w-50 justify-center items-center text-center m-auto contributor p-4"
-			>
-				<img
-					class="w-40 h-40 m-auto"
-					alt={contributor.name}
-					src={`/assets/contributors/${contributor.name.toLowerCase()}.png`}
-				/>
-				<div class="pt  -4">
-					<h3 class="text-2xl">
-						{contributor.name}
-					</h3>
-					<p class="">{contributor.description}</p>
+	<div class="justify-center flex">
+		<div class="grid auto-rows-auto gap-4 auto-cols-auto w-96">
+			{#each contributors as contributor}
+				<div
+					class="py-4 duration-200 border-4 border-yellow-500 bg-amber-700 w-50 justify-center items-center text-center m-auto contributor p-4 w-full"
+				>
+					<img
+						class="w-40 h-40 m-auto border-yellow-500 border-2"
+						alt={contributor.name}
+						src={`/assets/contributors/${contributor.name.toLowerCase()}.png`}
+					/>
+					<div class="pt  -4">
+						<h3 class="text-2xl">
+							{contributor.name}
+						</h3>
+						<p class="">{contributor.description}</p>
+					</div>
 				</div>
-			</div>
-		{/each}
+			{/each}
+		</div>
 	</div>
 </div>
