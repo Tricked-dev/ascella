@@ -89,9 +89,9 @@
 		{ href: '/docs/signup', a: 'Create an account' }
 	];
 	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 	import { goto } from '$app/navigation';
-
+	import { quintOut } from 'svelte/easing';
 	let show = false; // menu state
 	let menu = null; // menu wrapper DOM reference
 	onMount(() => {
@@ -162,34 +162,50 @@
 
 <template bind:this={menu} class="flex-1 flex">
 	<nav class="bg-cyan-800 ">
-		<div class="flex">
-			<div class="flex flex-col md:flex-row gap-4 p-2">
-				<a class="text-sky-600 text-xl" href="https://ascella.host">Ascella.host</a>
-				{#each topLinks as link}
-					<a class="hover:text-sky-600 text-sky-500 underline text-lg" href={link.href}>{link.a}</a>
-				{/each}
+		<div class="flex flex-col">
+			<div class="flex items-center">
+				<div class="flex flex-col md:flex-row gap-4 p-2 align-middle">
+					<a class="text-sky-600 text-xl" href="https://ascella.host">Ascella.host</a>
+					{#each topLinks as link}
+						<a class="hover:text-sky-600 text-sky-500 underline text-lg" href={link.href}
+							>{link.a}</a
+						>
+					{/each}
+				</div>
+				<div class="p-2 items-center">
+					<button on:click={setExpended}>
+						<p class="flex text-slate-200 gap-2 hover:text-slate-300 underline items-center">
+							<svg class="w-5 h-5 -mr-1" viewBox="0 0 20 20" fill="currentColor">
+								<path
+									fill-rule="evenodd"
+									d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+									clip-rule="evenodd"
+								/>
+							</svg>Documentation
+						</p>
+					</button>
+					<div class="md:hidden inline">
+						{#if expended}
+							<ul class="flex gap-2 flex-col md:flex-row px-2 pb-1">
+								{#each otherLinks as link (link.a)}
+									<li transition:scale={{ delay: 250, duration: 300, easing: quintOut }}>
+										<a href={link.href} class="text-slate-300 underline hover:text-teal-500"
+											>{link.a}</a
+										>
+									</li>
+								{/each}
+							</ul>
+						{/if}
+					</div>
+				</div>
 			</div>
-			<div class="p-2">
-				<button on:click={setExpended}>
-					<p class="flex text-slate-200 gap-2 hover:text-slate-300 underline">
-						<svg class="w-5 h-5 -mr-1" viewBox="0 0 20 20" fill="currentColor">
-							<path
-								fill-rule="evenodd"
-								d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-								clip-rule="evenodd"
-							/>
-						</svg>Documentation
-					</p>
-				</button>
+			<div class="md:inline hidden">
 				{#if expended}
-					<ul class="flex gap-2 flex-col md:flex-row">
-						{#each otherLinks as link}
-							<li>
-								<div>
-									<a href={link.href} class="text-slate-300 underline hover:text-teal-500"
-										>{link.a}</a
-									>
-								</div>
+					<ul class="flex gap-2 flex-col md:flex-row px-2 pb-1">
+						{#each otherLinks as link (link.a)}
+							<li transition:scale={{ delay: 250, duration: 300, easing: quintOut }}>
+								<a href={link.href} class="text-slate-300 underline hover:text-teal-500">{link.a}</a
+								>
 							</li>
 						{/each}
 					</ul>

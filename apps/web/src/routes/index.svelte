@@ -60,7 +60,7 @@
 						class="group m-auto p-1 bg-cyan-500 rounded-xl px-2 py-1 w-full hover:p-6 duration-500"
 					>
 						<h3 class="text-6xl group-hover:text-7xl duration-500 text-sky-700">{feature.title}</h3>
-						<p class="text-2xl group-hover:text-3xl duration-500 dark:text-sky-500 text-blue-800">
+						<p class="text-2xl group-hover:text-3xl duration-500 text-blue-800">
 							{feature.description}
 						</p>
 					</div>
