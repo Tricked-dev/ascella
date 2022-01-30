@@ -18,7 +18,10 @@
 		let imgParams = image?.split('/');
 
 		if (imgParams && imgParams[imgParams?.length - 1].split('.')?.[1]) {
-			return;
+			return {
+				status: 302,
+				redirect: 'https://ascella.host'
+			};
 		}
 		let data = await getImage(imgParams[imgParams?.length - 1]);
 		if (data.error)
