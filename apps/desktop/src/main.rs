@@ -68,7 +68,7 @@ pub fn main() -> iced::Result {
         Some(("upload", args)) => {
             let file = PathBuf::from(args.value_of("file").unwrap());
             let full_path = fs::canonicalize(&file).expect("File not found");
-            println!("{}", upload(full_path).unwrap());
+            println!("{}", upload(full_path).expect("Failed to upload file"));
             println!("\nFile uploaded");
             println!("Have a nice day!");
             Ok(())

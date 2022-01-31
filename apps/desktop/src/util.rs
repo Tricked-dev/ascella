@@ -120,12 +120,12 @@ pub fn upload<P: AsRef<Path>>(path: P) -> Result<String, Error> {
     let text = resp.text().unwrap();
 
     let r: Value = serde_json::from_str(&text).unwrap();
-    let url = r["url"].as_str().unwrap();
+    let url = r["url"].as_str().expect("Invalid image type");
     let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
 
-    copy(url.clone().to_owned());
-
+    println!("{url}");
     ctx.set_contents(url.to_owned()).unwrap();
+    copy(url.clone().to_owned());
 
     Ok(url.to_owned())
 }
@@ -137,15 +137,7 @@ fn copy(t: String) {
         use std::io::prelude::*;
         use std::process::Command;
         use std::process::Stdio;
-        // let cmd = format!(
-        //     r#"-c "xclip -selection clipboard <(echo "{}")""#,
-        //     &t.clone()
-        // );
-        // Command::new("bash")
-        //     .args(&cmd.split(" ").collect::<Vec<&str>>())
-        //     .spawn()
-        //     .ok();
-        let mut child = Command::new("xclip")
+        let child = Command::new("xclip")
             .arg("-selection")
             .arg("clipboard")
             .stdin(Stdio::piped())
@@ -162,34 +154,5 @@ fn copy(t: String) {
         }
 
         Command::new("wl-copy").arg(&t.clone()).spawn().ok();
-        // use std::process::Command;
-        // if let Ok(Fork::Child) = daemon(false, false) {
-        //     let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
-        //     ctx.set_contents(t.clone()).unwrap();
-
-        //     std::thread::sleep(std::time::Duration::from_secs(60));
-
-        //     let cmd = format!(
-        //         r#"-c "xclip -selection clipboard <(echo "{}")""#,
-        //         &t.clone()
-        //     );
-        //     println!("{cmd}");
-        //     Command::new("bash")
-        //         .args(&cmd.split(" ").collect::<Vec<&str>>())
-        //         .spawn()
-        //         .ok();
-        //     Command::new("wl-copy").arg(&t.clone()).spawn().ok();
-        // } else {
-        //     let cmd = format!(
-        //         r#"-c "xclip -selection clipboard <(echo "{}")""#,
-        //         &t.clone()
-        //     );
-        //     Command::new("bash")
-        //         .args(&cmd.split(" ").collect::<Vec<&str>>())
-        //         .spawn()
-        //         .ok();
-        //     println!("{cmd}");
-        //     Command::new("wl-copy").arg(&t.clone()).spawn().ok();
-        // };
     }
 }
