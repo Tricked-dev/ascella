@@ -9,3 +9,4 @@ pub mod stats;
 pub mod upload;
 pub mod verify;
 pub mod view;
+pub mod images;
