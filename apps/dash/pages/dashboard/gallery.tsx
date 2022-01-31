@@ -22,6 +22,7 @@ import {
 	Text,
 	useDisclosure,
 	grid,
+	SimpleGrid,
 	GridItem,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
@@ -44,8 +45,9 @@ export default function Dashboard({ user, domains }: any) {
 					skip: current,
 				}),
 			});
-			console.log(await r.json());
-			setImages([]);
+
+			setImages((await r.json()) || []);
+			console.log(images);
 		} catch (e) {
 			console.log(e);
 		}
@@ -58,15 +60,34 @@ export default function Dashboard({ user, domains }: any) {
 	return (
 		<Layout>
 			{/* <button onClicK={update}>Update</button> */}
-			<Grid>
-				{images.map((x, index) => {
+			<SimpleGrid minChildWidth="300px" spacing="5px">
+				{(Array.isArray(images) ? images : []).map((x, index) => {
 					return (
-						<GridItem key={index} border="2px" borderColor={'cyan.200'}>
-							<Image src={`https://ascella.host/${x.vanity}`}></Image>
+						<GridItem
+							key={index}
+							border="2px"
+							borderColor={'cyan.200'}
+							w="300px"
+							h="300px"
+							justifyContent={'center'}
+						>
+							<Image
+								w="auto"
+								h="auto"
+								src={`https://ascella.wtf/v2/ascella/view/${x.vanity}`}
+							></Image>
 						</GridItem>
 					);
 				})}
-			</Grid>
+			</SimpleGrid>
+			<Button
+				onClick={async () => {
+					setCurrent(current + 20);
+					await update();
+				}}
+			>
+				Next
+			</Button>
 		</Layout>
 	);
 }
@@ -86,14 +107,10 @@ export const getServerSideProps = withSession(async function ({
 			props: {},
 		};
 	}
-	let domains = await fetch('/domains', {}, undefined).then(
-		(r: any) => r.json() as any
-	);
 
 	return {
 		props: {
 			user: req.session.get('user'),
-			domains: domains.map((x: any) => x.domain),
 		},
 	};
 });

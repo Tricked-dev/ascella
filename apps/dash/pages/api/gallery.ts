@@ -16,9 +16,6 @@ async function handler(req: any, res: any) {
 			}),
 			'POST'
 		);
-		console.log(r);
-
-		// console.log(r.json());
 		res.status(200).json(await r.json());
 	} catch (e) {
 		console.log(e);
