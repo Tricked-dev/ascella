@@ -36,6 +36,16 @@
 		}
 	];
 	import '../css/index.scss';
+
+	const reviews = ['bumble', 'egirl', 'stef', 'trash', 'tyman'];
+	let image = 0;
+	setInterval(() => {
+		if (image == 4) {
+			image = 0;
+		} else {
+			image += 1;
+		}
+	}, 2000);
 </script>
 
 <div class="mx-auto md:p-4 p-2">
@@ -57,10 +67,12 @@
 					}`}
 				>
 					<div
-						class="group m-auto p-1 bg-cyan-500 rounded-xl px-2 py-1 w-full hover:p-6 duration-500"
+						class="group m-auto p-1 bg-green-500 rounded-xl px-2 py-1 w-full hover:p-6 duration-500"
 					>
-						<h3 class="text-6xl group-hover:text-7xl duration-500 text-sky-700">{feature.title}</h3>
-						<p class="text-2xl group-hover:text-3xl duration-500 text-blue-800">
+						<h3 class="text-6xl group-hover:text-7xl duration-500 text-sky-900">
+							{feature.title}
+						</h3>
+						<p class="text-2xl group-hover:text-3xl duration-500 text-sky-800">
 							{feature.description}
 						</p>
 					</div>
@@ -88,6 +100,23 @@
 					</div>
 				</div> -->
 			{/each}
+		</div>
+		<div class="py-60" />
+		<div class="grid justify-center gap-2 w-full">
+			<div class="bg-[#36393F] p-4">
+				<div>
+					<img src={`/reviews/${reviews[image]}.png`} alt={reviews[image]} />
+				</div>
+				<div class="flex gap-2 justify-center w-full ">
+					{#each reviews as _, index}
+						{#if index == image}
+							<button on:click={() => (image = index)} class="py-1 px-4 bg-slate-400 rounded-lg" />
+						{:else}
+							<button on:click={() => (image = index)} class="py-1 px-4 bg-slate-200 rounded-lg" />
+						{/if}
+					{/each}
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -5,14 +5,6 @@
 	export const hydrate = false;
 	export const router = true;
 
-	export const handle: Handle = async ({ request, resolve }) => {
-		const response = await resolve(request, {
-			ssr: true
-		});
-
-		return response;
-	};
-
 	export const load: Load = async ({ params }) => {
 		const { image } = params;
 		let imgParams = image?.split('/');

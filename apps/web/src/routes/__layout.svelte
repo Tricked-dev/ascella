@@ -43,10 +43,6 @@
 	];
 	const otherLinks = [
 		{
-			href: '/docs/effects',
-			a: 'Image effects'
-		},
-		{
 			href: '/docs/domain',
 			a: 'Adding your own domain'
 		},
@@ -90,10 +86,8 @@
 	];
 	import { onMount } from 'svelte';
 	import { fly, scale } from 'svelte/transition';
-	import { goto } from '$app/navigation';
 	import { quintOut } from 'svelte/easing';
 	let show = false; // menu state
-	let menu = null; // menu wrapper DOM reference
 	onMount(() => {
 		show = false;
 		const handleOutsideClick = (event) => {
@@ -160,8 +154,8 @@
 		src="https://analytics.tricked.pro/umami.js"></script>
 </svelte:head>
 
-<template bind:this={menu} class="flex-1 flex">
-	<nav class="bg-cyan-800 ">
+<template class="flex-1 flex">
+	<nav class="bg-slate-800 ">
 		<div class="flex flex-col">
 			<div class="flex items-center">
 				<div class="flex flex-col md:flex-row gap-4 p-2 align-middle">
