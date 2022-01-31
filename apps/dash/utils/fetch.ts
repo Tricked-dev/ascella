@@ -7,7 +7,7 @@ export default function fetch(
 	method?: string
 ): Promise<Response> {
 	console.log(route);
-	return isoFetch('http://localhost:7878/v2/ascella' + route, {
+	return isoFetch('http://ascella.wtf/v2/ascella' + route, {
 		method,
 		body,
 		headers: {
