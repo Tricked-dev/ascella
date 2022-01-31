@@ -40,6 +40,14 @@ pub struct Images {
 }
 
 #[derive(PostgresMapper, Serialize, Deserialize, Clone)]
+#[pg_mapper(table = "images")]
+pub struct SimpleImages {
+  pub id: i32,
+  pub vanity: String,
+}
+
+
+#[derive(PostgresMapper, Serialize, Deserialize, Clone)]
 #[pg_mapper(table = "pastes")]
 pub struct Pastes {
   pub id: String,

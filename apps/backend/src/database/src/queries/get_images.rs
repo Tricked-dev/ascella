@@ -1,19 +1,23 @@
+use serde_json::json;
 use crate::queries::prelude::*;
 
 #[cached(size = 100, time = 120, result = true)]
-pub async fn exec(owner: i32, amount: i32, skip: i32) -> Result<Vec<Images>> {
-  let row = get_tokio_postgres()
+pub async fn exec(owner: i32, amount: i32, skip: i32) -> Result<Vec<SimpleImages>> {
+  let rows = get_tokio_postgres()
     .await
     .query(
-      "SELECT created, id,vanity FROM images WHERE owner = $2 LIMIT $1 ORDER BY created OFFSET $3",
-      &[&amount, &owner, &skip],
+        //SQL INJECTION LMAOO this lang sucks!
+      format!("SELECT created, id,vanity FROM images WHERE owner = {} ORDER BY created LIMIT {} OFFSET {}", owner, amount,skip).as_str(),
+      &[],
     )
-    .await?;
-  let mut new_rows: Vec<Images> = vec![];
+    .await?.iter().map(|x|
+      SimpleImages::from_row_ref(x).unwrap()
+  ).collect::<Vec<SimpleImages>>();
+/*  let mut new_rows: Vec<Images> = vec![];
   for row in row.iter() {
     new_rows.push(Images::from_row_ref(row).unwrap())
-  }
-  Ok(new_rows)
+  }*/
+  Ok(rows)
 }
 
 pub async fn delete_all(owner: i32, date: i32) -> Result<u64> {

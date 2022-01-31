@@ -30,6 +30,7 @@ import DashBoardItem from '../../components/DashboardItem';
 import Layout from '../../components/DashboardLayout';
 import fetch from '../../utils/fetch';
 import withSession from '../../utils/withSession';
+import isoFetch from 'isomorphic-fetch';
 
 export default function Dashboard({ user, domains }: any) {
 	const [current, setCurrent] = useState(0);
@@ -37,15 +38,14 @@ export default function Dashboard({ user, domains }: any) {
 
 	async function update() {
 		try {
-			let r = await fetch(
-				'/images',
-				user,
-				JSON.stringify({
+			let r = await isoFetch('/api/gallery', {
+				method: 'POST',
+				body: JSON.stringify({
 					skip: current,
 				}),
-				'POST'
-			);
-			setImages(await r.json());
+			});
+			console.log(await r.json());
+			setImages([]);
 		} catch (e) {
 			console.log(e);
 		}

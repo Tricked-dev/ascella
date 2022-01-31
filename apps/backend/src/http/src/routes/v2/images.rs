@@ -13,8 +13,9 @@ pub async fn post(req: HttpRequest, body: web::Bytes) -> Result<HttpResponse, Er
       Ok(v) => v,
       _ => return Err(Error::BadRequest),
     };
-    let images = get_images::exec(data.id, 20, query.skip).await.map_err(|_|{
-      Error::BadRequest
+    let images = get_images::exec(data.id, 20, query.skip).await.map_err(|err|{
+      println!("{err:?}");
+      Error::DatabaseError
     })?;
     Ok(HttpResponse::Ok().json(images))
   } else {
