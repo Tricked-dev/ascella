@@ -4,18 +4,8 @@ import withSession from '../../utils/withSession';
 
 async function handler(req: any, res: any) {
 	try {
-		let json = req.body;
 		const user = req.session.get('user');
-		let skip = json.skip;
-
-		let r = await fetch(
-			'/images',
-			user,
-			JSON.stringify({
-				skip: skip || 0,
-			}),
-			'POST'
-		);
+		let r = await fetch('/images', user, req.body, 'POST');
 		res.status(200).json(await r.json());
 	} catch (e) {
 		console.log(e);

@@ -34,23 +34,34 @@ import withSession from '../../utils/withSession';
 import isoFetch from 'isomorphic-fetch';
 
 export default function Dashboard({ user, domains }: any) {
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [current, setCurrent] = useState(0);
 	const [images, setImages] = useState([] as Record<string, string>[]);
-
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
 	async function update() {
+		setLoading(true);
 		try {
+			console.log(current);
 			let r = await isoFetch('/api/gallery', {
 				method: 'POST',
 				body: JSON.stringify({
 					skip: current,
 				}),
 			});
-
-			setImages((await r.json()) || []);
+			const json = await r.json();
+			if (json.error) {
+				setError(`${json.error} Please slow down`);
+				onOpen();
+			} else {
+				setImages(json || []);
+				setError('');
+			}
 			console.log(images);
 		} catch (e) {
 			console.log(e);
 		}
+		setLoading(false);
 	}
 
 	useEffect(() => {
@@ -59,7 +70,20 @@ export default function Dashboard({ user, domains }: any) {
 
 	return (
 		<Layout>
-			{/* <button onClicK={update}>Update</button> */}
+			<Modal isOpen={isOpen} onClose={onClose}>
+				<ModalOverlay />
+				<ModalContent>
+					<ModalHeader>Failed to fetch images</ModalHeader>
+					<ModalCloseButton />
+					<ModalBody>{error} </ModalBody>
+
+					<ModalFooter>
+						<Button colorScheme="blue" mr={3} onClick={onClose}>
+							Close
+						</Button>
+					</ModalFooter>
+				</ModalContent>
+			</Modal>
 			<SimpleGrid minChildWidth="300px" spacing="5px">
 				{(Array.isArray(images) ? images : []).map((x, index) => {
 					return (
@@ -72,15 +96,33 @@ export default function Dashboard({ user, domains }: any) {
 							justifyContent={'center'}
 						>
 							<Image
-								w="auto"
-								h="auto"
+								objectFit={'contain'}
 								src={`https://ascella.wtf/v2/ascella/view/${x.vanity}`}
+								onError={(e) => {
+									setError(
+										'Failed to load a image this is likely due a ratelimit issue'
+									);
+									onOpen();
+								}}
 							></Image>
 						</GridItem>
 					);
 				})}
 			</SimpleGrid>
+			{current !== 0 && !loading && !isOpen && (
+				<Button
+					isLoading={loading}
+					onClick={async () => {
+						setCurrent(current - 20);
+						await update();
+					}}
+				>
+					Back
+				</Button>
+			)}
+
 			<Button
+				isLoading={loading}
 				onClick={async () => {
 					setCurrent(current + 20);
 					await update();
