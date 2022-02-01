@@ -24,6 +24,8 @@ import {
 	grid,
 	SimpleGrid,
 	GridItem,
+	Tag,
+	Wrap,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
@@ -39,10 +41,12 @@ export default function Dashboard({ user, domains }: any) {
 	const [images, setImages] = useState([] as Record<string, string>[]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
+	const [delay, setDelay] = useState(0);
 	async function update() {
 		setLoading(true);
 		try {
 			console.log(current);
+			setDelay(0);
 			let r = await isoFetch('/api/gallery', {
 				method: 'POST',
 				body: JSON.stringify({
@@ -85,29 +89,36 @@ export default function Dashboard({ user, domains }: any) {
 				</ModalContent>
 			</Modal>
 			<SimpleGrid minChildWidth="300px" spacing="5px">
-				{(Array.isArray(images) ? images : []).map((x, index) => {
-					return (
-						<GridItem
-							key={index}
-							border="2px"
-							borderColor={'cyan.200'}
-							w="300px"
-							h="300px"
-							justifyContent={'center'}
-						>
-							<Image
-								objectFit={'contain'}
-								src={`https://ascella.wtf/v2/ascella/view/${x.vanity}`}
-								onError={(e) => {
-									setError(
-										'Failed to load a image this is likely due a ratelimit issue'
-									);
-									onOpen();
-								}}
-							></Image>
-						</GridItem>
-					);
-				})}
+				{!loading &&
+					(Array.isArray(images) ? images : []).map((x, index) => {
+						return (
+							<GridItem
+								key={index}
+								w="300px"
+								h="300px"
+								justifyContent={'center'}
+							>
+								<Image
+									objectFit={'contain'}
+									src={`https://ascella.wtf/v2/ascella/view/${x.vanity}`}
+									border="2px"
+									borderColor={'cyan.200'}
+									onError={(_) => {
+										setError(
+											'Failed to load a image this is likely due a ratelimit issue'
+										);
+										onOpen();
+									}}
+								></Image>
+								<Wrap gap="2" pt="2">
+									<a href={`https://ascella.host/${x.vanity}`}>
+										<Tag>{x.vanity}</Tag>
+									</a>
+									<Tag>{x.id}</Tag>
+								</Wrap>
+							</GridItem>
+						);
+					})}
 			</SimpleGrid>
 			{current !== 0 && !loading && !isOpen && (
 				<Button
