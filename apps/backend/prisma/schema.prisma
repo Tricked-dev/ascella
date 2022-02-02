@@ -54,6 +54,7 @@ model users {
   key        String   @db.VarChar(200)
   name       String   @db.VarChar(200)
   autodelete Int?
+  deleteall  Int?     @default(90)
   emojis     Boolean?
   created    DateTime @default(now())
 }
