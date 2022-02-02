@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
 	import { getImage } from '$lib/api';
 	import type { Load, Handle } from '@sveltejs/kit';
+	import { onMount } from 'svelte';
 	export const prerender = true;
 	export const hydrate = false;
 	export const router = true;
@@ -31,6 +32,10 @@
 			props: { ...data, url: imgParams[imgParams?.length - 1] }
 		};
 	};
+	onMount(() => {
+		//@ts-ignore -
+		if (umami) umami.trackView('/image');
+	});
 </script>
 
 <script lang="ts">
@@ -71,6 +76,7 @@
 		async
 		defer
 		data-website-id="9d7a10ea-0ef7-4e4a-959f-bfe22fc26cfd"
+		data-auto-track="false"
 		src="https://analytics.tricked.pro/umami.js"></script>
 </svelte:head>
 
