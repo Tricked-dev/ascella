@@ -1,6 +1,8 @@
 use std::sync::Arc;
 
 use once_cell::sync::OnceCell;
+use serde::Deserialize;
+use serde::Serialize;
 use twilight_model::gateway::payload::outgoing::update_presence::UpdatePresencePayload;
 use twilight_model::gateway::presence::ActivityType;
 use twilight_model::gateway::presence::MinimalActivity;
@@ -9,8 +11,16 @@ use twilight_model::gateway::presence::Status;
 use crate::commands;
 use crate::prelude::*;
 
+#[derive(Serialize, Deserialize, Clone)]
+pub struct Comment {
+    avatar: String,
+    comment: String,
+    name: String,
+}
+
 lazy_static! {
     pub static ref HTTP: OnceCell<Arc<Client>> = OnceCell::new();
+    pub static ref REVIEWS: OnceCell<Vec<Comment>> = OnceCell::new();
 }
 
 pub async fn start_bot() -> Result<()> {
@@ -108,6 +118,35 @@ pub async fn start_bot() -> Result<()> {
                 _ => {}
             },
             Event::Ready(_) => {
+                if REVIEWS.get().is_none() {
+                    let pins = http
+                        .pins(ChannelId(
+                            core::num::NonZeroU64::new(937239935545663498).unwrap(),
+                        ))
+                        .exec()
+                        .await?
+                        .models()
+                        .await?
+                        .iter()
+                        .map(|x| {
+                            let comment = x.content.clone();
+
+                            let user = &x.author;
+                            let name = user.name.clone();
+                            Comment {
+                                avatar: format!(
+                                    "https://cdn.discordapp.com/avatars/{}/{}.png",
+                                    &user.id,
+                                    &user.avatar.as_ref().unwrap_or(&"".to_owned())
+                                ),
+                                comment,
+                                name,
+                            }
+                        })
+                        .collect::<Vec<Comment>>();
+                    REVIEWS.set(pins);
+                };
+
                 log::info!("Bot got on")
             }
             _ => {}

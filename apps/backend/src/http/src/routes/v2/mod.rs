@@ -6,6 +6,7 @@ pub mod images;
 pub mod paste;
 pub mod public;
 pub mod redirect;
+pub mod reviews;
 pub mod stats;
 pub mod upload;
 pub mod verify;

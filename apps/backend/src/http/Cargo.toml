@@ -32,3 +32,4 @@ tokio-postgres = "0.7.5"
 tracing = "0.1.29"
 tree_magic = "0.2.3"
 url = "2.2.2"
+ascella-bot = { path = "../bot" }

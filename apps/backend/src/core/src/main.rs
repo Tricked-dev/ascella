@@ -45,6 +45,7 @@ async fn init() -> std::io::Result<()> {
                             .service(domain::post)
                             .service(domains::get)
                             .service(embed::post)
+                            .service(reviews::get)
                             .service(public::post)
                             .service(redirect::post)
                             .service(stats::get)

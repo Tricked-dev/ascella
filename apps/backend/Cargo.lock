@@ -357,6 +357,7 @@ dependencies = [
  "actix-multipart",
  "actix-web",
  "anyhow",
+ "ascella-bot",
  "ascella-database",
  "ascella-util",
  "byte-unit",
