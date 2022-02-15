@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { getReviews } from '$lib/api';
+	import { fly } from 'svelte/transition';
+	import { onMount } from 'svelte';
+
 	const features: any[] = [
 		{
 			title: 'Easily change your settings',
@@ -37,15 +41,23 @@
 	];
 	import '../css/index.scss';
 
-	const reviews = ['bumble', 'egirl', 'stef', 'trash', 'tyman'];
+	$: reviews = [];
+	onMount(async () => {
+		let revs = await getReviews();
+		reviews = revs;
+	});
 	let image = 0;
-	setInterval(() => {
-		if (image == 4) {
-			image = 0;
-		} else {
-			image += 1;
-		}
-	}, 2000);
+	let lastInterval = 0;
+	$: {
+		clearInterval(lastInterval);
+		lastInterval = setInterval(() => {
+			if (image == reviews.length - 1) {
+				image = 0;
+			} else {
+				image += 1;
+			}
+		}, 4000);
+	}
 </script>
 
 <div class="mx-auto md:p-4 p-2">
@@ -84,39 +96,42 @@
 						/>
 					</div>
 				</div>
-				<!-- <div
-					class="p-4 bg-slate-600 shadow-lg mx-auto hover:shadow-2xl hover:shadow-green-500/50 w-full"
-				>
-					<div class="">
-						<img alt="" src={feature.image} class="w-full h-40 object-cover" />
-					</div>
-					<div class="">
-						<div>
-							<p class="text-xl text-cyan-400">{feature.title}</p>
-						</div>
-						<div>
-							<p class="text-gray-400">{feature.description}</p>
-						</div>
-					</div>
-				</div> -->
 			{/each}
 		</div>
 		<div class="py-60" />
-		<div class="grid justify-center gap-2 w-full">
-			<div class="bg-[#36393F] p-4">
-				<div>
-					<img src={`/reviews/${reviews[image]}.png`} alt={reviews[image]} />
-				</div>
-				<div class="flex gap-2 justify-center w-full ">
-					{#each reviews as _, index}
-						{#if index == image}
-							<button on:click={() => (image = index)} class="py-1 px-4 bg-slate-400 rounded-lg" />
-						{:else}
-							<button on:click={() => (image = index)} class="py-1 px-4 bg-slate-200 rounded-lg" />
-						{/if}
-					{/each}
+		{#if reviews.length !== 0}
+			<div class="grid justify-center gap-2 w-full">
+				<div class="bg-[#36393F] p-4">
+					<div in:fly={{ x: 200, duration: 1000 }} out:fly={{ x: -200, duration: 1000 }}>
+						<div class="flex text-white text-lg gap-2">
+							<img
+								class="rounded-[50%] p-2"
+								src={`${reviews[image].avatar}`}
+								alt={reviews[image].name}
+							/>
+							<div>
+								<p class="text-2xl font-bold text-amber-400">{reviews[image].name}</p>
+								<p class="text-white">{reviews[image].comment}</p>
+							</div>
+						</div>
+					</div>
+					<div class="flex gap-2 justify-center w-full ">
+						{#each reviews as _, index}
+							{#if index == image}
+								<button
+									on:click={() => (image = index)}
+									class="py-1 px-4 bg-slate-400 rounded-lg"
+								/>
+							{:else}
+								<button
+									on:click={() => (image = index)}
+									class="py-1 px-4 bg-slate-200 rounded-lg"
+								/>
+							{/if}
+						{/each}
+					</div>
 				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
 </div>
