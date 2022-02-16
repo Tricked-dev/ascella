@@ -34,9 +34,13 @@ libc = "0.2.112"
 [target.'cfg(windows)'.build-dependencies]
 winapi = "0.3.9"
 
+[[bin]]
+name = "desktop"
+path = "src/main.rs"
+
 [package.metadata.generate-rpm]
 assets = [
-  { source = "target/release/ascella", dest = "/usr/bin/ascella", mode = "0755" },
+  { source = "target/release/desktop", dest = "/usr/bin/ascella", mode = "0755" },
   { source = "LICENSE", dest = "/usr/share/doc/ascella/LICENSE", doc = true, mode = "0644" },
   { source = "README.md", dest = "/usr/share/doc/ascella/README.md", doc = true, mode = "0644" },
 ]
@@ -50,7 +54,7 @@ depends = "$auto"
 section = "utility"
 priority = "optional"
 assets = [
-  ["target/release/ascella", "usr/bin/", "755"],
+  ["target/release/desktop", "usr/bin/", "755"],
   ["LICENSE", "usr/share/doc/ascella/LICENSE", "644"],
   ["README.md", "usr/share/doc/ascella/README.md", "644"],
 ]

@@ -8,7 +8,7 @@ wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appim
 chmod a+x appimagetool-x86_64.AppImage
 sudo mv appimagetool-x86_64.AppImage /bin/appimagetool
 
-cd apps/desktop
+cd desktop
 
 run() {
     strip -s target/release/ascella
@@ -23,11 +23,11 @@ run aur
 run appimage
 run generate-rpm
 
-mkdir ../../dist &>/dev/null
+mkdir ../dist &>/dev/null
 
-mv PKGBUILD ../../dist/
-mv ascella-*.AppImage ../../dist/
-mv ascella-*.tar.gz ../../dist/
-mv target/debian/ascella_*.deb ../../dist/
-mv target/generate-rpm/ascella-*.rpm ../../dist/
-cp LICENSE ../../dist/
+mv PKGBUILD ../dist/
+mv ascella-*.AppImage ../dist/
+mv ascella-*.tar.gz ../dist/
+mv target/debian/ascella_*.deb ../dist/
+mv target/generate-rpm/ascella-*.rpm ../dist/
+cp LICENSE ../dist/

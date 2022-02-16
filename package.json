@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "web",
+    "dash"
   ],
   "scripts": {
     "build": "npx turbo run build",
@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "dprint": "^0.19.1",
+    "prisma": "^3.9.2",
     "turbo": "^1.0.23"
   },
   "turbo": {

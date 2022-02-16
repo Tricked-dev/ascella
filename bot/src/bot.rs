@@ -144,7 +144,7 @@ pub async fn start_bot() -> Result<()> {
                             }
                         })
                         .collect::<Vec<Comment>>();
-                    REVIEWS.set(pins);
+                    REVIEWS.set(pins).ok();
                 };
 
                 log::info!("Bot got on")

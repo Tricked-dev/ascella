@@ -33,3 +33,17 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# cargo
+
+target/
+
+# Env
+.env
+.env.*
+# Images
+images/*
+
+# Idea
+
+.idea/*

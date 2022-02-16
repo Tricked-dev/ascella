@@ -35,17 +35,17 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --locked --manifest-path ./apps/backend/Cargo.toml
+          args: --release --locked
 
       - name: Strip release binary (linux and macos)
-        run: strip "apps/backend/target/release/$BIN_NAME"
+        run: strip "target/release/$BIN_NAME"
 
       - name: make dist
         run: mkdir dist
 
       - name: Build archive
         shell: bash
-        run: cp "apps/backend/target/release/$BIN_NAME" "dist/"
+        run: cp "target/release/$BIN_NAME" "dist/"
 
       - uses: actions/upload-artifact@v2.2.4
         with:

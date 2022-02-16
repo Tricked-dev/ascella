@@ -6,7 +6,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  BIN_NAME: ascella
+  BIN_NAME: desktop
   PROJECT_NAME: ascella
   REPO_NAME: Tricked-dev/ascella
 
@@ -61,19 +61,12 @@ jobs:
           sudo apt-get install libssl-dev pkg-config libxcb-composite0-dev libx11-dev
           sudo apt-get install desktop-file-utils zsync
 
-      - name: Run cargo test
-        uses: actions-rs/cargo@v1
-        with:
-          use-cross: ${{ matrix.cross }}
-          command: test
-          args: --release --target ${{ matrix.target }} --manifest-path ./apps/desktop/Cargo.toml
-
       - name: Build release binary
         uses: actions-rs/cargo@v1
         with:
           use-cross: ${{ matrix.cross }}
           command: build
-          args: --release --target ${{ matrix.target }} --manifest-path ./apps/desktop/Cargo.toml
+          args: --release --target ${{ matrix.target }} --bin desktop
 
       - name: Strip release binary (linux and macos)
         run: strip "./apps/desktop/target/${{ matrix.target }}/release/$BIN_NAME"
