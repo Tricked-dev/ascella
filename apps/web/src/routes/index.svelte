@@ -101,20 +101,24 @@
 		<div class="py-60" />
 		{#if reviews.length !== 0}
 			<div class="grid justify-center gap-2 w-full">
-				<div class="bg-[#36393F] p-4">
-					<div in:fly={{ x: 200, duration: 1000 }} out:fly={{ x: -200, duration: 1000 }}>
-						<div class="flex text-white text-lg gap-2">
-							<img
-								class="rounded-[50%] p-2"
-								src={`${reviews[image].avatar}`}
-								alt={reviews[image].name}
-							/>
-							<div>
-								<p class="text-2xl font-bold text-amber-400">{reviews[image].name}</p>
-								<p class="text-white">{reviews[image].comment}</p>
+				<div class="bg-[#36393F] p-4 max-h-48">
+					{#each reviews as _, index}
+						{#if index == image}
+							<div in:fly={{ x: 200, duration: 400 }} out:fly={{ x: -200, duration: 400 }}>
+								<div class="flex text-white text-lg gap-2">
+									<img
+										class="rounded-[50%] p-2"
+										src={`${reviews[image].avatar}`}
+										alt={reviews[image].name}
+									/>
+									<div>
+										<p class="text-2xl font-bold text-amber-400">{reviews[image].name}</p>
+										<p class="text-white">{reviews[image].comment}</p>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+						{/if}
+					{/each}
 					<div class="flex gap-2 justify-center w-full ">
 						{#each reviews as _, index}
 							{#if index == image}
