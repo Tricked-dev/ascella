@@ -47,6 +47,10 @@ jobs:
         shell: bash
         run: cp "target/release/$BIN_NAME" "dist/"
 
+      - name: Build archive
+        shell: bash
+        run: cp "target/release/desktop" "dist/"
+
       - uses: actions/upload-artifact@v2.2.4
         with:
           name: ascella-x86_64-unknown-linux-gnu
