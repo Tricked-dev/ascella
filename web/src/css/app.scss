@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-	@apply bg-slate-900;
+	@apply bg-gradient-to-br from-cyan-600 to-sky-600;
 }
