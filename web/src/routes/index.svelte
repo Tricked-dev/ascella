@@ -56,7 +56,7 @@
 			} else {
 				image += 1;
 			}
-		}, 4000);
+		}, 4000) as unknown as number;
 	}
 </script>
 
