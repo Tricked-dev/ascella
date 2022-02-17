@@ -63,8 +63,8 @@
 <div class="mx-auto md:p-4 p-2">
 	<div class="">
 		<div class="text-center">
-			<h1 class="text-7xl underline text-sky-600">Welcome to the Ascella uploader</h1>
-			<h2 class="text-slate-100 text-3xl">
+			<h1 class="text-7xl text-sky-100 p-1">Welcome to the Ascella uploader</h1>
+			<h2 class="text-sky-100 text-3xl pb-6">
 				Looking to score an invite? Join the <a
 					class="underline text-green-500"
 					href="https://discord.gg/mY8zTARu4g">Discord.</a
@@ -73,27 +73,13 @@
 		</div>
 		<div>
 			{#each features as feature, index}
-				<div
-					class={`md:flex w-full p-2 ${
-						index % 2 ? 'md:ml-auto md:mr-0 text-right' : 'md:mr-auto md:ml-0 md:flex-row-reverse'
-					}`}
-				>
-					<div
-						class="group m-auto p-1 bg-green-500 rounded-xl px-2 py-1 w-full hover:p-6 duration-500"
-					>
-						<h3 class="text-6xl group-hover:text-7xl duration-500 text-sky-900">
-							{feature.title}
-						</h3>
-						<p class="text-2xl group-hover:text-3xl duration-500 text-sky-800">
-							{feature.description}
-						</p>
+				<div class="flex bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 duration-200 p-10 m-10 h-96">
+					<div class="w-2/3">
+						<h1 class="text-6xl underline decoration-red-500 text-slate-50 pb-6">{feature.title}</h1>
+						<h3 class="text-3xl text-sky-200">{feature.description}</h3>
 					</div>
-					<div class="m-auto p-1">
-						<img
-							class="h-96 w-auto hover:h-[30rem] duration-500"
-							alt={feature.name}
-							src={`${feature.image}`}
-						/>
+					<div class="w-1/3 pl-6 flex justify-center overflow-hidden">
+						<img alt={feature.description} src="{feature.image}" class="w-max object-cover object-left">
 					</div>
 				</div>
 			{/each}
