@@ -2,11 +2,11 @@
 	"name": "images-frontend",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "yarn svelte-kit dev",
-		"build": "yarn svelte-kit build",
-		"preview": "yarn svelte-kit preview",
-		"check": "yarn svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "yarn svelte-check --tsconfig ./tsconfig.json --watch"
+		"dev": "npx yarn svelte-kit dev",
+		"build": "npx yarn svelte-kit build",
+		"preview": "npx yarn svelte-kit preview",
+		"check": "npx yarn svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "npx yarn svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
 		"@sveltejs/kit": "next",

@@ -155,13 +155,13 @@
 </svelte:head>
 
 <template class="flex-1 flex">
-	<nav class="bg-slate-800 ">
+	<nav class="bg-sky-700">
 		<div class="flex flex-col">
 			<div class="flex items-center">
 				<div class="flex flex-col md:flex-row gap-4 p-2 align-middle">
-					<a class="text-sky-600 text-xl" href="https://ascella.host">Ascella.host</a>
+					<a class="text-sky-200 text-xl" href="https://ascella.host">Ascella.host</a>
 					{#each topLinks as link}
-						<a class="hover:text-sky-600 text-sky-500 underline text-lg" href={link.href}
+						<a class="hover:text-sky-100 text-sky-300 underline text-lg" href={link.href}
 							>{link.a}</a
 						>
 					{/each}
@@ -207,13 +207,13 @@
 			</div>
 		</div>
 	</nav>
-
+	<div class="pb-0.5 bg-sky-800" />
 	<div class="pb-4" />
 	<slot />
 
 	<div class="pb-7" />
 	<div
-		class="transform no-underline text-gray-500 hover:text-white min-h-full border-t-2 border-gray-600 hover:border-white pt-6 footer"
+		class="transform no-underline text-gray-300 hover:text-white min-h-full border-t-2 border-gray-300 hover:border-white pt-6 footer bg-sky-700"
 		transition:fly={{ x: 1500, y: 0, duration: 800 }}
 	>
 		<div class="flex-auto flex list-none">
@@ -222,7 +222,7 @@
 					<u>
 						{#each links as link}
 							<li>
-								<a href={link.href} class="px-4 py-2 not-sr-only hover:text-blue-500 translate-x-"
+								<a href={link.href} class="px-4 py-2 not-sr-only hover:text-blue-300 translate-x-"
 									>{link.a}</a
 								>
 							</li>
