@@ -50,6 +50,7 @@ async fn init() -> std::io::Result<()> {
                             .service(redirect::post)
                             .service(stats::get)
                             .service(verify::post)
+                            .service(view::getpng)
                             .service(view::get)
                             .service(images::post)
                             .service(
