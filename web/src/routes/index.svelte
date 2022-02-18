@@ -74,15 +74,15 @@
 		<div>
 			{#each features as feature, index}
 				<div
-					class="flex bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 duration-200 p-10 m-10 h-96"
+					class="duration-75 md md:flex-row flex-col flex bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 md:duration-200 md:p-10 p-5 md:m-10 m-5 md:h-96"
 				>
 					<div class="w-2/3">
-						<h1 class="text-6xl underline decoration-red-500 text-slate-50 pb-6">
+						<h1 class="md:text-6xl text-2xl underline decoration-red-500 text-slate-50 pb-6">
 							{feature.title}
 						</h1>
-						<h3 class="text-3xl text-sky-200">{feature.description}</h3>
+						<h3 class="md:text-3xl text-xl text-sky-200">{feature.description}</h3>
 					</div>
-					<div class="w-1/3 pl-6 flex justify-center overflow-hidden">
+					<div class="md:w-1/3 md:pl-6 md:h-auto h-52 flex justify-center overflow-hidden">
 						<img
 							alt={feature.description}
 							src={feature.image}
@@ -104,6 +104,12 @@
 										class="rounded-[50%] p-2"
 										src={`${reviews[image].avatar}`}
 										alt={reviews[image].name}
+										on:error={(e) => {
+											//@ts-ignore -
+											if (e.target.src == reviews[image + 1].avatar) return;
+											//@ts-ignore -
+											e.target.src = reviews[image + 1].avatar;
+										}}
 									/>
 									<div>
 										<p class="text-2xl font-bold text-amber-400">{reviews[image].name}</p>
@@ -113,7 +119,7 @@
 							</div>
 						{/if}
 					{/each}
-					<div class="flex gap-2 justify-center w-full ">
+					<div class="md:flex gap-2 justify-center md:w-full hidden ">
 						{#each reviews as _, index}
 							{#if index == image}
 								<button
