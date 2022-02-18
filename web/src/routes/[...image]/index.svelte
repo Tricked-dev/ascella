@@ -107,8 +107,8 @@
 
 <div class="main">
 	<div class="box mx-auto">
-		<a href={`https://ascella.wtf/v2/ascella/view/${url}`} target="_blank">
-			<img class="image" alt="" src={`https://ascella.wtf/v2/ascella/view/${url}`} />
+		<a href={`https://ascella.wtf/v2/ascella/view/${url}.png`} target="_blank">
+			<img class="image" alt="" src={`https://ascella.wtf/v2/ascella/view/${url}.png`} />
 		</a>
 	</div>
 </div>
