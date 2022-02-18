@@ -68,7 +68,7 @@
 	<meta property="theme-color" content={embed.color} />
 	<meta property="og:author" content={user_name} />
 
-	<meta property="og:image" content={`https://ascella.wtf/v2/ascella/view/${url}`} />
+	<meta property="og:image" content={`https://ascella.wtf/v2/ascella/view/${url}.png`} />
 	<meta property="og:type" content="website" />
 	<meta property="twitter:card" content="summary_large_image" />
 
