@@ -128,31 +128,16 @@
 	.image {
 		object-fit: contain;
 		height: 100%;
-		/* margin-top: auto; */
-		/* margin-bottom: auto; */
-		/* display: flex; */
-		/* padding: auto; */
-		/* padding-top: auto; */
-		/* max-width: 80rem; */
-		/* max-height: 60rem; */
-		/* max-height: 50rem; */
-		/* min-height: max-content; */
-		/* width: ; */
-		/* width: auto; */
-		/* height: auto; */
+		width: 100%;
 	}
 	.box {
-		width: 20rem;
-		height: 15rem;
+		width: 40rem;
+		height: 55rem;
 		justify-content: center;
-		display: flex;
 	}
 	.main {
 		padding-top: 4rem;
-		/* margin-top: auto; */
-		/* margin-bottom: auto; */
-		display: flex;
+		display: grid;
 		justify-content: center;
-		/* align-items: center; */
 	}
 </style>

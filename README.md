@@ -2,11 +2,6 @@
 
 this repo includes the various projects needed to run ascella
 
-- [Backend](./apps/backend/README.md)
-- [Dashboard](./apps/dash/README.md)
-- [Frontend](./apps/web/README.md)
-- [Desktop](./apps/desktop/README.md)
-
 ---
 ### Ascella - Backend
 
