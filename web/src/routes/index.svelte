@@ -1,7 +1,14 @@
 <script lang="ts">
 	import { getReviews } from '$lib/api';
-	import { fly } from 'svelte/transition';
+	import { media } from '$lib/media';
 	import { onMount } from 'svelte';
+
+	let Carousel;
+	let carousel;
+
+	const handleNextClick = () => {
+		carousel.goToNext();
+	};
 
 	const features: any[] = [
 		{
@@ -43,21 +50,10 @@
 
 	$: reviews = [];
 	onMount(async () => {
-		let revs = await getReviews();
+		const [module, revs] = await Promise.all([import('svelte-carousel'), getReviews()]);
+		Carousel = module.default;
 		reviews = revs;
 	});
-	let image = 0;
-	let lastInterval = 0;
-	$: {
-		clearInterval(lastInterval);
-		lastInterval = setInterval(() => {
-			if (image == reviews.length - 1) {
-				image = 0;
-			} else {
-				image += 1;
-			}
-		}, 4000) as unknown as number;
-	}
 </script>
 
 <div class="mx-auto md:p-4 p-2">
@@ -92,33 +88,63 @@
 				</div>
 			{/each}
 		</div>
-		<div class="py-60" />
 		{#if reviews.length !== 0}
-			<div class="grid justify-center gap-2 w-full">
-				<div class="bg-[#36393F] p-4 max-h-48">
-					{#each reviews as _, index}
-						{#if index == image}
-							<div in:fly={{ x: 200, duration: 400 }} out:fly={{ x: -200, duration: 400 }}>
-								<div class="flex text-white text-lg gap-2">
-									<img
-										class="rounded-[50%] p-2"
-										src={`${reviews[image].avatar}`}
-										alt={reviews[image].name}
-										on:error={(e) => {
-											//@ts-ignore -
-											if (e.target.src == reviews[image + 1].avatar) return;
-											//@ts-ignore -
-											e.target.src = reviews[image + 1].avatar;
-										}}
-									/>
-									<div>
-										<p class="text-2xl font-bold text-amber-400">{reviews[image].name}</p>
-										<p class="text-white">{reviews[image].comment}</p>
-									</div>
+			<div class="p-4">
+				<svelte:component
+					this={Carousel}
+					bind:this={carousel}
+					class="w-auto"
+					particlesToShow={$media.laptop ? 3 : $media.tablet ? 2 : 1}
+					particlesToScroll={$media.laptop || $media.tablet ? 2 : 1}
+					autoplay
+					autoplayDuration={3500}
+					autoplayProgressVisible
+					pauseOnFocus
+				>
+					{#each reviews as review}
+						<div>
+							<div class="flex text-white text-lg gap-2 bg-[#36393F] p-2 h-full">
+								<img class="rounded-[50%] p-2" src={`${review.avatar}`} alt={review.name} />
+								<div>
+									<p class="text-2xl font-bold text-amber-400">{review.name}</p>
+									<p class="text-white">{review.comment}</p>
 								</div>
 							</div>
-						{/if}
+						</div>
 					{/each}
+				</svelte:component>
+			</div>
+		{/if}
+
+		<!-- {#if reviews.length !== 0}
+			<div class="grid justify-center gap-2 w-full">
+				<div class="bg-[#36393F] p-4 max-h-48">
+					<div class="h-auto">
+						{#each reviews as _, index}
+							{#if index == image}
+								<div in:fly={{ x: 200, duration: 400 }} out:fly={{ x: -200, duration: 400 }}>
+									<div class="flex text-white text-lg gap-2 absolute">
+										<img
+											class="rounded-[50%] p-2"
+											src={`${reviews[image].avatar}`}
+											alt={reviews[image].name}
+											on:error={(e) => {
+												//@ts-ignore -
+												if (e.target.src == reviews[image + 1].avatar) return;
+												//@ts-ignore -
+												e.target.src = reviews[image + 1].avatar;
+											}}
+										/>
+										<div>
+											<p class="text-2xl font-bold text-amber-400">{reviews[image].name}</p>
+											<p class="text-white">{reviews[image].comment}</p>
+										</div>
+									</div>
+								</div>
+							{/if}
+						{/each}
+					</div>
+
 					<div class="md:flex gap-2 justify-center md:w-full hidden ">
 						{#each reviews as _, index}
 							{#if index == image}
@@ -136,6 +162,6 @@
 					</div>
 				</div>
 			</div>
-		{/if}
+		{/if} -->
 	</div>
 </div>
