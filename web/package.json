@@ -46,6 +46,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"svelte-media": "^0.1.5"
+		"svelte-carousel": "^1.0.17-rc4"
 	}
 }
