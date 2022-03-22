@@ -11,14 +11,14 @@ services:
       - '890:3000'
     env_file:
       - .env
-  dash:
-    depends_on:
-      - database
-    ports:
-      - 3400:3000
-    build: ./dash
-    env_file:
-      - .env
+  # dash:
+  #   depends_on:
+  #     - database
+  #   ports:
+  #     - 3400:3000
+  #   build: ./dash
+  #   env_file:
+  #     - .env
 
   backend:
     build: .
