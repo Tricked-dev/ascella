@@ -1,4 +1,4 @@
-import vercel from '@sveltejs/adapter-vercel';
+import node from '@sveltejs/adapter-node';
 import { mdsvex } from 'mdsvex';
 import preprocess from 'svelte-preprocess';
 import mdsvexConfig from './mdsvex.config.js';
@@ -16,7 +16,7 @@ const config = {
 	],
 
 	kit: {
-		adapter: vercel(),
+		adapter: node(),
 		prerender: {
 			crawl: true,
 			enabled: true,

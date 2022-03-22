@@ -2,16 +2,16 @@
 	"name": "images-frontend",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "yarn svelte-kit dev",
-		"build": "yarn svelte-kit build",
-		"preview": "yarn svelte-kit preview",
-		"check": "yarn svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "yarn svelte-check --tsconfig ./tsconfig.json --watch"
+		"dev": "svelte-kit dev",
+		"build": "svelte-kit build",
+		"preview": "svelte-kit preview",
+		"check": "svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
 		"@fontsource/roboto": "^4.5.1",
-		"@sveltejs/adapter-vercel": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/adapter-vercel": "^1.0.0-next.47",
+		"@sveltejs/kit": "^1.0.0-next.302",
 		"@tailwindcss/typography": "^0.5.0",
 		"@types/cookie": "^0.4.1",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",
@@ -29,15 +29,17 @@
 		"remark-github": "^11.1.1",
 		"sass": "^1.43.3",
 		"svelte": "^3.44.3",
+		"svelte-carousel": "^1.0.17-rc4",
+		"svelte-media": "^0.1.5",
 		"svelte-media-query": "^1.1.2",
 		"svelte-preprocess": "^4.9.4",
 		"tailwindcss": "^3.0.1",
 		"tslib": "^2.3.1",
-		"svelte-media": "^0.1.5",
-		"svelte-carousel": "^1.0.17-rc4",
 		"typescript": "^4.5.4"
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-node": "^1.0.0-next.73",
+		"strip-indent": "^4.0.0"
 	}
 }
