@@ -78,7 +78,7 @@ async fn init() -> std::io::Result<()> {
                 .error_response()
             }))
     })
-    .bind("0.0.0.0:7878")?
+    .bind(format!("0.0.0.0:{}", std::env::var("BACKEND_PORT").unwrap_or("7878".to_owned())))?
     .run()
     .await
 }

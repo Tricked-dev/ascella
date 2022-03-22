@@ -3,10 +3,23 @@
 version: '3.9'
 
 services:
-  # web:
-  #     build: ./web
-  #     ports:
-  #         - "850:3000"
+  web:
+    build: ./web
+    depends_on:
+      - database
+    ports:
+      - '890:3000'
+    env_file:
+      - .env
+  dash:
+    depends_on:
+      - database
+    ports:
+      - 3400:3000
+    build: ./dash
+    env_file:
+      - .env
+
   backend:
     build: .
     depends_on:
@@ -24,7 +37,7 @@ services:
       - .env
     volumes:
       - db:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  # - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
   # db:
   #     image: postgres
   #     restart: always
