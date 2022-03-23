@@ -1,5 +1,7 @@
 {
 	"editor.defaultFormatter": "dprint",
+	"deno.path": "/home/tricked/.deno/bin/deno",
+	"deno.enablePaths": ["embed-service", "init.ts"],
 	"[ignore]": {
 		"editor.defaultFormatter": "foxundermoon.shell-format"
 	},
@@ -10,10 +12,10 @@
 		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[typescript]": {
-		"editor.defaultFormatter": "dprint.dprint"
+		"editor.defaultFormatter": "denoland.vscode-deno"
 	},
 	"[rust]": {
-		"editor.defaultFormatter": "dprint.dprint"
+		"editor.defaultFormatter": "matklad.rust-analyzer"
 	},
 	"[markdown]": {
 		"editor.defaultFormatter": "dprint.dprint"

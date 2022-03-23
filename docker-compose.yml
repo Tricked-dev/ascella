@@ -8,24 +8,32 @@ services:
     depends_on:
       - database
     ports:
-      - '890:3000'
+      - '4440:3000'
     env_file:
       - .env
-  # dash:
-  #   depends_on:
-  #     - database
-  #   ports:
-  #     - 3400:3000
-  #   build: ./dash
-  #   env_file:
-  #     - .env
-
+  dash:
+    depends_on:
+      - database
+    ports:
+      - 4441:3000
+    build: ./dash
+    env_file:
+      - .env
+  deno:
+    container_name: deno
+    image: deno
+    restart: always
+    build: embed-service/
+    env_file:
+      - .env
+    ports:
+      - '4442:3000'
   backend:
     build: .
     depends_on:
       - database
     ports:
-      - '850:7878'
+      - '4443:3000'
     env_file:
       - .env
   database:
@@ -37,19 +45,6 @@ services:
       - .env
     volumes:
       - db:/var/lib/postgresql/data
-  # - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
-  # db:
-  #     image: postgres
-  #     restart: always
-  #     ports:
-  #         - "5432:5432"
-  #     environment:
-  #         POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-  # adminer:
-  #     image: adminer
-  #     restart: always
-  #     ports:
-  #         - 8080:8080
 volumes:
   db:
     driver: local
