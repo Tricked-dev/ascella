@@ -126,12 +126,7 @@ fn get_header(val: Option<&HeaderValue>) -> Result<&str> {
 }
 pub async fn validate_request_upload(req: &HttpRequest) -> Result<(Users, Result<&str>), Error> {
     let headers = req.headers();
-    let user_id = get_header(headers.get("x-user-id"))
-        .unwrap_or("-1")
-        .parse::<i32>()
-        .unwrap_or(-1);
-    let user_token = get_header(headers.get("x-user-token"))
-        .unwrap_or_else(|_| get_header(headers.get("x-user-key")).unwrap_or(""));
+
     let auth = get_header(headers.get("authorization"));
     if let Ok(auth) = auth {
         if let Ok(user) = get_user_auth::exec(auth.to_owned()).await {
@@ -146,19 +141,28 @@ pub async fn validate_request_upload(req: &HttpRequest) -> Result<(Users, Result
         } else {
             Err(Error::NotAuthorized)
         }
-    } else if user_id == -1 || user_token.is_empty() {
-        Err(Error::NotAuthorized)
-    } else if let Ok(user) = get_user_token::exec(user_id, user_token.to_owned()).await {
-        log::info!("{} {}", &user.name, &user.id);
-        actix_web::rt::spawn(send_text_webhook(format!(
-            "**{}** {} {}",
-            &req.path(),
-            &user.name,
-            &user.id
-        )));
-        Ok((user, get_header(headers.get("x-image-effects"))))
     } else {
-        Err(Error::NotAuthorized)
+        let user_id = get_header(headers.get("x-user-id"))
+            .unwrap_or("-1")
+            .parse::<i32>()
+            .unwrap_or(-1);
+        let user_token = get_header(headers.get("x-user-token"))
+            .unwrap_or_else(|_| get_header(headers.get("x-user-key")).unwrap_or(""));
+
+        if user_id == -1 || user_token.is_empty() {
+            Err(Error::NotAuthorized)
+        } else if let Ok(user) = get_user_token::exec(user_id, user_token.to_owned()).await {
+            log::info!("{} {}", &user.name, &user.id);
+            actix_web::rt::spawn(send_text_webhook(format!(
+                "**{}** {} {}",
+                &req.path(),
+                &user.name,
+                &user.id
+            )));
+            Ok((user, get_header(headers.get("x-image-effects"))))
+        } else {
+            Err(Error::NotAuthorized)
+        }
     }
 }
 pub async fn validate_request(req: &HttpRequest) -> Result<Users, Error> {

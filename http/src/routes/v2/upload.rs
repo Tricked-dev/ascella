@@ -44,6 +44,19 @@ fn zws_url() -> String {
     s
 }
 
+#[cfg(test)]
+mod test_urls {
+    use super::*;
+
+    #[self::test]
+    async fn test_add() {
+        println!("{}", default_url());
+        println!("{}", ulid_url());
+        println!("{}", gfycat_url());
+        println!("{}", zws_url());
+    }
+}
+
 #[post("/upload")]
 pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<HttpResponse, Error> {
     if let Ok((data, _)) = validate_request_upload(&req).await {
