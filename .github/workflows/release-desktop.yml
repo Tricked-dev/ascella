@@ -71,7 +71,7 @@ jobs:
       - name: Strip release binary (linux and macos)
         run: strip "./target/${{ matrix.target }}/release/$BIN_NAME"
 
-      - run: mv ./target .
+      # - run: mv ./target .
 
       - name: make dist
         run: mkdir dist
