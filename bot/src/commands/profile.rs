@@ -30,7 +30,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
             domain = user.domain,
             auto = user.autodelete.map(|x| { x.to_string() }).unwrap_or("Images wont get deleted automatically".to_owned()),
             images = images,
-            config = serde_json::to_string_pretty(&create_config(&user.upload_key.unwrap_or(new_key.unwrap()))).unwrap()
+            config = serde_json::to_string_pretty(&create_config(&user.upload_key.unwrap_or(new_key.unwrap_or("please wait 120 seconds".to_owned())))).unwrap()
         );
 
     let embed = create_embed()
