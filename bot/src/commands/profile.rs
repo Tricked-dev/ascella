@@ -19,10 +19,13 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
     } else {
         None
     };
+    let upl_key = &user
+        .upload_key
+        .unwrap_or(new_key.unwrap_or("please wait 120 seconds".to_owned()));
     let images = get_user_image_count::exec(user.id).await?;
 
     let message = format!(
-        "dashboard: https://dash.ascella.host\nid: `{id}`\nname: `{name}`\ndiscord_id: `{discord}`\npassword: `{pass}`\nautodelete images: `{auto}`\n\ndomain: `{domain}`\nimages: `{images}`\n\ndownload config [here](https://ascella.wtf/v2/ascella/config?id={id}&key={pass})\n```json\n{config}\n```",
+        "dashboard: https://dash.ascella.host\nid: `{id}`\nname: `{name}`\ndiscord_id: `{discord}`\npassword: `{pass}`\nautodelete images: `{auto}`\n\ndomain: `{domain}`\nimages: `{images}`\n\ndownload config [here](https://ascella.wtf/v2/ascella/config?auth={auth})\n```json\n{config}\n```",
             id = user.id,
             name = user.name,
             discord = user.discord_id,
@@ -30,11 +33,10 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
             domain = user.domain,
             auto = user.autodelete.map(|x| { x.to_string() }).unwrap_or("Images wont get deleted automatically".to_owned()),
             images = images,
+            auth=&upl_key,
             config = serde_json::to_string_pretty(
                 &create_config(
-                    &user.upload_key.unwrap_or(
-                        new_key.unwrap_or("please wait 120 seconds".to_owned()
-                    ))
+                    &upl_key
                 )
             ).unwrap()
         );
