@@ -32,10 +32,10 @@ pub mod set_embed;
 pub mod set_emojis;
 
 pub mod prelude {
-    pub use crate::structs::*;
-    pub use crate::*;
-    pub use anyhow::anyhow;
-    pub use anyhow::Result;
-    pub use cached::{proc_macro::cached, Cached, CachedAsync};
-    pub use tokio_pg_mapper::FromTokioPostgresRow;
+  pub use crate::structs::*;
+  pub use crate::*;
+  pub use anyhow::anyhow;
+  pub use anyhow::Result;
+  pub use cached::{proc_macro::cached, Cached, CachedAsync};
+  pub use tokio_pg_mapper::FromTokioPostgresRow;
 }

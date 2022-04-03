@@ -9,6 +9,7 @@ edition = "2021"
 actix-multipart = "0.4.0-beta.12"
 actix-web = "4.0.0-beta.19"
 anyhow = "1.0.52"
+ascella-bot = { path = "../bot" }
 ascella-database = { path = "../database" }
 ascella-util = { path = "../util" }
 byte-unit = "4.0.13"
@@ -32,4 +33,3 @@ tokio-postgres = "0.7.5"
 tracing = "0.1.29"
 tree_magic = "0.2.3"
 url = "2.2.2"
-ascella-bot = { path = "../bot" }

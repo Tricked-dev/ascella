@@ -41,12 +41,6 @@ model images {
   created      DateTime @default(now())
 }
 
-model pastes {
-  id      String   @id
-  content String   @db.VarChar(50000)
-  created DateTime @default(now())
-}
-
 model users {
   discord_id String   @unique
   domain     String   @db.VarChar(200)
@@ -55,14 +49,7 @@ model users {
   name       String   @db.VarChar(200)
   autodelete Int?
   deleteall  Int?     @default(90)
-  emojis     Boolean?
   created    DateTime @default(now())
-}
-
-model gallery {
-  id      Int      @id @default(autoincrement())
-  public  Boolean?
-  images  Int[]
-  owner   Int
-  created DateTime @default(now())
+  upload_key String   @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  url_style  Int      @default(0)
 }

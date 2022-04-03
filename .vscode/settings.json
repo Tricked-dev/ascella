@@ -1,5 +1,6 @@
 {
   "editor.defaultFormatter": "dprint",
+  "dprint.path": "~/.dprint/bin/dprint",
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
@@ -20,5 +21,8 @@
   },
   "[json]": {
     "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
   }
 }
