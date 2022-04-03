@@ -13,8 +13,7 @@ const theme = extendTheme({
 });
 
 const meta = {
-  description:
-    "Ascella dashboard made using next.js - Ascella is the fastest image uploader",
+  description: "Ascella dashboard made using next.js - Ascella is the fastest image uploader",
   title: "Ascella",
   type: "website",
   themeColor: "#2C3748",
