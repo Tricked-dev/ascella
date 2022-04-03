@@ -13,7 +13,8 @@ const theme = extendTheme({
 });
 
 const meta = {
-  description: "Ascella dashboard made using next.js - Ascella is the fastest image uploader",
+  description:
+    "Ascella dashboard made using next.js - Ascella is the fastest image uploader",
   title: "Ascella",
   type: "website",
   themeColor: "#2C3748",
@@ -47,6 +48,7 @@ function UploadApp({ Component, pageProps }: any) {
         {/* <meta name="twitter:image" content={meta.image} /> */}
       </Head>
       <Script
+        id="umami"
         async
         defer
         data-website-id="75176083-526f-437c-95c3-59a10bd49ac7"
