@@ -69,15 +69,12 @@ jobs:
           args: --release --target ${{ matrix.target }} --bin desktop
 
       - name: Strip release binary (linux and macos)
-        run: strip "./apps/desktop/target/${{ matrix.target }}/release/$BIN_NAME"
+        run: strip "./target/${{ matrix.target }}/release/$BIN_NAME"
 
-
-
-      - run: mv ./apps/desktop/target .
+      - run: mv ./target .
 
       - name: make dist
         run: mkdir dist
-
 
       - name: Build archive
         if: matrix.build == 'x86_64-macos'
@@ -85,7 +82,7 @@ jobs:
         run: |
 
           if [ "${{ matrix.os }}" = "windows-2019" ]; then
-            cp target/wix/ascella* dist/
+            # cp target/wix/ascella* dist/
             cp "target/${{ matrix.target }}/release/$BIN_NAME.exe" "dist/"
           else
             cp "target/${{ matrix.target }}/release/$BIN_NAME" "dist/"
@@ -130,7 +127,6 @@ jobs:
 
           mv ascella-x86_64-linux/* dist/
           tar -czvf dist/ascella-x86_64-macos.tar.xz ascella-x86_64-macos
-
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
