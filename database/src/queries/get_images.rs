@@ -1,5 +1,4 @@
 use crate::queries::prelude::*;
-use serde_json::json;
 
 #[cached(size = 100, time = 120, result = true)]
 pub async fn exec(owner: i32, amount: i32, skip: i32) -> Result<Vec<SimpleImages>> {
@@ -18,10 +17,7 @@ pub async fn exec(owner: i32, amount: i32, skip: i32) -> Result<Vec<SimpleImages
     .iter()
     .map(|x| SimpleImages::from_row_ref(x).unwrap())
     .collect::<Vec<SimpleImages>>();
-  /*  let mut new_rows: Vec<Images> = vec![];
-  for row in row.iter() {
-    new_rows.push(Images::from_row_ref(row).unwrap())
-  }*/
+
   Ok(rows)
 }
 

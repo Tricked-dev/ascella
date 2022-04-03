@@ -19,6 +19,7 @@ pub mod get_latest_image;
 pub mod get_paste_content;
 pub mod get_unclaimed_code;
 pub mod get_user;
+pub mod get_user_auth;
 pub mod get_user_discord;
 pub mod get_user_image_count;
 pub mod get_user_token;
@@ -29,13 +30,12 @@ pub mod set_autodelete;
 pub mod set_domain;
 pub mod set_domain_discord;
 pub mod set_embed;
-pub mod set_emojis;
-
+pub mod set_url_style;
 pub mod prelude {
-  pub use crate::structs::*;
-  pub use crate::*;
-  pub use anyhow::anyhow;
-  pub use anyhow::Result;
-  pub use cached::{proc_macro::cached, Cached, CachedAsync};
-  pub use tokio_pg_mapper::FromTokioPostgresRow;
+    pub use crate::structs::*;
+    pub use crate::*;
+    pub use anyhow::anyhow;
+    pub use anyhow::Result;
+    pub use cached::{proc_macro::cached, Cached, CachedAsync};
+    pub use tokio_pg_mapper::FromTokioPostgresRow;
 }

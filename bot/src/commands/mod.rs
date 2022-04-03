@@ -13,7 +13,7 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
     ("delete", Ok(user), _) => delete::execute(client, cmd, user).await,
     ("domain", Ok(user), _) => domain::execute(client, cmd, user).await,
     ("embed", Ok(user), _) => embed::execute(client, cmd, user).await,
-    ("emojis", Ok(user), _) => emojis::execute(client, cmd, user).await,
+    ("url_style", Ok(user), _) => url_style::execute(client, cmd, user).await,
     ("funny_redirect", Ok(user), _) => funny_redirect::execute(client, cmd, user).await,
     ("profile", Ok(user), _) => profile::execute(client, cmd, user).await,
     ("redirect", Ok(user), _) => redirect::execute(client, cmd, user).await,
@@ -80,7 +80,6 @@ pub mod delete_latest;
 pub mod domain;
 pub mod domains;
 pub mod embed;
-pub mod emojis;
 pub mod eval;
 pub mod funny_redirect;
 pub mod help;
@@ -89,4 +88,5 @@ pub mod redeem;
 pub mod redirect;
 pub mod stats;
 pub mod unknown;
+pub mod url_style;
 pub mod user;

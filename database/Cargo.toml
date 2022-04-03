@@ -33,6 +33,7 @@ tokio-pg-mapper = "0.2.0"
 tokio-pg-mapper-derive = "0.2.0"
 tokio-postgres = "0.7.5"
 ttl_cache = "0.5.1"
+ulid = "0.5.0"
 
 [features]
 openssl-vendored = ["openssl/vendored"]

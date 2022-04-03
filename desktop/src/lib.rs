@@ -134,17 +134,17 @@ pub fn screenshot_full(file: String) {
 fn flameshot(option: ScreenshotKind, file: String) {
   let output = match option {
     ScreenshotKind::Area => Command::new("flameshot")
-      .args(&["gui", "--raw"])
+      .args(&["gui", "-p", &file])
       .stdout(Stdio::piped())
       .output()
       .expect("flameshot did not launch"),
     ScreenshotKind::Window => Command::new("flameshot")
-      .args(&["screen", "--raw"])
+      .args(&["screen", "-p", &file])
       .stdout(Stdio::piped())
       .output()
       .expect("flameshot did not launch"),
     ScreenshotKind::Full => Command::new("flameshot")
-      .args(&["full", "--raw"])
+      .args(&["full", "-p", &file])
       .stdout(Stdio::piped())
       .output()
       .expect("flameshot did not launch"),
@@ -152,7 +152,7 @@ fn flameshot(option: ScreenshotKind, file: String) {
   if !output.status.success() {
     panic!("Flameshot returned a non zero return value")
   }
-  fs::write(file, output.stdout).unwrap();
+  // fs::write(file, output.stdout).unwrap();
 }
 
 fn gnome(option: ScreenshotKind, file: String, freeze: bool) {

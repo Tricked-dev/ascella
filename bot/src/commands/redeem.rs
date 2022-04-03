@@ -26,7 +26,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
         .exec()
         .await?;
       let name = discord_user.name.clone();
-      let user = create_user::exec("https://ascella.host", id, ran_str(), name).await?;
+      let user = create_user::exec("https://ascella.host", id, ran_str(),name,ulid::Ulid::new().to_string() ).await?;
       claim_code::exec(code, &user.id).await?;
 
       let message = format!(
@@ -39,7 +39,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
             domain: `{domain}`
             images: `0`
             
-            download config [here](https://ascella.wtf/v2/ascella/config?id={id}&key={pass})
+            download config [here](https://ascella.wtf/v2/ascella/config?auth={upload_key})
             ```json
             {config}
             ```",
@@ -48,7 +48,8 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
         discord = user.discord_id,
         pass = user.key,
         domain = user.domain,
-        config = serde_json::to_string_pretty(&create_config(user.id, &user.key)).unwrap()
+        config = serde_json::to_string_pretty(&create_config(&user.upload_key)).unwrap(),
+        upload_key = user.upload_key
       );
 
       let embed = create_embed().title("Code redeemed!").description(message).build()?;

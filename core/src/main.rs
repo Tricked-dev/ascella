@@ -73,6 +73,7 @@ fn main() -> std::io::Result<()> {
     .enable_all()
     .build()
     .unwrap();
+
   rt.spawn(start_bot());
   rt.spawn(async {
     let mut sched = tokio_cron_scheduler::JobScheduler::new();

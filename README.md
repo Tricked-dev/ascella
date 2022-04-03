@@ -1,6 +1,16 @@
-# Ascella Monorepo
+# Ascella Uploader
 
-this repo includes the various projects needed to run ascella
+Ascella is the fastest opensource image uploader.
+
+## Features:
+
+- Custom bot to manage almost everything
+- Awesome frontend
+- Rust written backend!
+- Awesome Dashboard with features (it sucks)
+- Fully opensource
+- Linux & Mac support using our custom desktop app!
+- Awesome community at the [discord](https://discord.gg/mY8zTARu4g)
 
 ---
 
@@ -17,7 +27,7 @@ Discord: https://discord.gg/mY8zTARu4g
 
 ### Selfhosting
 
-There's no support for self hosting
+There's no support for self hosting see #1
 
 ### Development
 
@@ -43,12 +53,15 @@ Check the issues tab to find issues that need to be resolved
 
 ## Formatting
 
-for formatting we use [dprint](https://dprint.dev/install/) for formatting files `npm i dprint -g`
+for formatting we use [dprint](https://dprint.dev/install/) for formatting files
+`npm i dprint -g`
 
 ### Copyright
 
-please contact me via discord (tricked#3777) before using any of the code i would greatly appreciate this.
+please contact me via discord (tricked#3777) before using any of the code i
+would greatly appreciate this.
 
 ### Donating
 
-You can help keep ascella running by supporting me on [github sponsers](https://github.com/sponsors/Tricked-dev/)
+You can help keep ascella running by supporting me on
+[github sponsers](https://github.com/sponsors/Tricked-dev/)

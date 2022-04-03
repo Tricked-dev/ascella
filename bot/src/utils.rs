@@ -20,7 +20,7 @@ pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 18] {
     domain::command(domain_options.clone()),
     domains::command(),
     embed::command(),
-    emojis::command(),
+    url_style::command(),
     eval::command(),
     funny_redirect::command(domain_options.clone()),
     help::command(),

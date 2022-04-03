@@ -1,4 +1,12 @@
-import { Button, Grid, GridItem, Input, InputGroup, InputLeftAddon, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Grid,
+  GridItem,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Text,
+} from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import DashBoardItem from "../../components/DashboardItem";
 import Layout from "../../components/DashboardLayout";
@@ -6,7 +14,7 @@ import fetch from "../../utils/fetch";
 import withSession from "../../utils/withSession";
 export default function Dashboard({ user }: any) {
   async function downloadConfig() {
-    let blob = await fetch(`/config?id=${user.id}&key=${user.key}`, user).then(
+    let blob = await fetch(`/config?auth=${user.upload_key}`, user).then(
       (r) => r.blob(),
     );
     let url = URL.createObjectURL(blob);
@@ -51,7 +59,7 @@ export default function Dashboard({ user }: any) {
   );
 }
 
-export const getServerSideProps = withSession(async function({
+export const getServerSideProps = withSession(async function ({
   req,
   res,
 }: any) {
