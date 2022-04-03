@@ -50,6 +50,6 @@ model users {
   autodelete Int?
   deleteall  Int?     @default(90)
   created    DateTime @default(now())
-  upload_key String   @default(uuid())
+  upload_key String?  @default(uuid())
   url_style  Int      @default(0)
 }
