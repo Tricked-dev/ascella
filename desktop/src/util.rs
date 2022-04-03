@@ -12,11 +12,8 @@ use serde_json::Value;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AscellaConfig {
-  #[serde(rename = "x-user-id")]
-  pub id: Option<String>,
-  #[serde(rename = "x-user-token")]
-  pub token: Option<String>,
-  #[serde(rename = "user-agent")]
+  #[serde(rename = "authorization")]
+  pub auth: Option<String>,
   pub headers: Option<String>,
 }
 
@@ -61,13 +58,13 @@ pub fn upload<P: AsRef<Path>>(path: P) -> Result<String, Error> {
   let config_raw = if let Ok(config_raw) = std::fs::read_to_string(write_path) {
     config_raw
   } else {
+    println!("config not detected please upload your config");
     MessageDialog::new()
       .set_type(MessageType::Info)
       .set_title("config not detected please upload your config")
       .set_text("config not detected please upload your config\n\nPlease add a config file you can do this using the gui")
       .show_alert()
       .unwrap();
-    println!("config not detected please upload your config");
     return Ok("".to_owned());
   };
 
@@ -78,17 +75,17 @@ pub fn upload<P: AsRef<Path>>(path: P) -> Result<String, Error> {
   let config: AscellaConfig = if let Ok(config) = toml::from_str(&config_raw) {
     config
   } else {
+    println!("Your config is invalid please use a valid ascella config");
     MessageDialog::new()
       .set_type(MessageType::Info)
       .set_title("invalid config")
       .set_text("Your config is invalid please use a valid ascella config")
       .show_alert()
       .unwrap();
-    println!("Your config is invalid please use a valid ascella config");
     return Ok("".to_owned());
   };
-  headers.insert("x-user-id", HeaderValue::from_str(&config.id.unwrap()).unwrap());
-  headers.insert("x-user-token", HeaderValue::from_str(&config.token.unwrap()).unwrap());
+
+  headers.insert("authorization", HeaderValue::from_str(&config.auth.unwrap()).unwrap());
   headers.insert("user-agent", HeaderValue::from_str("Ascella-uploader").unwrap());
 
   let client = reqwest::Client::new();

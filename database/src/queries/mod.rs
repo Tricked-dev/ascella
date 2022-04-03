@@ -32,10 +32,10 @@ pub mod set_domain_discord;
 pub mod set_embed;
 pub mod set_url_style;
 pub mod prelude {
-    pub use crate::structs::*;
-    pub use crate::*;
-    pub use anyhow::anyhow;
-    pub use anyhow::Result;
-    pub use cached::{proc_macro::cached, Cached, CachedAsync};
-    pub use tokio_pg_mapper::FromTokioPostgresRow;
+  pub use crate::structs::*;
+  pub use crate::*;
+  pub use anyhow::anyhow;
+  pub use anyhow::Result;
+  pub use cached::{proc_macro::cached, Cached, CachedAsync};
+  pub use tokio_pg_mapper::FromTokioPostgresRow;
 }

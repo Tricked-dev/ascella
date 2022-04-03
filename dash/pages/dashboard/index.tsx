@@ -1,12 +1,4 @@
-import {
-  Button,
-  Grid,
-  GridItem,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Grid, GridItem, Input, InputGroup, InputLeftAddon, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import DashBoardItem from "../../components/DashboardItem";
 import Layout from "../../components/DashboardLayout";
@@ -59,7 +51,7 @@ export default function Dashboard({ user }: any) {
   );
 }
 
-export const getServerSideProps = withSession(async function ({
+export const getServerSideProps = withSession(async function({
   req,
   res,
 }: any) {
