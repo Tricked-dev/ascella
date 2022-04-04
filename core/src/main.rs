@@ -10,11 +10,7 @@ use ascella_http::set_endpoints;
 
 use ascella_ratelimit::{Governor, GovernorConfigBuilder};
 use futures::executor::block_on;
-use paperclip::actix::{
-  web,
-  // extension trait for actix_web::App and proc-macro attributes
-  OpenApiExt,
-};
+use paperclip::actix::{web, OpenApiExt};
 use paperclip::v2::models::{Contact, DefaultApiRaw, Info, License};
 
 async fn init() -> std::io::Result<()> {
@@ -47,7 +43,7 @@ async fn init() -> std::io::Result<()> {
         &GovernorConfigBuilder::default().per_second(3600).burst_size(128).finish().unwrap(),
       ))
       .wrap(middleware::Logger::default())
-      .with_json_spec_at("/spec/v2")
+      .with_json_spec_at("/v2/ascella/spec/v2")
       .service(web::scope("/v2/ascella").configure(set_endpoints))
       // .default_service(web::to(|| {
       //     Error::Four04 {
