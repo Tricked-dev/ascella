@@ -1,4 +1,5 @@
-use actix_web::middleware;
+use actix_cors::Cors;
+use actix_web::{http, middleware};
 use actix_web::{App, HttpServer};
 use ascella_bot::{
   bot::HTTP,
@@ -35,9 +36,15 @@ async fn init() -> std::io::Result<()> {
       ..Default::default()
     };
     spec.host = Some("https://ascella.wtf".into());
+    let cors = Cors::default()
+      .allowed_methods(vec!["GET", "POST"])
+      // .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
+      // .allowed_header(http::header::CONTENT_TYPE)
+      .max_age(3600);
 
     App::new()
       .wrap_api_with_spec(spec)
+      .wrap(cors)
       .wrap(Governor::new(&GovernorConfigBuilder::default().per_second(60).burst_size(30).finish().unwrap()))
       .wrap(Governor::new(
         &GovernorConfigBuilder::default().per_second(3600).burst_size(128).finish().unwrap(),

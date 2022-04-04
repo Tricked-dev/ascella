@@ -10,6 +10,7 @@ name = "ascella"
 path = "src/main.rs"
 
 [dependencies]
+actix-cors = "0.6.1"
 actix-web = "4"
 ascella-bot = { path = "../bot" }
 ascella-database = { path = "../database" }
