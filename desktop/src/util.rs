@@ -1,5 +1,6 @@
 use std::io::{Error, ErrorKind};
 use std::path::{Path, PathBuf};
+use std::process::Command;
 
 use crate::{take_ss, ScreenshotKind};
 use clipboard::{ClipboardContext, ClipboardProvider};
@@ -15,6 +16,7 @@ pub struct AscellaConfig {
   #[serde(rename = "authorization")]
   pub auth: Option<String>,
   pub headers: Option<String>,
+  pub command: Option<String>,
 }
 
 pub fn update_config<T: Into<PathBuf>>(path: T) -> Result<(), Error> {
@@ -39,14 +41,51 @@ pub fn update_config<T: Into<PathBuf>>(path: T) -> Result<(), Error> {
 }
 
 pub fn screenshot(t: ScreenshotKind) -> iced::Result {
+  let mut write_path = home_dir().unwrap();
+  write_path.extend(&[".ascella", "config.toml"]);
+
+  let config: AscellaConfig = if let Ok(config_raw) = std::fs::read_to_string(write_path) {
+    if let Ok(config) = toml::from_str(&config_raw) {
+      config
+    } else {
+      println!("Your config is invalid please use a valid ascella config");
+      MessageDialog::new()
+        .set_type(MessageType::Info)
+        .set_title("invalid config")
+        .set_text("Your config is invalid please use a valid ascella config")
+        .show_alert()
+        .unwrap();
+      return Ok(());
+    }
+  } else {
+    println!("config not detected please upload your config");
+    MessageDialog::new()
+      .set_type(MessageType::Info)
+      .set_title("config not detected please upload your config")
+      .set_text("config not detected please upload your config\n\nPlease add a config file you can do this using the gui")
+      .show_alert()
+      .unwrap();
+    return Ok(());
+  };
+
   let mut path = home_dir().unwrap();
 
   path.extend(&[".ascella", "images"]);
   std::fs::create_dir_all(&path).unwrap();
   let filename = chrono::offset::Local::now().format("%Y-%m-%d_%H-%M-%S.png").to_string();
   path.extend(&[&filename]);
+  if let Some(command) = config.command {
+    let replaced = command.replace("%image", &path.clone().into_os_string().into_string().unwrap());
+    let mut parts = replaced.trim().split_whitespace();
 
-  take_ss(t, path.clone().into_os_string().into_string().unwrap(), true);
+    let command = parts.next().unwrap();
+
+    let args = parts;
+
+    Command::new(command).args(args).spawn().unwrap();
+  } else {
+    take_ss(t, path.clone().into_os_string().into_string().unwrap(), true);
+  }
   upload(path).unwrap();
   Ok(())
 }
