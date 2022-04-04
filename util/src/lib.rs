@@ -152,17 +152,29 @@ pub async fn validate_request_upload(req: &HttpRequest) -> Result<(Users, Result
 }
 pub async fn validate_request(req: &HttpRequest) -> Result<Users, Error> {
   let headers = req.headers();
-  let user_id = get_header(headers.get("x-user-id")).unwrap_or("-1").parse::<i32>().unwrap_or(-1);
-  let user_token = get_header(headers.get("x-user-token")).unwrap_or_else(|_| get_header(headers.get("x-user-key")).unwrap_or(""));
 
-  if user_id == -1 || user_token.is_empty() {
-    Err(Error::NotAuthorized)
-  } else if let Ok(user) = get_user_token::exec(user_id, user_token.to_owned()).await {
-    log::info!("{} {}", &user.name, &user.id);
-    actix_web::rt::spawn(send_text_webhook(format!("**{}** {} {}", &req.path(), &user.name, &user.id)));
-    Ok(user)
+  let auth = get_header(headers.get("authorization"));
+  if let Ok(auth) = auth {
+    if let Ok(user) = get_user_auth::exec(auth.to_owned()).await {
+      log::info!("{} {}", &user.name, &user.id);
+      actix_web::rt::spawn(send_text_webhook(format!("**{}** {} {}", &req.path(), &user.name, &user.id)));
+      Ok(user)
+    } else {
+      Err(Error::NotAuthorized)
+    }
   } else {
-    Err(Error::NotAuthorized)
+    let user_id = get_header(headers.get("x-user-id")).unwrap_or("-1").parse::<i32>().unwrap_or(-1);
+    let user_token = get_header(headers.get("x-user-token")).unwrap_or_else(|_| get_header(headers.get("x-user-key")).unwrap_or(""));
+
+    if user_id == -1 || user_token.is_empty() {
+      Err(Error::NotAuthorized)
+    } else if let Ok(user) = get_user_token::exec(user_id, user_token.to_owned()).await {
+      log::info!("{} {}", &user.name, &user.id);
+      actix_web::rt::spawn(send_text_webhook(format!("**{}** {} {}", &req.path(), &user.name, &user.id)));
+      Ok(user)
+    } else {
+      Err(Error::NotAuthorized)
+    }
   }
 }
 
