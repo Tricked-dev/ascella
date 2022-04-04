@@ -1,13 +1,8 @@
-use home::home_dir;
-use iced::svg::Handle;
-use iced::{
-  button, executor, scrollable, slider, svg, text_input, Application, Button, Column, Command, Container, Element, Length, Radio, Row, Rule, Svg, Text, Toggler,
-};
+use iced::{button, executor, scrollable, slider, text_input, Application, Button, Column, Command, Container, Element, Length, Row, Rule, Text, Toggler};
 use native_dialog::{FileDialog, MessageDialog, MessageType};
-use serde_json::Value;
 
 use crate::ui::style;
-use crate::util::{screenshot, update_config, AscellaConfig};
+use crate::util::{screenshot, update_config};
 use crate::ScreenshotKind;
 
 #[derive(Default)]
@@ -51,9 +46,9 @@ impl Application for AscellaDesktop {
         self.toggler_value = dark;
 
         if dark {
-          self.theme = *style::Theme::ALL.iter().find(|x| format!("{:?}", x) == "Dark".to_owned()).unwrap();
+          self.theme = *style::Theme::ALL.iter().find(|x| format!("{:?}", x) == *"Dark").unwrap();
         } else {
-          self.theme = *style::Theme::ALL.iter().find(|x| format!("{:?}", x) != "Dark".to_owned()).unwrap();
+          self.theme = *style::Theme::ALL.iter().find(|x| format!("{:?}", x) != *"Dark").unwrap();
         }
       }
       Message::ThemeChanged(theme) => self.theme = theme,
@@ -71,7 +66,7 @@ impl Application for AscellaDesktop {
             MessageDialog::new()
               .set_type(MessageType::Info)
               .set_title("Config updated")
-              .set_text(&(&path_string).to_string())
+              .set_text(&path_string)
               .show_alert()
               .unwrap();
           }
@@ -80,7 +75,7 @@ impl Application for AscellaDesktop {
             MessageDialog::new()
               .set_type(MessageType::Error)
               .set_title(&format!("OOh no failed to update config {:?}", e))
-              .set_text(&(&path_string).to_string())
+              .set_text(&path_string)
               .show_alert()
               .unwrap();
           }

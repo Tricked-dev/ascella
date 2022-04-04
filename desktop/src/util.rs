@@ -125,11 +125,11 @@ fn copy(t: String) {
     if let Ok(mut child) = child {
       {
         let child_stdin = child.stdin.as_mut().unwrap();
-        child_stdin.write_all(format!("{}", &t.clone()).as_bytes()).ok();
+        child_stdin.write_all((&t).to_string().as_bytes()).ok();
       }
       let _ = child.wait().ok();
     }
 
-    Command::new("wl-copy").arg(&t.clone()).spawn().ok();
+    Command::new("wl-copy").arg(&t).spawn().ok();
   }
 }

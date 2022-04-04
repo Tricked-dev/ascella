@@ -4,7 +4,7 @@ use paperclip::actix::Apiv2Schema;
 
 #[derive(Deserialize, Apiv2Schema)]
 pub struct Data {
-    auth: String,
+  auth: String,
 }
 
 /// Entry point for our websocket route
@@ -12,8 +12,10 @@ pub struct Data {
 #[api_v2_operation]
 #[get("/config")]
 pub async fn get(data: Query<Data>) -> Result<HttpResponse, Error> {
-    Ok(HttpResponse::Ok()
-        .append_header(("content-disposition", "attachment;filename=ascella.sxcu"))
-        .append_header(("content-type", "application/octet-stream"))
-        .json(create_config(&data.auth)))
+  Ok(
+    HttpResponse::Ok()
+      .append_header(("content-disposition", "attachment;filename=ascella.sxcu"))
+      .append_header(("content-type", "application/octet-stream"))
+      .json(create_config(&data.auth)),
+  )
 }
