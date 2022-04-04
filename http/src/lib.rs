@@ -16,7 +16,6 @@ pub fn set_endpoints(cfg: &mut web::ServiceConfig) {
     .service(redirect::post)
     .service(stats::get)
     .service(verify::post)
-    .service(view::getpng)
     .service(view::get)
     .service(images::post)
     .service(

@@ -1,6 +1,11 @@
 use crate::routes::prelude::*;
 
-#[api_v2_operation]
+#[api_v2_operation(
+  summary = "Domains",
+  description = "Returns all ascella domains",
+  consumes = "application/json, text/plain",
+  produces = "application/json"
+)]
 #[get("/domains")]
 pub async fn get() -> Result<HttpResponse, Error> {
   let data = get_domains::exec().await.unwrap();

@@ -17,7 +17,7 @@
 		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[markdown]": {
-		"editor.defaultFormatter": "denoland.vscode-deno"
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[json]": {
 		"editor.defaultFormatter": "dprint.dprint"

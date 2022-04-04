@@ -1,20 +1,21 @@
 use crate::routes::prelude::*;
 
-#[derive(Deserialize)]
-struct DomainData {
+#[derive(Deserialize, Apiv2Schema, Clone)]
+
+pub struct DomainData {
   domain: String,
 }
 
-#[api_v2_operation]
+#[api_v2_operation(
+  summary = "Domain",
+  description = "Set the domain of the user",
+  consumes = "application/json, text/plain",
+  produces = "application/json"
+)]
 #[post("/domain")]
-pub async fn post(req: HttpRequest, body: web::Bytes) -> Result<HttpResponse, Error> {
+pub async fn post(req: HttpRequest, domain_info: web::Json<DomainData>) -> Result<HttpResponse, Error> {
   if let Ok(data) = validate_request(&req).await {
-    let result = from_str(std::str::from_utf8(&body).unwrap()); // return Result
-    let domain_info: DomainData = match result {
-      Ok(v) => v,
-      _ => return Err(Error::BadRequest),
-    };
-    set_domain::exec(data.id, domain_info.domain).await.map_err(|_| Error::BadRequest)?;
+    set_domain::exec(data.id, domain_info.domain.clone()).await.map_err(|_| Error::BadRequest)?;
     Ok(HttpResponse::Ok().json(&send_message(200, true, "Successfully updated your domain.")))
   } else {
     Err(Error::NotAuthorized)

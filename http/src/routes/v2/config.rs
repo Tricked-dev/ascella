@@ -9,7 +9,12 @@ pub struct Data {
 
 /// Entry point for our websocket route
 
-#[api_v2_operation]
+#[api_v2_operation(
+  summary = "Config",
+  description = "Returns the upload config of the given auth token",
+  consumes = "application/json, text/plain",
+  produces = "application/json"
+)]
 #[get("/config")]
 pub async fn get(data: Query<Data>) -> Result<HttpResponse, Error> {
   Ok(
