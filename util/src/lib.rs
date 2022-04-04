@@ -3,8 +3,9 @@ use anyhow::{anyhow, Result};
 use ascella_database::queries::{get_user_auth, get_user_token, prelude::Users};
 use http::{HeaderValue, StatusCode};
 use lazy_static::lazy_static;
+use paperclip::v2::schema::Apiv2Errors;
 use rand::{distributions::Alphanumeric, prelude::SliceRandom, Rng};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::fmt::Display;
 lazy_static! {
@@ -30,6 +31,8 @@ pub enum Error {
     LabelMe,
     Four04 { message: String },
 }
+
+impl Apiv2Errors for Error {}
 
 impl Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -236,14 +239,21 @@ pub fn send_message(code: i32, success: bool, message: &str) -> serde_json::Valu
       "message": message
     })
 }
+#[derive(Serialize, Deserialize)]
+pub struct UploadSuccess {
+    code: i32,
+    success: bool,
+    url: String,
+    raw: String,
+}
 
-pub fn upload_success(vanity: &str, domain: &str) -> serde_json::Value {
-    serde_json::json!({
-    "code": 200,
-    "success": true,
-    "url": format!("{}/{}", domain, vanity),
-    "raw": format!("https://ascella.wtf/images/raw/{}", vanity)
-    })
+pub fn upload_success(vanity: &str, domain: &str) -> UploadSuccess {
+    UploadSuccess {
+        code: 200,
+        success: true,
+        url: format!("{}/{}", domain, vanity),
+        raw: format!("https://ascella.wtf/images/raw/{}", vanity),
+    }
 }
 
 pub fn ran_str() -> String {
