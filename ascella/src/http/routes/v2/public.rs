@@ -5,6 +5,7 @@ struct ImageData {
 }
 
 #[api_v2_operation(
+  summary = "make image public",
   description = "Make a image public this endpoint is useless atm",
   consumes = "application/json, text/plain",
   produces = "application/json"

@@ -15,7 +15,7 @@ description: Guide on how to install Ascella Images
 
 ### Linux/Macos
 
-Follow the [ascella desktop](/docs/ascella-desktop) installing guide
+Follow the [ascella desktop](,/ascella-desktop) installing guide
 
 ---
 

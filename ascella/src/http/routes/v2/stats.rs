@@ -9,14 +9,18 @@ pub struct StatsResponse {
   user_name: String,
   user_id: i32,
   id: i32,
+  #[serde(skip_serializing_if = "Option::is_none")]
   redirect: Option<String>,
   content_type: String,
+  #[serde(skip_serializing_if = "Option::is_none")]
   image_size: Option<String>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   embed: Option<Embeds>,
 }
 apply_responders!(StatsResponse);
 
 #[api_v2_operation(
+  summary = "get image stats",
   description = "View info about a image",
   consumes = "application/json, text/plain",
   produces = "application/json"

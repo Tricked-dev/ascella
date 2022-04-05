@@ -6,7 +6,7 @@ use paperclip::actix::{
   web::{self},
 };
 
-#[api_v2_operation(description = "View a image", consumes = "application/json, text/plain")]
+#[api_v2_operation(summary = "get image", description = "View a image", consumes = "application/json, text/plain")]
 #[get("/view/{image}.{ext:(gif|webp|jpg|jpeg|png)$}")]
 pub async fn get(params: web::Path<(String, String)>) -> Result<HttpResponse, Error> {
   let (image, _ext) = params.into_inner();

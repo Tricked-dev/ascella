@@ -12,7 +12,4 @@ description: Ascella Uploader FAQ
 ### What's your infrastructure?
 
 - Images are stored on [storj.io](https://www.storj.io/) references to them are stored on Postgres
-- This site is hosted on Vercel.
-- The backend is on a namecheap vps.
-- This website is made using sveltekit
-- The backend uses actix a rust HTTP library
+- The backend is on a Contabo vps.
