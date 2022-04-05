@@ -1,13 +1,8 @@
 [workspace]
 resolver = "2"
 members = [
-  "core",
-  "bot",
-  "database",
-  "http",
-  "ratelimit",
-  "util",
   "desktop",
+  "ascella",
 ]
 
 [profile.release]
