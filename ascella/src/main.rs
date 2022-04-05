@@ -1,5 +1,5 @@
 use actix_cors::Cors;
-use actix_web::middleware;
+use actix_web::{middleware, ResponseError};
 use actix_web::{App, HttpServer};
 use futures::executor::block_on;
 use paperclip::actix::{web, OpenApiExt};
@@ -8,7 +8,7 @@ use paperclip::v2::models::{Contact, DefaultApiRaw, Info, License};
 use tsunami::bot::{bot::HTTP, start_bot, utils::create_embed};
 use tsunami::http::set_endpoints;
 use tsunami::prelude::get_images::delete_all;
-use tsunami::prelude::{get_users_autodelete, ChannelId};
+use tsunami::prelude::{get_users_autodelete, ChannelId, Error};
 use tsunami::ratelimit::{Governor, GovernorConfigBuilder};
 
 async fn init() -> std::io::Result<()> {
@@ -35,7 +35,7 @@ async fn init() -> std::io::Result<()> {
       ..DefaultApiRaw::default()
     };
 
-    let cors = Cors::default().allowed_methods(vec!["GET", "POST"]).max_age(3600);
+    let cors = Cors::default().allow_any_origin().allow_any_header().allow_any_method().max_age(3600);
 
     App::new()
       .wrap_api_with_spec(spec)
@@ -47,12 +47,12 @@ async fn init() -> std::io::Result<()> {
       .wrap(middleware::Logger::default())
       .with_json_spec_at("/v2/ascella/spec/v2")
       .service(web::scope("/v2/ascella").configure(set_endpoints))
-      // .default_service(web::to(|| {
-      //     Error::Four04 {
-      //         message: "Path not found.".to_owned(),
-      //     }
-      //     .error_response()
-      // }))
+      .default_service(web::to(|| async {
+        Error::Four04 {
+          message: "Path not found.".to_owned(),
+        }
+        .error_response()
+      }))
       .build()
   })
   .bind("0.0.0.0:7878")?
