@@ -19,7 +19,7 @@ async fn init() -> std::io::Result<()> {
       info: Info {
         version: "2.0".into(),
         title: "Ascella Image uploader".into(),
-        description: Some("Ascella is the fastest image uploader utilizing rust to bring you the fastest upload speeds".into()),
+        description: Some("Ascella is the fastest image uploader utilizing rust to bring you the fastest upload speeds\n\n# Suggesting new routes\n\nYou can suggest new routes in the discord or send tricked#3777 a dm privaty for your use case for the route.  Or even better you can make a pull request adding the route".into()),
         contact: Some(Contact {
           name: Some("Tricked".into()),
           url: Some("https://tricked.pro".into()),
@@ -29,6 +29,7 @@ async fn init() -> std::io::Result<()> {
           name: Some("AGPL-3.0".into()),
           url: Some("https://github.com/Tricked-dev/ascella/blob/master/LICENSE".into()),
         }),
+        
         ..Default::default()
       },
       tags: vec![
