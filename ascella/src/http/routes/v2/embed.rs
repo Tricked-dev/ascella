@@ -10,6 +10,7 @@ pub struct EmbedData {
 }
 
 #[api_v2_operation(
+  tags(Dashboard),
   summary = "set embed",
   description = "Set the embed of the user",
   consumes = "application/json, text/plain",

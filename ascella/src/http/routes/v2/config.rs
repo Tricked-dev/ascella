@@ -9,6 +9,7 @@ pub struct Data {
 }
 
 #[api_v2_operation(
+  tags(Etc),
   summary = "get config",
   description = "Returns the upload config of the given auth token",
   consumes = "application/json, text/plain",

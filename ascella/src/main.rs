@@ -3,7 +3,7 @@ use actix_web::{middleware, ResponseError};
 use actix_web::{App, HttpServer};
 use futures::executor::block_on;
 use paperclip::actix::{web, OpenApiExt};
-use paperclip::v2::models::{Contact, DefaultApiRaw, Info, License};
+use paperclip::v2::models::{Contact, DefaultApiRaw, Info, License, Tag};
 
 use tsunami::bot::{bot::HTTP, start_bot, utils::create_embed};
 use tsunami::http::set_endpoints;
@@ -31,6 +31,23 @@ async fn init() -> std::io::Result<()> {
         }),
         ..Default::default()
       },
+      tags: vec![
+        Tag {
+          name: "Images".to_string(),
+          description: Some("Stuff related to images".to_string()),
+          external_docs: None,
+        },
+        Tag {
+          name: "Dashboard".to_string(),
+          description: Some("Stuff related to the Dashboard".to_string()),
+          external_docs: None,
+        },
+        Tag {
+          name: "Etc".to_string(),
+          description: Some("Stuff not related to the above".to_string()),
+          external_docs: None,
+        },
+      ],
       host: Some("https://ascella.wtf".into()),
       ..DefaultApiRaw::default()
     };

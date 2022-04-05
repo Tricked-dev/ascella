@@ -7,6 +7,7 @@ pub struct QueryData {
 }
 
 #[api_v2_operation(
+  tags(Dashboard),
   summary = "get images",
   description = "View the images of a user",
   consumes = "application/json, text/plain",

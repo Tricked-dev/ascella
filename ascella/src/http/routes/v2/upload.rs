@@ -56,6 +56,7 @@ mod test_urls {
   }
 }
 #[api_v2_operation(
+  tags(Images),
   summary = "create image",
   description = "Upload a image",
   consumes = "multipart/form-data",

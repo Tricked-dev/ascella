@@ -4,6 +4,7 @@ use crate::bot::bot::REVIEWS;
 use crate::prelude::*;
 
 #[api_v2_operation(
+  tags(Etc),
   summary = "get reviews",
   description = "Get ascella reviews!",
   consumes = "application/json, text/plain",

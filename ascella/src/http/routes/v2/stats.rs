@@ -20,6 +20,7 @@ pub struct StatsResponse {
 apply_responders!(StatsResponse);
 
 #[api_v2_operation(
+  tags(Images),
   summary = "get image stats",
   description = "View info about a image",
   consumes = "application/json, text/plain",
