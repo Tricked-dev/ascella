@@ -7,8 +7,6 @@ pub struct Data {
   auth: String,
 }
 
-/// Entry point for our websocket route
-
 #[api_v2_operation(
   summary = "Config",
   description = "Returns the upload config of the given auth token",

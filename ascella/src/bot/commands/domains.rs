@@ -12,10 +12,10 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
     let (id, name) = get_discord_id::exec(e.owner).await.unwrap();
 
     format!(
-      "**{domain}**\nApex: {apex}\nOwner: {mention}{id}",
+      "**{domain}**\nApex: {apex}\nOwner: <@{mention}>{id}",
       domain = e.domain,
       apex = e.apex,
-      mention = format!("<@{}>", id),
+      mention = id,
       id = name
     )
   }))

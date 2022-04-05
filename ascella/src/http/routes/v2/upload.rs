@@ -57,7 +57,7 @@ mod test_urls {
 }
 #[post("/upload")]
 #[api_v2_operation]
-pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<HttpResponse, Error> {
+pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<UploadSuccess, Error> {
   if let Ok((data, _)) = validate_request_upload(&req).await {
     if let Ok(Some(mut field)) = payload.try_next().await {
       let mut file_size: usize = 0;
@@ -78,22 +78,7 @@ pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<HttpRespon
 
       match s {
         //"image/png" |
-        "image/jpeg" | "image/gif" | "image/webp" => {
-          // if s == "image/jpeg" {
-          //   let mut bytes: Vec<u8> = Vec::new();
-
-          //   // Re-encode JPEGs to remove EXIF data.
-          //   ImageReader::new(Cursor::new(buf))
-          //     .with_guessed_format()
-          //     .map_err(|_| Error::IOError)?
-          //     .decode()
-          //     .map_err(|_| Error::IOError)?
-          //     .write_to(&mut bytes, image::ImageOutputFormat::Jpeg(80))
-          //     .map_err(|_| Error::IOError)?;
-
-          //   buf = bytes;
-          // }
-        }
+        "image/jpeg" | "image/gif" | "image/webp" => {}
         _ => return Err(Error::FileTypeNotAllowed),
       };
 
@@ -118,7 +103,7 @@ pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<HttpRespon
         name = &data.name,
         id = &data.id
       )));
-      Ok(HttpResponse::Ok().json(&upload_success(&img.vanity, &data.domain)))
+      Ok(upload_success(&img.vanity, &data.domain))
     } else {
       Err(Error::BadRequest)
     }

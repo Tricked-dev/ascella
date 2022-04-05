@@ -8,7 +8,7 @@ pub mod prelude {
   pub use crate::database::queries::*;
   pub use crate::database::structs::*;
   pub use crate::database::*;
-  pub use crate::util::{create_config, ran_str, random_emojis, send_message, send_text_webhook, upload_success, validate_request, Error};
+  pub use crate::util::{create_config, ran_str, random_emojis, send_text_webhook, upload_success, validate_request, Error, SendMessage};
   pub use actix_multipart::Multipart;
   pub use actix_web::{HttpRequest, HttpResponse};
   pub use anyhow::anyhow;
@@ -31,11 +31,14 @@ pub mod prelude {
     pub static ref START_TIME: OnceCell<Instant> = OnceCell::new();
   }
 
+  pub use crate::apply_responders;
   pub use crate::bot::utils::*;
   pub use crate::database::queries::*;
   pub use crate::database::structs::*;
   pub use crate::database::*;
   pub use crate::util::*;
+  pub use actix_web::body::BoxBody;
+  pub use actix_web::Responder;
   pub use futures::future;
   pub use humantime::format_duration;
   pub use lazy_static::lazy_static;

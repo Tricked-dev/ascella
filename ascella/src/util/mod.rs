@@ -1,16 +1,22 @@
-use crate::database::{
-  queries::{get_user_auth, get_user_token},
-  structs::Users,
+pub mod apply_responder;
+
+use crate::{
+  apply_responders,
+  database::{
+    queries::{get_user_auth, get_user_token},
+    structs::Users,
+  },
 };
-use actix_web::{HttpRequest, HttpResponse, ResponseError};
+use actix_web::{body::BoxBody, HttpRequest, HttpResponse, Responder, ResponseError};
 use anyhow::{anyhow, Result};
 use http::{HeaderValue, StatusCode};
 use lazy_static::lazy_static;
-use paperclip::v2::schema::Apiv2Errors;
+use paperclip::{actix::Apiv2Schema, v2::schema::Apiv2Errors};
 use rand::{distributions::Alphanumeric, prelude::SliceRandom, Rng};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::fmt::Display;
+
 lazy_static! {
   pub static ref CLIENT: reqwest::Client = reqwest::Client::new();
 }
@@ -219,21 +225,27 @@ pub fn create_config<T: std::fmt::Display>(auth: T) -> serde_json::Value {
     "URL": "$json:url$",
   })
 }
-
-pub fn send_message(code: i32, success: bool, message: &str) -> serde_json::Value {
-  serde_json::json!({
-    "code": code,
-    "success": success,
-    "message": message
-  })
+#[derive(Serialize, Deserialize, Apiv2Schema)]
+pub struct SendMessage {
+  code: i32,
+  success: bool,
+  message: &'static str,
 }
-#[derive(Serialize, Deserialize)]
+impl SendMessage {
+  pub fn new(code: i32, success: bool, message: &'static str) -> Self {
+    SendMessage { code, success, message }
+  }
+}
+
+#[derive(Serialize, Deserialize, Apiv2Schema)]
 pub struct UploadSuccess {
   code: i32,
   success: bool,
   url: String,
   raw: String,
 }
+
+apply_responders!(UploadSuccess, SendMessage);
 
 pub fn upload_success(vanity: &str, domain: &str) -> UploadSuccess {
   UploadSuccess {

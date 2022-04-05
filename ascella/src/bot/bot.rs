@@ -8,6 +8,7 @@ use twilight_model::gateway::presence::ActivityType;
 use twilight_model::gateway::presence::MinimalActivity;
 use twilight_model::gateway::presence::Status;
 
+use crate::apply_responders;
 use crate::bot::commands;
 use crate::prelude::*;
 
@@ -17,6 +18,8 @@ pub struct Comment {
   comment: String,
   name: String,
 }
+
+apply_responders!(Comment);
 
 lazy_static! {
   pub static ref HTTP: OnceCell<Arc<Client>> = OnceCell::new();

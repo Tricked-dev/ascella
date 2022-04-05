@@ -1,3 +1,4 @@
+use paperclip::actix::Apiv2Schema;
 use serde::{Deserialize, Serialize};
 use tokio_pg_mapper_derive::PostgresMapper;
 
@@ -18,7 +19,7 @@ pub struct Codes {
   pub key: String,
 }
 
-#[derive(PostgresMapper, Serialize, Deserialize, Clone)]
+#[derive(PostgresMapper, Serialize, Deserialize, Clone, Apiv2Schema)]
 #[pg_mapper(table = "embeds")]
 pub struct Embeds {
   pub color: Option<String>,

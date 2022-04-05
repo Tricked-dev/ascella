@@ -6,6 +6,7 @@ use crate::prelude::*;
   produces = "application/json"
 )]
 #[get("/domains")]
+
 pub async fn get() -> Result<HttpResponse, Error> {
   let data = get_domains::exec().await.unwrap();
 

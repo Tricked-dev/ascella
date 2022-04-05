@@ -11,10 +11,10 @@ pub struct DomainData {
   produces = "application/json"
 )]
 #[post("/domain")]
-pub async fn post(req: HttpRequest, domain_info: web::Json<DomainData>) -> Result<HttpResponse, Error> {
+pub async fn post(req: HttpRequest, domain_info: web::Json<DomainData>) -> Result<SendMessage, Error> {
   if let Ok(data) = validate_request(&req).await {
     set_domain::exec(data.id, domain_info.domain.clone()).await.map_err(|_| Error::BadRequest)?;
-    Ok(HttpResponse::Ok().json(&send_message(200, true, "Successfully updated your domain.")))
+    Ok(SendMessage::new(200, true, "Successfully updated your domain."))
   } else {
     Err(Error::NotAuthorized)
   }
