@@ -1,6 +1,7 @@
-use paperclip::actix::Apiv2Schema;
 use serde::{Deserialize, Serialize};
 use tokio_pg_mapper_derive::PostgresMapper;
+
+use crate::prelude::*;
 
 #[derive(PostgresMapper, Serialize, Deserialize, Debug, Clone)]
 #[pg_mapper(table = "domains")]
@@ -54,7 +55,7 @@ pub struct Pastes {
   pub content: String,
 }
 
-#[derive(PostgresMapper, Serialize, Deserialize, Clone)]
+#[derive(PostgresMapper, Serialize, Deserialize, Clone, Apiv2Schema)]
 #[pg_mapper(table = "users")]
 pub struct Users {
   pub discord_id: String,
@@ -68,11 +69,4 @@ pub struct Users {
   pub url_style: i32,
 }
 
-// #[derive(PostgresMapper,Serialize, Deserialize, Clone)]
-// #[pg_mapper(table = "gallery")]
-// pub struct gallery {
-// pub id: i32,
-// pub public: Option<bool>,
-// pub images: Int[],
-// pub owner: i32
-// }
+apply_responders!(Users);

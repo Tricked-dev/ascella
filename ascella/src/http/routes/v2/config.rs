@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use actix_web::web::Query;
+// TODO: type this result
 use paperclip::actix::Apiv2Schema;
 
 #[derive(Deserialize, Apiv2Schema)]
@@ -8,7 +9,6 @@ pub struct Data {
 }
 
 #[api_v2_operation(
-  summary = "Config",
   description = "Returns the upload config of the given auth token",
   consumes = "application/json, text/plain",
   produces = "application/json"

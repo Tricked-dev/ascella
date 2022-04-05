@@ -5,7 +5,6 @@ pub struct DomainData {
 }
 
 #[api_v2_operation(
-  summary = "Domain",
   description = "Set the domain of the user",
   consumes = "application/json, text/plain",
   produces = "application/json"

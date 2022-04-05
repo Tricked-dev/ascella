@@ -1,3 +1,5 @@
+// TODO: type this result
+
 use crate::prelude::*;
 #[derive(Deserialize, Apiv2Schema, Clone)]
 pub struct QueryData {
@@ -5,7 +7,6 @@ pub struct QueryData {
 }
 
 #[api_v2_operation(
-  summary = "Images",
   description = "View the images of a user",
   consumes = "application/json, text/plain",
   produces = "application/json"

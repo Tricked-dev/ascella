@@ -4,8 +4,7 @@ pub struct RedirectData {
   pub vanity: String,
   pub to: String,
 }
-
-#[api_v2_operation]
+#[api_v2_operation(description = "Create a redirect", consumes = "application/json, text/plain", produces = "application/json")]
 #[post("/redirect")]
 pub async fn post(req: HttpRequest, data: web::Json<RedirectData>) -> Result<SendMessage, Error> {
   if let Ok(user) = validate_request(&req).await {

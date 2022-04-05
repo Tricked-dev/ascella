@@ -16,7 +16,11 @@ pub struct StatsResponse {
 }
 apply_responders!(StatsResponse);
 
-#[api_v2_operation]
+#[api_v2_operation(
+  description = "View info about a image",
+  consumes = "application/json, text/plain",
+  produces = "application/json"
+)]
 #[get("/view/{image}/stats")]
 pub async fn get(image: web::Path<String>) -> Result<StatsResponse, Error> {
   let data = get_image_vanity_only::exec(image.to_string()).await;

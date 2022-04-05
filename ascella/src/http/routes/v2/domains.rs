@@ -1,6 +1,7 @@
+// TODO: type this result
+
 use crate::prelude::*;
 #[api_v2_operation(
-  summary = "Domains",
   description = "Returns all ascella domains",
   consumes = "application/json, text/plain",
   produces = "application/json"

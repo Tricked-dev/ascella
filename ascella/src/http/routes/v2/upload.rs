@@ -55,8 +55,8 @@ mod test_urls {
     println!("{}", zws_url());
   }
 }
+#[api_v2_operation(description = "Upload a image", consumes = "multipart/form-data", produces = "application/json")]
 #[post("/upload")]
-#[api_v2_operation]
 pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<UploadSuccess, Error> {
   if let Ok((data, _)) = validate_request_upload(&req).await {
     if let Ok(Some(mut field)) = payload.try_next().await {

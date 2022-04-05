@@ -4,7 +4,11 @@ struct ImageData {
   pub image_id: i32,
 }
 
-#[api_v2_operation]
+#[api_v2_operation(
+  description = "Make a image public this endpoint is useless atm",
+  consumes = "application/json, text/plain",
+  produces = "application/json"
+)]
 #[post("/public")]
 pub async fn post(req: HttpRequest, body: web::Bytes) -> Result<SendMessage, Error> {
   if let Ok(user) = validate_request(&req).await {
