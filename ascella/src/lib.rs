@@ -16,7 +16,6 @@ pub mod prelude {
   pub use byte_unit::Byte;
   pub use cached::{proc_macro::cached, Cached, CachedAsync};
   pub use futures::{StreamExt, TryStreamExt};
-  pub use image::io::Reader as ImageReader;
   pub use paperclip::actix::api_v2_operation;
   pub use paperclip::actix::*;
   pub use serde::{Deserialize, Serialize};

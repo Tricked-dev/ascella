@@ -12,6 +12,10 @@ Ascella is the fastest opensource image uploader.
 - Linux & Mac support using our custom desktop app!
 - Awesome community at the [discord](https://discord.gg/mY8zTARu4g)
 
+## Contributing
+
+someone please properly make a theme for everything & new icont thx luv u if u do
+
 ---
 
 ### Ascella - Backend

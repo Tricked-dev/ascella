@@ -1,9 +1,0 @@
-const fallback = `{"swagger":"2.0","definitions":{},"paths":{"/v2/ascella/config":{"get":{"summary":"Entry point for our websocket route","responses":{},"parameters":[{"in":"query","name":"auth","required":true,"type":"string"}]}},"/v2/ascella/domain":{"post":{"responses":{}}},"/v2/ascella/domains":{"get":{"responses":{}}},"/v2/ascella/embed":{"post":{"responses":{}}},"/v2/ascella/images":{"post":{"responses":{}}},"/v2/ascella/public":{"post":{"responses":{}}},"/v2/ascella/redirect":{"post":{"responses":{}}},"/v2/ascella/reviews":{"get":{"responses":{}}},"/v2/ascella/upload":{"post":{"responses":{},"parameters":[{"in":"formData","name":"file_data","required":true,"type":"file","format":"binary"}]}},"/v2/ascella/verify":{"post":{"responses":{}}},"/v2/ascella/view/{image}":{"get":{"responses":{},"parameters":[{"in":"path","name":"image","required":true,"type":"string"}]}},"/v2/ascella/view/{image}.png":{"get":{"responses":{},"parameters":[{"in":"path","name":"image","required":true,"type":"string"}]}},"/v2/ascella/view/{image}/stats":{"get":{"responses":{},"parameters":[{"in":"path","name":"image","required":true,"type":"string"}]}}},"host":"https://ascella.wtf","info":{"version":"2.0","title":"Ascella Image uploader","description":"Ascella is the fastest image uploader utilizing rust to bring you the fastest upload speeds","contact":{"name":"Tricked","url":"https://tricked.pro","email":"tricked@tricked.pro"},"license":{"name":"AGPL-3.0","url":"https://github.com/Tricked-dev/ascella/blob/master/LICENSE"}}}`
-export const get = async () => {
-    const r = await fetch("https://ascella.wtf/v2/ascella/spec/v2")
-    if (r.ok) {
-        return { body: await r.json() }
-    } else {
-        return { body: JSON.parse(fallback) }
-    }
-}

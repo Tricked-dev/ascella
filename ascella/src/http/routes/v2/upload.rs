@@ -3,8 +3,8 @@ use lazy_static::lazy_static;
 use rand::prelude::SliceRandom;
 
 use crate::prelude::*;
-const ANIMALS: &str = include_str!("../../../../../assets/animals.txt");
-const ADJECTIVES: &str = include_str!("../../../../../assets/adjectives.txt");
+const ANIMALS: &str = include_str!("../../../../assets/animals.txt");
+const ADJECTIVES: &str = include_str!("../../../../assets/adjectives.txt");
 const ZWS_CHARS: [char; 4] = ['\u{200C}', '\u{200B}', '\u{200D}', '\u{2060}'];
 
 /// Upload styles

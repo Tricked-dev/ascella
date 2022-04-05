@@ -6,16 +6,16 @@
 	import '@fontsource/roboto';
 	const bottomLinks = [
 		[
+			// {
+			// 	href: '/docs/faq',
+			// 	a: 'Faq'
+			// },
 			{
-				href: '/docs/faq',
-				a: 'Faq'
-			},
-			{
-				href: '/docs/rules',
+				href: 'https://docs.ascella.host/rules',
 				a: 'Rules'
 			},
 			{
-				href: '/docs/privacy',
+				href: 'https://docs.ascella.host/privacy',
 				a: 'Privacy'
 			}
 		],
@@ -43,30 +43,6 @@
 	];
 	const otherLinks = [
 		{
-			href: '/docs/domain',
-			a: 'Adding your own domain'
-		},
-		{
-			href: '/docs/rules',
-			a: 'Rules'
-		},
-		{
-			href: '/docs/privacy',
-			a: 'Privacy'
-		},
-		{
-			href: '/docs/',
-			a: 'Docs Index'
-		},
-		{
-			href: '/docs/installing',
-			a: 'Installing'
-		},
-		{
-			href: '/docs/ascella-desktop',
-			a: 'Desktop-App'
-		},
-		{
 			href: '/domains',
 			a: 'Domains'
 		},
@@ -82,7 +58,7 @@
 		},
 		{ href: 'https://dash.ascella.host', a: 'Dashboard' },
 		{ href: '/', a: 'Home' },
-		{ href: '/docs/signup', a: 'Create an account' }
+		{ href: 'https://docs.ascella.host/docs/signup', a: 'Create an account' }
 	];
 	import { onMount } from 'svelte';
 	import { fly, scale } from 'svelte/transition';

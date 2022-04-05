@@ -1,21 +1,13 @@
 use anyhow::Result;
-use async_trait::async_trait;
-use bytes::{Buf, Bytes};
-use cached::{proc_macro::cached, Cached, CachedAsync};
-use parking_lot::Mutex;
+use bytes::Bytes;
+use cached::proc_macro::cached;
 use s3::bucket::Bucket;
 use s3::creds::Credentials;
 use s3::region::Region;
 use s3::serde_types::HeadObjectResult;
-use sha2::Digest;
 use std::io::Read;
-use std::ops::Deref;
-use std::ops::DerefMut;
 use std::sync::Arc;
-use std::sync::RwLock;
-use std::time::Duration;
 use thiserror::Error;
-use ttl_cache::TtlCache;
 
 #[derive(Error, Debug)]
 pub enum FileHostingError {
@@ -32,9 +24,6 @@ pub struct UploadFileData {
   pub file_id: String,
   pub file_name: String,
   pub content_length: u32,
-  pub content_sha512: String,
-  pub content_sha1: String,
-  pub content_md5: Option<String>,
   pub content_type: String,
   pub upload_timestamp: u64,
 }
@@ -63,7 +52,6 @@ lazy_static! {
       .unwrap(),
     )
   };
-  pub static ref CACHE: Arc<Mutex<TtlCache<String, Vec<u8>>>> = Arc::new(Mutex::new(TtlCache::new(20)));
 }
 
 impl S3Host {
@@ -92,13 +80,10 @@ pub async fn get_file(s: String) -> Result<Vec<u8>, FileHostingError> {
 
 impl S3Host {
   pub async fn upload_file(&self, content_type: &str, file_name: &str, file_bytes: Bytes) -> Result<UploadFileData, FileHostingError> {
-    let content_sha1 = sha1::Sha1::from(&file_bytes).hexdigest();
     let bytes = file_bytes.bytes().filter(|x| x.is_ok()).map(|x| x.unwrap()).collect::<Vec<_>>();
-    let content_sha512 = format!("{:x}", sha2::Sha512::digest(&bytes));
 
     let file_name_clone = file_name.clone().to_owned();
     let content_type_clone = content_type.clone().to_owned();
-    let file_bytes_clone = file_bytes.clone().to_owned();
     tokio::spawn(async move {
       S3.bucket
         .put_object_with_content_type(format!("/{}", &file_name_clone), &bytes, &content_type_clone)
@@ -111,9 +96,6 @@ impl S3Host {
       file_id: file_name.to_string(),
       file_name: file_name.to_string(),
       content_length: file_bytes.len() as u32,
-      content_sha512,
-      content_sha1,
-      content_md5: None,
       content_type: content_type.to_string(),
       upload_timestamp: chrono::Utc::now().timestamp_millis() as u64,
     })
