@@ -1,4 +1,4 @@
-use crate::database::queries::prelude::*;
+use crate::prelude::*;
 
 #[cached(size = 100, time = 120, result = true)]
 pub async fn exec(owner: i32, amount: i32, skip: i32) -> Result<Vec<SimpleImages>> {

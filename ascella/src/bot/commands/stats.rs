@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 fn dir_size(path: impl Into<PathBuf>) -> io::Result<u64> {
   fn dir_size(mut dir: fs::ReadDir) -> io::Result<u64> {
     dir.try_fold(0, |acc, file| {

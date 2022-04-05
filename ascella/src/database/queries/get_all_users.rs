@@ -1,4 +1,4 @@
-use crate::database::queries::prelude::*;
+use crate::prelude::*;
 
 pub async fn exec() -> Result<Vec<Users>> {
   let row = get_tokio_postgres().await.query("SELECT * FROM users", &[]).await?;

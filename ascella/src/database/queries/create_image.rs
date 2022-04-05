@@ -1,4 +1,4 @@
-use crate::database::queries::prelude::*;
+use crate::prelude::*;
 
 pub async fn exec(id: i32, content_type: String, vanity: String) -> Result<Images> {
   let pg = get_tokio_postgres().await;

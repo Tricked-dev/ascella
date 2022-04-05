@@ -1,7 +1,6 @@
 use crate::database::s3::S3;
 
-use super::super::prelude::*;
-
+use crate::prelude::*;
 #[api_v2_operation]
 #[get("/view/{image}/stats")]
 pub async fn get(image: web::Path<String>) -> Result<HttpResponse, Error> {

@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 #[derive(Deserialize)]
 struct RedirectData {
   pub vanity: String,

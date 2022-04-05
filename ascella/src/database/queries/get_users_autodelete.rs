@@ -1,4 +1,4 @@
-use crate::database::queries::prelude::*;
+use crate::prelude::*;
 
 pub async fn exec() -> Result<Vec<(i32, i32, String)>> {
   let rows = get_tokio_postgres()

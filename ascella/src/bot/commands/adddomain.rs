@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("adddomain".into(), "Add a domain.".into(), CommandType::ChatInput)
     .option(UserBuilder::new("owner".into(), "The owner of the domain.".into()).required(true))

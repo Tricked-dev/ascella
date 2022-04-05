@@ -1,4 +1,4 @@
-use crate::database::queries::prelude::*;
+use crate::prelude::*;
 
 pub async fn exec(id: String, content: String) -> Result<Pastes> {
   let row = get_tokio_postgres()

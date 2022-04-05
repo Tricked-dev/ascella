@@ -1,41 +1,40 @@
 use actix_cors::Cors;
-use actix_web::{http, middleware};
+use actix_web::middleware;
 use actix_web::{App, HttpServer};
 use futures::executor::block_on;
 use paperclip::actix::{web, OpenApiExt};
 use paperclip::v2::models::{Contact, DefaultApiRaw, Info, License};
-use tsunami::bot::{
-  bot::HTTP,
-  prelude::{get_images::delete_all, get_users_autodelete, ChannelId},
-  start_bot,
-  utils::create_embed,
-};
 
+use tsunami::bot::{bot::HTTP, start_bot, utils::create_embed};
 use tsunami::http::set_endpoints;
+use tsunami::prelude::get_images::delete_all;
+use tsunami::prelude::{get_users_autodelete, ChannelId};
 use tsunami::ratelimit::{Governor, GovernorConfigBuilder};
 
 async fn init() -> std::io::Result<()> {
   tracing_subscriber::fmt().init();
 
   HttpServer::new(|| {
-    let mut spec = DefaultApiRaw::default();
-
-    spec.info = Info {
-      version: "2.0".into(),
-      title: "Ascella Image uploader".into(),
-      description: Some("Ascella is the fastest image uploader utilizing rust to bring you the fastest upload speeds".into()),
-      contact: Some(Contact {
-        name: Some("Tricked".into()),
-        url: Some("https://tricked.pro".into()),
-        email: Some("tricked@tricked.pro".into()),
-      }),
-      license: Some(License {
-        name: Some("AGPL-3.0".into()),
-        url: Some("https://github.com/Tricked-dev/ascella/blob/master/LICENSE".into()),
-      }),
-      ..Default::default()
+    let spec = DefaultApiRaw {
+      info: Info {
+        version: "2.0".into(),
+        title: "Ascella Image uploader".into(),
+        description: Some("Ascella is the fastest image uploader utilizing rust to bring you the fastest upload speeds".into()),
+        contact: Some(Contact {
+          name: Some("Tricked".into()),
+          url: Some("https://tricked.pro".into()),
+          email: Some("tricked@tricked.pro".into()),
+        }),
+        license: Some(License {
+          name: Some("AGPL-3.0".into()),
+          url: Some("https://github.com/Tricked-dev/ascella/blob/master/LICENSE".into()),
+        }),
+        ..Default::default()
+      },
+      host: Some("https://ascella.wtf".into()),
+      ..DefaultApiRaw::default()
     };
-    spec.host = Some("https://ascella.wtf".into());
+
     let cors = Cors::default().allowed_methods(vec!["GET", "POST"]).max_age(3600);
 
     App::new()

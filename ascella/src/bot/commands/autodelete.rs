@@ -1,4 +1,4 @@
-use super::super::prelude::*;
+use crate::prelude::*;
 use twilight_model::application::interaction::application_command::CommandOptionValue;
 pub fn command() -> Command {
   CommandBuilder::new(

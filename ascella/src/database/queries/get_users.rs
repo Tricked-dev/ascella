@@ -1,4 +1,4 @@
-use super::prelude::*;
+use crate::prelude::*;
 
 pub async fn exec() -> Result<Vec<Users>> {
   let rows = get_tokio_postgres()

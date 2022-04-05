@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("delete".into(), "Delete a image".into(), CommandType::ChatInput)
     .option(StringBuilder::new(

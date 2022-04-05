@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("domains".into(), "View the domains ascella has.".into(), CommandType::ChatInput).build()
 }

@@ -9,7 +9,7 @@ use twilight_model::gateway::presence::MinimalActivity;
 use twilight_model::gateway::presence::Status;
 
 use crate::bot::commands;
-use crate::bot::prelude::*;
+use crate::prelude::*;
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Comment {

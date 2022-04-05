@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 /// Upload styles
 /// 0 = default
 /// 1 = ulid id

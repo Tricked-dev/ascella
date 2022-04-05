@@ -1,6 +1,5 @@
-use super::super::prelude::*;
-
 use crate::bot::bot::REVIEWS;
+use crate::prelude::*;
 
 #[api_v2_operation]
 #[get("/reviews")]

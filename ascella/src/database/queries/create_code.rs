@@ -1,4 +1,4 @@
-use crate::database::queries::prelude::*;
+use crate::prelude::*;
 pub async fn exec(user: i32, code: String) -> Result<()> {
   get_tokio_postgres()
     .await

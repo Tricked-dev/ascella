@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("eval".into(), "Eval postgresql queries".into(), CommandType::ChatInput)
     .option(StringBuilder::new("code".into(), "Postgresql Query".into()).required(true))

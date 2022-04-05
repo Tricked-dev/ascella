@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 #[api_v2_operation]
 #[post("/verify")]
 pub async fn post(req: HttpRequest) -> Result<HttpResponse, Error> {

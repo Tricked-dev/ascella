@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("codedrop".into(), "Give everyone a free code".into(), CommandType::ChatInput)
     .option(IntegerBuilder::new("codes".into(), "Codes to generate".into()).required(true))

@@ -1,4 +1,4 @@
-use super::super::prelude::*;
+use crate::prelude::*;
 #[derive(Deserialize, Apiv2Schema, Clone)]
 pub struct DomainData {
   domain: String,

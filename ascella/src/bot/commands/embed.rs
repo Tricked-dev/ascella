@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("embed".into(), "Set the embed to be used when uploading.".into(), CommandType::ChatInput)
     .option(StringBuilder::new("title".into(), "Title of the embed".into()))

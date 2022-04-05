@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("codes".into(), "View your codes.".into(), CommandType::ChatInput).build()
 }

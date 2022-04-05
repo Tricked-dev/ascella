@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 lazy_static! {
   static ref FUNNY_WORDS: Vec<&'static str> = vec![
     "fbi",

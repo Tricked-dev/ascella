@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("profile".into(), "View your profile.".into(), CommandType::ChatInput).build()
 }

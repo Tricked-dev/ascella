@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("delete_latest".into(), "Delete your latest upload".into(), CommandType::ChatInput).build()
 }

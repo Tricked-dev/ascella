@@ -1,4 +1,4 @@
-use super::prelude::*;
+use crate::prelude::*;
 
 pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
   let user = get_user_discord::exec(cmd.member.as_ref().unwrap().user.as_ref().unwrap().id.to_string()).await;

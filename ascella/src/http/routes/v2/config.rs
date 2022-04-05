@@ -1,4 +1,4 @@
-use super::super::prelude::*;
+use crate::prelude::*;
 use actix_web::web::Query;
 use paperclip::actix::Apiv2Schema;
 

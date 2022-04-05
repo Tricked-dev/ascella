@@ -1,5 +1,4 @@
-use super::super::prelude::*;
-
+use crate::prelude::*;
 #[api_v2_operation(
   summary = "Domains",
   description = "Returns all ascella domains",

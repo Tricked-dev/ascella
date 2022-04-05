@@ -1,5 +1,5 @@
 use crate::bot::commands::*;
-use crate::bot::prelude::*;
+use crate::prelude::*;
 
 pub fn create_embed() -> EmbedBuilder {
   EmbedBuilder::new().color(0x0e1b98).footer(EmbedFooter {

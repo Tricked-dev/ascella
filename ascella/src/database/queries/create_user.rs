@@ -1,4 +1,4 @@
-use crate::database::queries::prelude::*;
+use crate::prelude::*;
 
 pub async fn exec(domain: &'static str, discord_id: String, key: String, name: String, upload: String) -> Result<Users> {
   let row = get_tokio_postgres()

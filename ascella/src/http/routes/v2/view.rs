@@ -1,6 +1,5 @@
-use super::super::prelude::*;
-
 use crate::database::s3::get_file;
+use crate::prelude::*;
 
 use paperclip::actix::{
   api_v2_operation,
