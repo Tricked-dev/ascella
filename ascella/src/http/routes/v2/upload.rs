@@ -78,7 +78,7 @@ pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<UploadSucc
 
       match s {
         //"image/png" |
-        "image/jpeg" | "image/gif" | "image/webp" => {}
+        "image/png" | "image/gif" | "image/webp" => {}
         _ => return Err(Error::FileTypeNotAllowed),
       };
 
