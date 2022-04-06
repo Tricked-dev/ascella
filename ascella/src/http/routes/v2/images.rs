@@ -14,14 +14,10 @@ pub struct QueryData {
   produces = "application/json"
 )]
 #[post("/images")]
-pub async fn post(req: HttpRequest, query: web::Json<QueryData>) -> Result<HttpResponse, Error> {
-  if let Ok(data) = validate_request(&req).await {
-    let images = get_images::exec(data.id, 20, query.skip).await.map_err(|err| {
-      println!("{err:?}");
-      Error::DatabaseError
-    })?;
-    Ok(HttpResponse::Ok().json(images))
-  } else {
-    Err(Error::NotAuthorized)
-  }
+pub async fn post(query: web::Json<QueryData>, data: AccessToken) -> Result<HttpResponse, Error> {
+  let images = get_images::exec(data.id(), 20, query.skip).await.map_err(|err| {
+    println!("{err:?}");
+    Error::DatabaseError
+  })?;
+  Ok(HttpResponse::Ok().json(images))
 }

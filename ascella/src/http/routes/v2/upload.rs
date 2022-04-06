@@ -1,4 +1,4 @@
-use crate::{database::s3::S3, util::validate_request_upload};
+use crate::database::s3::S3;
 use lazy_static::lazy_static;
 use rand::prelude::SliceRandom;
 
@@ -55,65 +55,55 @@ mod test_urls {
     println!("{}", zws_url());
   }
 }
-#[api_v2_operation(
-  tags(Images),
-  summary = "create image",
-  description = "Upload a image",
-  consumes = "multipart/form-data",
-  produces = "application/json"
-)]
+#[api_v2_operation(tags(Images), summary = "create image", description = "Upload a image", consumes = "multipart/form-data", produces = "application/json")]
 #[post("/upload")]
-pub async fn post(req: HttpRequest, mut payload: Multipart) -> Result<UploadSuccess, Error> {
-  if let Ok((data, _)) = validate_request_upload(&req).await {
-    if let Ok(Some(mut field)) = payload.try_next().await {
-      let mut file_size: usize = 0;
-      let mut buf: Vec<u8> = Vec::new();
-      while let Some(chunk) = field.next().await {
-        let data = chunk.map_err(|_| Error::BadRequest)?;
-        file_size += data.len();
+pub async fn post(_req: HttpRequest, mut payload: Multipart, data: AccessToken) -> Result<UploadSuccess, Error> {
+  if let Ok(Some(mut field)) = payload.try_next().await {
+    let mut file_size: usize = 0;
+    let mut buf: Vec<u8> = Vec::new();
+    while let Some(chunk) = field.next().await {
+      let data = chunk.map_err(|_| Error::BadRequest)?;
+      file_size += data.len();
 
-        if file_size > 1000000 {
-          return Err(Error::BadRequest);
-        }
-
-        buf.append(&mut data.to_vec());
+      if file_size > 1000000 {
+        return Err(Error::BadRequest);
       }
 
-      let content_type = tree_magic::from_u8(&buf);
-      let s = &content_type[..];
-
-      match s {
-        //"image/png" |
-        "image/png" | "image/gif" | "image/webp" => {}
-        _ => return Err(Error::FileTypeNotAllowed),
-      };
-
-      let url = match data.url_style {
-        0 => default_url(),
-        1 => ulid_url(),
-        2 => gfycat_url(),
-        3 => zws_url(),
-        _ => default_url(),
-      };
-
-      let img = create_image::exec(data.id, content_type.clone(), url).await.unwrap();
-
-      // create_dir_all(format!("images/{}", data.id)).await.unwrap();
-      let dest = format!("{}/{}", data.id, img.id,);
-
-      S3.upload_file(&content_type, dest.as_str(), buf.into()).await.map_err(|_| Error::BadRequest)?;
-
-      actix_web::rt::spawn(send_text_webhook(format!(
-        "**[IMAGE]** [image](<https://ascella.wtf/v2/ascella/view/{image}>) **[OWNER]** {name} ({id})",
-        image = &img.vanity,
-        name = &data.name,
-        id = &data.id
-      )));
-      Ok(upload_success(&img.vanity, &data.domain))
-    } else {
-      Err(Error::BadRequest)
+      buf.append(&mut data.to_vec());
     }
+
+    let content_type = tree_magic::from_u8(&buf);
+    let s = &content_type[..];
+
+    match s {
+      //"image/png" |
+      "image/png" | "image/gif" | "image/webp" => {}
+      _ => return Err(Error::FileTypeNotAllowed),
+    };
+
+    let url = match data.url_style() {
+      0 => default_url(),
+      1 => ulid_url(),
+      2 => gfycat_url(),
+      3 => zws_url(),
+      _ => default_url(),
+    };
+
+    let img = create_image::exec(data.id(), content_type.clone(), url).await.unwrap();
+
+    // create_dir_all(format!("images/{}", data.id)).await.unwrap();
+    let dest = format!("{}/{}", data.id(), img.id,);
+
+    S3.upload_file(&content_type, dest.as_str(), buf.into()).await.map_err(|_| Error::BadRequest)?;
+
+    actix_web::rt::spawn(send_text_webhook(format!(
+      "**[IMAGE]** [image](<https://ascella.wtf/v2/ascella/view/{image}>) **[OWNER]** {name} ({id})",
+      image = &img.vanity,
+      name = &data.name(),
+      id = &data.id()
+    )));
+    Ok(upload_success(&img.vanity, &data.domain()))
   } else {
-    Err(Error::NotAuthorized)
+    Err(Error::BadRequest)
   }
 }

@@ -17,11 +17,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
 
     if code_data.is_ok() {
       client
-        .add_guild_member_role(
-          cmd.guild_id.unwrap(),
-          discord_user.id,
-          RoleId(core::num::NonZeroU64::new(878730206024720404).unwrap()),
-        )
+        .add_guild_member_role(cmd.guild_id.unwrap(), discord_user.id, RoleId(core::num::NonZeroU64::new(878730206024720404).unwrap()))
         .exec()
         .await?;
       let name = discord_user.name.clone();

@@ -17,15 +17,11 @@ pub struct EmbedData {
   produces = "application/json"
 )]
 #[post("/embed")]
-pub async fn post(req: HttpRequest, embed: web::Json<EmbedData>) -> Result<SendMessage, Error> {
-  if let Ok(data) = validate_request(&req).await {
-    let embed = embed.clone();
+pub async fn post(_req: HttpRequest, embed: web::Json<EmbedData>, data: AccessToken) -> Result<SendMessage, Error> {
+  let embed = embed.clone();
 
-    set_embed::exec(data.id, embed.description, embed.title, embed.url, embed.color)
-      .await
-      .map_err(|_| Error::BadRequest)?;
-    Ok(SendMessage::new(200, true, "Successfully updated your domain."))
-  } else {
-    Err(Error::NotAuthorized)
-  }
+  set_embed::exec(data.id(), embed.description, embed.title, embed.url, embed.color)
+    .await
+    .map_err(|_| Error::BadRequest)?;
+  Ok(SendMessage::new(200, true, "Successfully updated your domain."))
 }

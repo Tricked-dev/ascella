@@ -7,11 +7,8 @@ pub async fn exec(id: i32, to: String, vanity: String) -> Result<()> {
     println!("aa {:#?}", exists);
     return Err(anyhow!(""));
   }
-  pg.execute(
-    "INSERT INTO images(redirect,owner,vanity,content_type) VALUES($1,$2,$3,'redirect')",
-    &[&to, &id, &vanity],
-  )
-  .await?;
+  pg.execute("INSERT INTO images(redirect,owner,vanity,content_type) VALUES($1,$2,$3,'redirect')", &[&to, &id, &vanity])
+    .await?;
 
   Ok(())
 }

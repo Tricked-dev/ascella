@@ -18,9 +18,9 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
   let color = get_arg(command_args.clone(), "color");
 
   let embed = create_embed()
-        .title("Updated the embed")
-        .description("Your domain has been updated, Take a new screenshot to test the embed out.\n\n*please wait up to 2 minutes for your embed to update this is due to caching*")
-        .build()?;
+    .title("Updated the embed")
+    .description("Your domain has been updated, Take a new screenshot to test the embed out.\n\n*please wait up to 2 minutes for your embed to update this is due to caching*")
+    .build()?;
 
   set_embed::exec(user.id, description, title, url, color).await?;
 

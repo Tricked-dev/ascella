@@ -74,9 +74,7 @@ impl GovernorConfigBuilder {
   pub fn finish(&mut self) -> Option<GovernorConfig> {
     if self.burst_size != 0 && self.period.as_nanos() != 0 {
       Some(GovernorConfig {
-        limiter: Arc::new(RateLimiter::keyed(
-          Quota::with_period(self.period).unwrap().allow_burst(NonZeroU32::new(self.burst_size).unwrap()),
-        )),
+        limiter: Arc::new(RateLimiter::keyed(Quota::with_period(self.period).unwrap().allow_burst(NonZeroU32::new(self.burst_size).unwrap()))),
         methods: self.methods.clone(),
       })
     } else {
@@ -179,13 +177,7 @@ where
       .headers()
       .get("CF-Connecting-IP")
       .map(|r| r.to_str().unwrap().parse().unwrap_or_else(|_| "127.0.0.0".parse().unwrap()))
-      .unwrap_or_else(|| {
-        if let Some(addr) = req.peer_addr() {
-          addr.ip()
-        } else {
-          "127.0.0.0".parse().unwrap()
-        }
-      });
+      .unwrap_or_else(|| if let Some(addr) = req.peer_addr() { addr.ip() } else { "127.0.0.0".parse().unwrap() });
     match self.limiter.check_key(&ip) {
       Ok(_) => {
         let fut = self.service.call(req);

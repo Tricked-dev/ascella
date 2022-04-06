@@ -9,13 +9,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
   let message = if !codes.is_empty() {
     codes
       .iter()
-      .map(|r| {
-        if r.claimed_by.is_some() {
-          format!("~~{}~~", r.key)
-        } else {
-          r.key.to_string()
-        }
-      })
+      .map(|r| if r.claimed_by.is_some() { format!("~~{}~~", r.key) } else { r.key.to_string() })
       .collect::<Vec<String>>()
       .join("\n")
   } else {

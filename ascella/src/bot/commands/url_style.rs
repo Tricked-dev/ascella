@@ -9,12 +9,7 @@ pub fn command() -> Command {
   CommandBuilder::new("url_style".into(), "Change the url style of your uploads".into(), CommandType::ChatInput)
     .option(
       IntegerBuilder::new("style".into(), "Change your url style!".to_owned())
-        .choices(vec![
-          ("default".to_owned(), 0),
-          ("ulid".to_owned(), 1),
-          ("gfycat".to_owned(), 2),
-          ("zws".to_owned(), 3),
-        ])
+        .choices(vec![("default".to_owned(), 0), ("ulid".to_owned(), 1), ("gfycat".to_owned(), 2), ("zws".to_owned(), 3)])
         .required(true),
     )
     .build()

@@ -1,13 +1,9 @@
 use crate::prelude::*;
 use twilight_model::application::interaction::application_command::CommandOptionValue;
 pub fn command() -> Command {
-  CommandBuilder::new(
-    "autodelete".into(),
-    "auto delete images older than a certain amount of days.".into(),
-    CommandType::ChatInput,
-  )
-  .option(IntegerBuilder::new("days".into(), "days after which the image will get deleted".into()))
-  .build()
+  CommandBuilder::new("autodelete".into(), "auto delete images older than a certain amount of days.".into(), CommandType::ChatInput)
+    .option(IntegerBuilder::new("days".into(), "days after which the image will get deleted".into()))
+    .build()
 }
 
 pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<()> {
@@ -30,10 +26,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
   } else {
     create_embed()
       .title("Auto image deletion")
-      .description(format!(
-        "{} is not a valid amount of days please choose a time between 1 and 365 days",
-        v.err().unwrap()
-      ))
+      .description(format!("{} is not a valid amount of days please choose a time between 1 and 365 days", v.err().unwrap()))
       .build()?
   };
 

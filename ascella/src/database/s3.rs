@@ -40,18 +40,16 @@ pub struct S3Host {
 use lazy_static::lazy_static;
 
 lazy_static! {
-  pub static ref S3: Arc<S3Host> = {
-    Arc::new(
-      S3Host::new(
-        &dotenv::var("S3_BUCKET").unwrap_or("ascella".to_owned()),
-        "EU1",
-        "https://gateway.eu1.storjshare.io",
-        &dotenv::var("S3_ID").unwrap(),
-        &dotenv::var("S3_SECRET").unwrap(),
-      )
-      .unwrap(),
+  pub static ref S3: Arc<S3Host> = Arc::new(
+    S3Host::new(
+      &dotenv::var("S3_BUCKET").unwrap_or("ascella".to_owned()),
+      "EU1",
+      "https://gateway.eu1.storjshare.io",
+      &dotenv::var("S3_ID").unwrap(),
+      &dotenv::var("S3_SECRET").unwrap(),
     )
-  };
+    .unwrap(),
+  );
 }
 
 impl S3Host {
@@ -102,11 +100,7 @@ impl S3Host {
   }
 
   pub async fn delete_file_version(&self, file_id: &str, file_name: &str) -> Result<DeleteFileData, FileHostingError> {
-    self
-      .bucket
-      .delete_object(format!("/{}", file_name))
-      .await
-      .map_err(|_| FileHostingError::AnError)?;
+    self.bucket.delete_object(format!("/{}", file_name)).await.map_err(|_| FileHostingError::AnError)?;
 
     Ok(DeleteFileData {
       file_id: file_id.to_string(),

@@ -49,12 +49,7 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
     }
   };
 
-  send_text_webhook(format!(
-    "**{}**: {}",
-    cmd.data.name.as_str(),
-    cmd.member.as_ref().unwrap().user.as_ref().unwrap().name
-  ))
-  .await?;
+  send_text_webhook(format!("**{}**: {}", cmd.data.name.as_str(), cmd.member.as_ref().unwrap().user.as_ref().unwrap().name)).await?;
   match value {
     Ok(_) => {}
     Err(err) => {

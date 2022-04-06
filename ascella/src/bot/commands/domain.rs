@@ -1,11 +1,7 @@
 use crate::prelude::*;
 pub fn command(domain_options: impl IntoIterator<Item = (String, String)>) -> Command {
   CommandBuilder::new("domain".into(), "Select a domain to be used when uploading.".into(), CommandType::ChatInput)
-    .option(
-      StringBuilder::new("domain".into(), "Select the domain here".into())
-        .required(true)
-        .choices(domain_options),
-    )
+    .option(StringBuilder::new("domain".into(), "Select the domain here".into()).required(true).choices(domain_options))
     .option(StringBuilder::new("subdomain".into(), "Funny subdomain to add.".into()).required(false))
     .build()
 }

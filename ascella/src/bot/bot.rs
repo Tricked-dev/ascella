@@ -60,9 +60,7 @@ pub async fn start_bot() -> Result<()> {
 
   HTTP.set(Arc::clone(&http)).unwrap();
 
-  let data = http
-    .set_guild_commands(GuildId(core::num::NonZeroU64::new(748956745409232945).unwrap()), commands.as_ref())
-    .unwrap();
+  let data = http.set_guild_commands(GuildId(core::num::NonZeroU64::new(748956745409232945).unwrap()), commands.as_ref()).unwrap();
 
   data.exec().await?;
   START_TIME.set(Instant::now()).unwrap();
@@ -71,11 +69,7 @@ pub async fn start_bot() -> Result<()> {
       Event::InteractionCreate(inter) => match inter.0 {
         Interaction::Ping(_) => {}
         Interaction::ApplicationCommand(cmd) => {
-          log::info!(
-            "slash command called {} {}",
-            cmd.data.name,
-            cmd.member.as_ref().unwrap().user.as_ref().unwrap().name
-          );
+          log::info!("slash command called {} {}", cmd.data.name, cmd.member.as_ref().unwrap().user.as_ref().unwrap().name);
           let r = commands::builtin_exec(&http, &cmd).await;
           if let Err(r) = r {
             http
@@ -125,11 +119,7 @@ pub async fn start_bot() -> Result<()> {
               let user = &x.author;
               let name = user.name.clone();
               Comment {
-                avatar: format!(
-                  "https://cdn.discordapp.com/avatars/{}/{}.png",
-                  &user.id,
-                  &user.avatar.as_ref().unwrap_or(&"".to_owned())
-                ),
+                avatar: format!("https://cdn.discordapp.com/avatars/{}/{}.png", &user.id, &user.avatar.as_ref().unwrap_or(&"".to_owned())),
                 comment,
                 name,
               }

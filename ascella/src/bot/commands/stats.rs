@@ -15,11 +15,7 @@ fn dir_size(path: impl Into<PathBuf>) -> io::Result<u64> {
 }
 
 async fn get_count(part: &'static str) -> i64 {
-  let data = get_tokio_postgres()
-    .await
-    .query_one(format!("SELECT count(*) FROM {}", part).as_str(), &[])
-    .await
-    .unwrap();
+  let data = get_tokio_postgres().await.query_one(format!("SELECT count(*) FROM {}", part).as_str(), &[]).await.unwrap();
   data.get("count")
 }
 
@@ -38,11 +34,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
   let domains_count = get_count("domains").await;
   let users_count = get_count("users").await;
 
-  let mem = ProcessCommand::new("ps")
-    .args(vec!["-o", "rss="])
-    .arg(format!("{}", process::id()))
-    .output()
-    .unwrap();
+  let mem = ProcessCommand::new("ps").args(vec!["-o", "rss="]).arg(format!("{}", process::id())).output().unwrap();
   let usage = std::str::from_utf8(&mem.stdout).unwrap();
 
   let now = Instant::now();
@@ -53,17 +45,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
     .field(EmbedFieldBuilder::new("Domains", domains_count.to_string()).inline())
     .field(EmbedFieldBuilder::new("Users", users_count.to_string()).inline())
     .field(EmbedFieldBuilder::new("Created", "<t:1629305469:R>").inline())
-    .field(
-      EmbedFieldBuilder::new(
-        "Memory Usage",
-        bytes_to(if let Ok(r) = usage.trim_end().parse::<u128>().map(|x| x * 1024) {
-          r
-        } else {
-          100000
-        }),
-      )
-      .inline(),
-    )
+    .field(EmbedFieldBuilder::new("Memory Usage", bytes_to(if let Ok(r) = usage.trim_end().parse::<u128>().map(|x| x * 1024) { r } else { 100000 })).inline())
     .field(EmbedFieldBuilder::new("Upload's Size", bytes_to(dir_size("images").unwrap().into())).inline())
     .field(EmbedFieldBuilder::new("Discord-API version", "9").inline())
     .field(EmbedFieldBuilder::new("Uptime", time.to_string()).inline())

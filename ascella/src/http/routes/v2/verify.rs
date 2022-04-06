@@ -1,4 +1,5 @@
 use crate::prelude::*;
+
 #[api_v2_operation(
   tags(Dashboard)
   summary = "verify a user",
@@ -7,10 +8,6 @@ use crate::prelude::*;
   produces = "application/json"
 )]
 #[post("/verify")]
-pub async fn post(req: HttpRequest) -> Result<Users, Error> {
-  if let Ok(data) = validate_request(&req).await {
-    Ok(data)
-  } else {
-    Err(Error::NotAuthorized)
-  }
+pub async fn post(_req: HttpRequest, data: AccessToken) -> Result<Users, Error> {
+  Ok(data.inner())
 }

@@ -29,7 +29,6 @@ async fn init() -> std::io::Result<()> {
           name: Some("AGPL-3.0".into()),
           url: Some("https://github.com/Tricked-dev/ascella/blob/master/LICENSE".into()),
         }),
-        
         ..Default::default()
       },
       tags: vec![

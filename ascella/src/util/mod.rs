@@ -7,20 +7,105 @@ use crate::{
     structs::Users,
   },
 };
-use actix_web::{body::BoxBody, HttpRequest, HttpResponse, Responder, ResponseError};
-use anyhow::{anyhow, Result};
-use http::{HeaderValue, StatusCode};
+use actix_web::{body::BoxBody, dev::Payload, http::header::HeaderMap, FromRequest, HttpRequest, HttpResponse, Responder, ResponseError};
+use anyhow::Result;
+use futures::{Future, FutureExt};
+use http::StatusCode;
 use lazy_static::lazy_static;
-use paperclip::{actix::Apiv2Schema, v2::schema::Apiv2Errors};
+use paperclip::{
+  actix::{Apiv2Schema, Apiv2Security},
+  v2::schema::Apiv2Errors,
+};
 use rand::{distributions::Alphanumeric, prelude::SliceRandom, Rng};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
-use std::fmt::Display;
+use std::{fmt::Display, pin::Pin};
 
 lazy_static! {
   pub static ref CLIENT: reqwest::Client = reqwest::Client::new();
 }
 
+//Users
+
+#[derive(Apiv2Security)]
+#[openapi(apiKey, in = "header", name = "Authorization", description = "Use format 'TOKEN'")]
+pub struct AccessToken {
+  inner: Users,
+}
+impl AccessToken {
+  pub fn inner(self) -> Users {
+    self.inner
+  }
+  pub fn discord_id(&self) -> String {
+    self.inner.discord_id.clone()
+  }
+  pub fn domain(&self) -> String {
+    self.inner.domain.clone()
+  }
+  pub fn id(&self) -> i32 {
+    self.inner.id
+  }
+  pub fn key(&self) -> String {
+    self.inner.key.clone()
+  }
+  pub fn name(&self) -> String {
+    self.inner.name.clone()
+  }
+  pub fn autodelete(&self) -> Option<i32> {
+    self.inner.autodelete
+  }
+  pub fn deleteall(&self) -> Option<i32> {
+    self.inner.deleteall
+  }
+  pub fn upload_key(&self) -> Option<String> {
+    self.inner.upload_key.clone()
+  }
+  pub fn url_style(&self) -> i32 {
+    self.inner.url_style
+  }
+}
+
+impl FromRequest for AccessToken {
+  type Error = Error;
+
+  type Future = Pin<Box<dyn Future<Output = Result<Self, Self::Error>>>>;
+
+  fn from_request(req: &HttpRequest, _payload: &mut Payload) -> Self::Future {
+    let headers = req.headers().clone();
+    fn get_auth(headers: HeaderMap) -> Option<String> {
+      headers.get("Authorization")?.to_str().map(|x| x.to_owned()).ok()
+    }
+    fn get_user_id(headers: HeaderMap) -> Option<String> {
+      headers.get("x-user-id")?.to_str().map(|x| x.to_owned()).ok()
+    }
+    fn get_user_token(headers: HeaderMap) -> Option<String> {
+      headers.get("x-user-id")?.to_str().map(|x| x.to_owned()).ok()
+    }
+    let auth = get_auth(headers.clone()).unwrap_or_default();
+    let user_id = get_user_id(headers.clone()).unwrap_or("-1".to_string()).parse::<i32>().unwrap();
+    let user_token = get_user_token(headers).unwrap_or_default();
+
+    Box::pin(async move {
+      if !auth.is_empty() {
+        if let Ok(user) = get_user_auth::exec(auth.to_owned()).await {
+          return Ok(Self { inner: user });
+        }
+      }
+
+      if user_id != -1 || !user_token.is_empty() {
+        if let Ok(user) = get_user_token::exec(user_id, user_token.to_owned()).await {
+          return Ok(Self { inner: user });
+        }
+      }
+
+      Err(Error::BadRequest)
+    })
+  }
+
+  fn extract(req: &HttpRequest) -> Self::Future {
+    Self::from_request(req, &mut Payload::None)
+  }
+}
 #[derive(Serialize, Debug)]
 #[serde(tag = "error")]
 pub enum Error {
@@ -118,74 +203,10 @@ impl ResponseError for Error {
 }
 
 const EMOJIS: [char; 92] = [
-  '✌', '😂', '😝', '😁', '😱', '👉', '🙌', '🍻', '🔥', '🌈', '☀', '🎈', '🌹', '💄', '🎀', '⚽', '🎾', '🏁', '😡', '👿', '🐻', '🐶', '🐬', '🐟', '🍀', '👀',
-  '🚗', '🍎', '💝', '💙', '👌', '❤', '😍', '😉', '😓', '😳', '💪', '💩', '🍸', '🔑', '💖', '🌟', '🎉', '🌺', '🎶', '👠', '🏈', '⚾', '🏆', '👽', '💀', '🐵',
-  '🐮', '🐩', '🐎', '💣', '👃', '👂', '🍓', '💘', '💜', '👊', '💋', '😘', '😜', '😵', '🙏', '👋', '🚽', '💃', '💎', '🚀', '🌙', '🎁', '⛄', '🌊', '⛵', '🏀',
-  '🎱', '💰', '👶', '👸', '🐰', '🐷', '🐍', '🐫', '🔫', '👄', '🚲', '🍉', '💛', '💚',
+  '✌', '😂', '😝', '😁', '😱', '👉', '🙌', '🍻', '🔥', '🌈', '☀', '🎈', '🌹', '💄', '🎀', '⚽', '🎾', '🏁', '😡', '👿', '🐻', '🐶', '🐬', '🐟', '🍀', '👀', '🚗', '🍎', '💝', '💙', '👌', '❤', '😍',
+  '😉', '😓', '😳', '💪', '💩', '🍸', '🔑', '💖', '🌟', '🎉', '🌺', '🎶', '👠', '🏈', '⚾', '🏆', '👽', '💀', '🐵', '🐮', '🐩', '🐎', '💣', '👃', '👂', '🍓', '💘', '💜', '👊', '💋', '😘', '😜', '😵',
+  '🙏', '👋', '🚽', '💃', '💎', '🚀', '🌙', '🎁', '⛄', '🌊', '⛵', '🏀', '🎱', '💰', '👶', '👸', '🐰', '🐷', '🐍', '🐫', '🔫', '👄', '🚲', '🍉', '💛', '💚',
 ];
-
-fn get_header(val: Option<&HeaderValue>) -> Result<&str> {
-  if let Some(val) = val {
-    if let Ok(val) = val.to_str() {
-      return Ok(val);
-    }
-  }
-  Err(anyhow!(""))
-}
-pub async fn validate_request_upload(req: &HttpRequest) -> Result<(Users, Result<&str>), Error> {
-  let headers = req.headers();
-
-  let auth = get_header(headers.get("authorization"));
-  if let Ok(auth) = auth {
-    if let Ok(user) = get_user_auth::exec(auth.to_owned()).await {
-      log::info!("{} {}", &user.name, &user.id);
-      actix_web::rt::spawn(send_text_webhook(format!("**{}** {} {}", &req.path(), &user.name, &user.id)));
-      Ok((user, get_header(headers.get("x-image-effects"))))
-    } else {
-      Err(Error::NotAuthorized)
-    }
-  } else {
-    let user_id = get_header(headers.get("x-user-id")).unwrap_or("-1").parse::<i32>().unwrap_or(-1);
-    let user_token = get_header(headers.get("x-user-token")).unwrap_or_else(|_| get_header(headers.get("x-user-key")).unwrap_or(""));
-
-    if user_id == -1 || user_token.is_empty() {
-      Err(Error::NotAuthorized)
-    } else if let Ok(user) = get_user_token::exec(user_id, user_token.to_owned()).await {
-      log::info!("{} {}", &user.name, &user.id);
-      actix_web::rt::spawn(send_text_webhook(format!("**{}** {} {}", &req.path(), &user.name, &user.id)));
-      Ok((user, get_header(headers.get("x-image-effects"))))
-    } else {
-      Err(Error::NotAuthorized)
-    }
-  }
-}
-pub async fn validate_request(req: &HttpRequest) -> Result<Users, Error> {
-  let headers = req.headers();
-
-  let auth = get_header(headers.get("authorization"));
-  if let Ok(auth) = auth {
-    if let Ok(user) = get_user_auth::exec(auth.to_owned()).await {
-      log::info!("{} {}", &user.name, &user.id);
-      actix_web::rt::spawn(send_text_webhook(format!("**{}** {} {}", &req.path(), &user.name, &user.id)));
-      Ok(user)
-    } else {
-      Err(Error::NotAuthorized)
-    }
-  } else {
-    let user_id = get_header(headers.get("x-user-id")).unwrap_or("-1").parse::<i32>().unwrap_or(-1);
-    let user_token = get_header(headers.get("x-user-token")).unwrap_or_else(|_| get_header(headers.get("x-user-key")).unwrap_or(""));
-
-    if user_id == -1 || user_token.is_empty() {
-      Err(Error::NotAuthorized)
-    } else if let Ok(user) = get_user_token::exec(user_id, user_token.to_owned()).await {
-      log::info!("{} {}", &user.name, &user.id);
-      actix_web::rt::spawn(send_text_webhook(format!("**{}** {} {}", &req.path(), &user.name, &user.id)));
-      Ok(user)
-    } else {
-      Err(Error::NotAuthorized)
-    }
-  }
-}
 
 fn random_char() -> &'static char {
   EMOJIS.choose(&mut rand::thread_rng()).unwrap()
