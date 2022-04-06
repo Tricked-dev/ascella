@@ -8,7 +8,7 @@ pub mod prelude {
   pub use crate::database::queries::*;
   pub use crate::database::structs::*;
   pub use crate::database::*;
-  pub use crate::util::{create_config, ran_str, random_emojis, send_text_webhook, upload_success, Error, SendMessage};
+  pub use crate::util::{create_config, ran_str, send_text_webhook, Error, SendMessage};
   pub use actix_multipart::Multipart;
   pub use actix_web::{HttpRequest, HttpResponse};
   pub use anyhow::anyhow;

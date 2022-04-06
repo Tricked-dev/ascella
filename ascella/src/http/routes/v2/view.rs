@@ -1,10 +1,7 @@
 use crate::database::s3::get_file;
 use crate::prelude::*;
 
-use paperclip::actix::{
-  api_v2_operation,
-  web::{self},
-};
+use paperclip::actix::api_v2_operation;
 
 #[api_v2_operation(tags(Images), summary = "get image", description = "View a image", consumes = "application/json")]
 #[get("/view/{image}.{ext:(gif|webp|jpg|jpeg|png)$}")]

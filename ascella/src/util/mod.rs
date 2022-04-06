@@ -16,7 +16,7 @@ use paperclip::{
   actix::{Apiv2Schema, Apiv2Security},
   v2::schema::Apiv2Errors,
 };
-use rand::{distributions::Alphanumeric, prelude::SliceRandom, Rng};
+use rand::{distributions::Alphanumeric, Rng};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::{fmt::Display, pin::Pin};
@@ -208,34 +208,6 @@ impl ResponseError for Error {
   }
 }
 
-const EMOJIS: [char; 92] = [
-  '✌', '😂', '😝', '😁', '😱', '👉', '🙌', '🍻', '🔥', '🌈', '☀', '🎈', '🌹', '💄', '🎀', '⚽', '🎾', '🏁', '😡', '👿', '🐻', '🐶', '🐬', '🐟', '🍀', '👀', '🚗', '🍎', '💝', '💙', '👌', '❤', '😍',
-  '😉', '😓', '😳', '💪', '💩', '🍸', '🔑', '💖', '🌟', '🎉', '🌺', '🎶', '👠', '🏈', '⚾', '🏆', '👽', '💀', '🐵', '🐮', '🐩', '🐎', '💣', '👃', '👂', '🍓', '💘', '💜', '👊', '💋', '😘', '😜', '😵',
-  '🙏', '👋', '🚽', '💃', '💎', '🚀', '🌙', '🎁', '⛄', '🌊', '⛵', '🏀', '🎱', '💰', '👶', '👸', '🐰', '🐷', '🐍', '🐫', '🔫', '👄', '🚲', '🍉', '💛', '💚',
-];
-
-fn random_char() -> &'static char {
-  EMOJIS.choose(&mut rand::thread_rng()).unwrap()
-}
-
-pub fn random_emojis() -> String {
-  let mut result = "".to_owned();
-  for _i in 1..10 {
-    result.push_str(&random_char().to_string());
-  }
-  result
-}
-
-#[cfg(test)]
-pub mod test {
-  use super::*;
-  #[test]
-  fn test_emojis() {
-    let emojis = random_emojis();
-    println!("{}", emojis)
-  }
-}
-
 pub fn create_config<T: std::fmt::Display>(auth: T) -> serde_json::Value {
   serde_json::json!({
     "Version": "13.1.0",
@@ -271,17 +243,17 @@ pub struct UploadSuccess {
   url: String,
   raw: String,
 }
-
-apply_responders!(UploadSuccess, SendMessage);
-
-pub fn upload_success(vanity: &str, domain: &str) -> UploadSuccess {
-  UploadSuccess {
-    code: 200,
-    success: true,
-    url: format!("{}/{}", domain, vanity),
-    raw: format!("https://ascella.wtf/images/raw/{}", vanity),
+impl UploadSuccess {
+  pub fn new(vanity: &str, domain: &str) -> Self {
+    Self {
+      code: 200,
+      success: true,
+      url: format!("{}/{}", domain, vanity),
+      raw: format!("https://ascella.wtf/images/raw/{}", vanity),
+    }
   }
 }
+apply_responders!(UploadSuccess, SendMessage);
 
 pub fn ran_str() -> String {
   rand::thread_rng().sample_iter(&Alphanumeric).take(10).map(char::from).collect()

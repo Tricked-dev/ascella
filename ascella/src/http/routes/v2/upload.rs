@@ -102,7 +102,7 @@ pub async fn post(_req: HttpRequest, mut payload: Multipart, data: AccessToken) 
       name = &data.name(),
       id = &data.id()
     )));
-    Ok(upload_success(&img.vanity, &data.domain()))
+    Ok(UploadSuccess::new(&img.vanity, &data.domain()))
   } else {
     Err(Error::BadRequest)
   }
