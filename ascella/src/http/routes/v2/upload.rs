@@ -27,7 +27,7 @@ fn gfycat_url() -> String {
   let mut rng = rand::thread_rng();
   let mut s: Vec<&str> = vec![];
 
-  for _ in 0..5 {
+  for _ in 0..3 {
     s.push(ADJECTIVES_ARRAY.choose(&mut rng).unwrap());
   }
   s.push(ANIMALS_ARRAY.choose(&mut rng).unwrap());

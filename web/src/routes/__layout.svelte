@@ -58,7 +58,7 @@
 		},
 		{ href: 'https://dash.ascella.host', a: 'Dashboard' },
 		{ href: '/', a: 'Home' },
-		{ href: 'https://docs.ascella.host/docs/signup', a: 'Create an account' }
+		{ href: 'https://docs.ascella.host/signup', a: 'Create an account' }
 	];
 	import { onMount } from 'svelte';
 	import { fly, scale } from 'svelte/transition';

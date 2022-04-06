@@ -2,6 +2,7 @@
 title: Welcome
 description: Welcome to the Ascella Uploader documentation
 position: 0
+slug: /
 ---
 
 ## Singing up

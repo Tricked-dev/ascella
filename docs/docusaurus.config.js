@@ -17,24 +17,15 @@ const config = {
 
   presets: [
     [
-      "classic",
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      "@docusaurus/preset-classic",
+      {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          editUrl: "https://github.com/Tricked-dev/ascella",
+          routeBasePath: "/", // Serve the docs at the site's root
+          /* other docs plugin options */
         },
-        // blog: {
-        //   showReadingTime: true,
-        //   // Please change this to your repo.
-        //   editUrl:
-        //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        // },
-        theme: {
-          customCss: require.resolve("./src/css/custom.css"),
-        },
-      }),
+        blog: false, // Optional: disable the blog plugin
+        // ...
+      },
     ],
     [
       "redocusaurus",
@@ -91,7 +82,7 @@ const config = {
             items: [
               {
                 label: "Getting started",
-                to: "/docs/",
+                to: "/",
               },
             ],
           },

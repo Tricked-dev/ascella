@@ -19,8 +19,6 @@ Follow the [ascella desktop](./ascella-desktop) installing guide
 
 ---
 
----
-
 ### Alternative Linux
 
 - Download Sharenix [github.com/Francesco149/sharenix](https://github.com/Francesco149/sharenix)

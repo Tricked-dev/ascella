@@ -14,7 +14,7 @@ Ascella is the fastest opensource image uploader.
 
 ## Contributing
 
-someone please properly make a theme for everything & new icont thx luv u if u do
+see [contributing](https://dosc.ascella.host/contributing)
 
 ---
 

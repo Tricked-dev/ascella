@@ -2,15 +2,15 @@ import { Box, Link } from "@chakra-ui/react";
 const bottomLinks = [
   [
     {
-      href: "/docs/faq",
+      href: "/faq",
       a: "Faq",
     },
     {
-      href: "/docs/rules",
+      href: "/rules",
       a: "Rules",
     },
     {
-      href: "/docs/privacy",
+      href: "/privacy",
       a: "Privacy",
     },
   ],
