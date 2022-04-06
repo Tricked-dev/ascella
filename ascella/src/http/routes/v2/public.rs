@@ -8,7 +8,7 @@ struct ImageData {
   tags(Dashboard),
   summary = "make image public",
   description = "Make a image public this endpoint is useless atm",
-  consumes = "application/json, text/plain",
+  consumes = "application/json",
   produces = "application/json"
 )]
 #[post("/public")]

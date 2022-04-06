@@ -5,7 +5,7 @@ use crate::prelude::*;
   tags(Etc),
   summary = "get domains",
   description = "Returns all ascella domains",
-  consumes = "application/json, text/plain",
+  consumes = "application/json",
   produces = "application/json"
 )]
 #[get("/domains")]

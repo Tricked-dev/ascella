@@ -64,7 +64,13 @@ impl AccessToken {
     self.inner.url_style
   }
 }
-
+/// This code makes me want to cry
+/// i spend 1 hour trying to make ownershiop work
+/// and i succeeded
+/// but at what cost
+///
+///
+/// someone save me from this programming language
 impl FromRequest for AccessToken {
   type Error = Error;
 

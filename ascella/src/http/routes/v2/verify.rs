@@ -4,7 +4,7 @@ use crate::prelude::*;
   tags(Dashboard)
   summary = "verify a user",
   description = "Used to check if someone is actually a user",
-  consumes = "application/json, text/plain",
+  consumes = "application/json",
   produces = "application/json"
 )]
 #[post("/verify")]

@@ -12,7 +12,7 @@ pub struct Data {
   tags(Etc),
   summary = "get config",
   description = "Returns the upload config of the given auth token",
-  consumes = "application/json, text/plain",
+  consumes = "application/json",
   produces = "application/json"
 )]
 #[get("/config")]

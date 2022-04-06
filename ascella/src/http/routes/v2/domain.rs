@@ -8,7 +8,7 @@ pub struct DomainData {
   tags(Dashboard),
   summary = "set domain",
   description = "Set the domain of the user",
-  consumes = "application/json, text/plain",
+  consumes = "application/json",
   produces = "application/json"
 )]
 #[post("/domain")]

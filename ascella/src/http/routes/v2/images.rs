@@ -10,7 +10,7 @@ pub struct QueryData {
   tags(Dashboard),
   summary = "get images",
   description = "View the images of a user",
-  consumes = "application/json, text/plain",
+  consumes = "application/json",
   produces = "application/json"
 )]
 #[post("/images")]

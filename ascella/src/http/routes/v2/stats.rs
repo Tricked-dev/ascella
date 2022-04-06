@@ -23,7 +23,7 @@ apply_responders!(StatsResponse);
   tags(Images),
   summary = "get image stats",
   description = "View info about a image",
-  consumes = "application/json, text/plain",
+  consumes = "application/json",
   produces = "application/json"
 )]
 #[get("/view/{image}/stats")]
