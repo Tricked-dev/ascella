@@ -11,6 +11,7 @@ export default function fetch(
     method,
     body,
     headers: {
+      "content-type": "application/json",
       "x-user-id": session.id,
       "x-user-token": session.key,
       "user-agent": "Ascella Dashboard (dash.ascella.host)",
