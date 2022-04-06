@@ -9,7 +9,7 @@ use crate::{
 };
 use actix_web::{body::BoxBody, dev::Payload, http::header::HeaderMap, FromRequest, HttpRequest, HttpResponse, Responder, ResponseError};
 use anyhow::Result;
-use futures::{Future, FutureExt};
+use futures::Future;
 use http::StatusCode;
 use lazy_static::lazy_static;
 use paperclip::{

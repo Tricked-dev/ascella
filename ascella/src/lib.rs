@@ -1,4 +1,5 @@
 pub mod bot;
+pub mod cron;
 pub mod database;
 pub mod http;
 pub mod ratelimit;
