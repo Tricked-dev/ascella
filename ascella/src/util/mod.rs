@@ -6,12 +6,12 @@ use crate::{
     queries::{get_user_auth, get_user_token},
     structs::Users,
   },
+  prelude::CLIENT,
 };
 use actix_web::{body::BoxBody, dev::Payload, http::header::HeaderMap, FromRequest, HttpRequest, HttpResponse, Responder, ResponseError};
 use anyhow::Result;
 use futures::Future;
 use http::StatusCode;
-use lazy_static::lazy_static;
 use paperclip::{
   actix::{Apiv2Schema, Apiv2Security},
   v2::schema::Apiv2Errors,
@@ -20,10 +20,6 @@ use rand::{distributions::Alphanumeric, Rng};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::{fmt::Display, pin::Pin};
-
-lazy_static! {
-  pub static ref CLIENT: reqwest::Client = reqwest::Client::new();
-}
 
 //Users
 

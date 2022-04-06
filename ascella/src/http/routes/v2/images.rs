@@ -6,6 +6,9 @@ pub struct QueryData {
   skip: i32,
 }
 
+#[derive(Serialize, Deserialize, Apiv2Schema)]
+pub struct GetImagesResponse(Vec<SimpleImages>);
+
 #[api_v2_operation(
   tags(Dashboard),
   summary = "get images",
@@ -14,10 +17,11 @@ pub struct QueryData {
   produces = "application/json"
 )]
 #[post("/images")]
-pub async fn post(query: web::Json<QueryData>, data: AccessToken) -> Result<HttpResponse, Error> {
+pub async fn post(query: web::Json<QueryData>, data: AccessToken) -> Result<GetImagesResponse, Error> {
   let images = get_images::exec(data.id(), 20, query.skip).await.map_err(|err| {
     println!("{err:?}");
     Error::DatabaseError
   })?;
-  Ok(HttpResponse::Ok().json(images))
+  Ok(GetImagesResponse(images))
 }
+apply_responders!(GetImagesResponse);

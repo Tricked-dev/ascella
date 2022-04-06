@@ -1,6 +1,15 @@
-// TODO: type this result
-
 use crate::prelude::*;
+
+#[derive(Serialize, Deserialize, Apiv2Schema)]
+pub struct GetDomainsResponse(Vec<Domain>);
+
+#[derive(Serialize, Deserialize, Apiv2Schema)]
+pub struct Domain {
+  apex: bool,
+  owner: i32,
+  domain: String,
+}
+
 #[api_v2_operation(
   tags(Etc),
   summary = "get domains",
@@ -9,19 +18,17 @@ use crate::prelude::*;
   produces = "application/json"
 )]
 #[get("/domains")]
-
-pub async fn get() -> Result<HttpResponse, Error> {
+pub async fn get() -> Result<GetDomainsResponse, Error> {
   let data = get_domains::exec().await.unwrap();
 
   let data_domains = data
-    .iter()
-    .map(|domain| {
-      json!({
-          "apex":domain.apex,
-          "owner": domain.owner,
-          "domain": domain.domain
-      })
+    .into_iter()
+    .map(|domain| Domain {
+      apex: domain.apex,
+      owner: domain.owner,
+      domain: domain.domain,
     })
     .collect::<Vec<_>>();
-  Ok(HttpResponse::Ok().json(&data_domains))
+  Ok(GetDomainsResponse(data_domains))
 }
+apply_responders!(GetDomainsResponse);

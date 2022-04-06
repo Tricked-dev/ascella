@@ -1,3 +1,4 @@
+pub mod ascella_stats;
 pub mod config;
 pub mod domain;
 pub mod domains;

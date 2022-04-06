@@ -2,9 +2,8 @@ use futures::executor::block_on;
 use twilight_model::id::ChannelId;
 
 use crate::{
-  bot::bot::HTTP,
   database::queries::{get_images::delete_all, get_users_autodelete},
-  prelude::create_embed,
+  prelude::{create_embed, HTTP},
 };
 
 pub async fn start_cron() {

@@ -5,7 +5,6 @@ pub async fn exec(owner: i32, amount: i32, skip: i32) -> Result<Vec<SimpleImages
   let rows = get_tokio_postgres()
     .await
     .query(
-      //SQL INJECTION LMAOO this lang sucks!
       format!("SELECT created, id,vanity FROM images WHERE owner = {} ORDER BY id DESC LIMIT {} OFFSET {}", owner, amount, skip).as_str(),
       &[],
     )

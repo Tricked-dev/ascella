@@ -1,6 +1,5 @@
 use std::sync::Arc;
 
-use once_cell::sync::OnceCell;
 use serde::Deserialize;
 use serde::Serialize;
 use twilight_model::gateway::payload::outgoing::update_presence::UpdatePresencePayload;
@@ -12,7 +11,7 @@ use crate::apply_responders;
 use crate::bot::commands;
 use crate::prelude::*;
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Apiv2Schema)]
 pub struct Comment {
   avatar: String,
   comment: String,
@@ -20,11 +19,6 @@ pub struct Comment {
 }
 
 apply_responders!(Comment);
-
-lazy_static! {
-  pub static ref HTTP: OnceCell<Arc<Client>> = OnceCell::new();
-  pub static ref REVIEWS: OnceCell<Vec<Comment>> = OnceCell::new();
-}
 
 pub async fn start_bot() -> Result<()> {
   let domains = get_domains::exec().await?;

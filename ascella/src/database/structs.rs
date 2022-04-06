@@ -41,7 +41,7 @@ pub struct Images {
   pub public: Option<bool>,
 }
 
-#[derive(PostgresMapper, Serialize, Deserialize, Clone)]
+#[derive(PostgresMapper, Serialize, Deserialize, Clone, Apiv2Schema)]
 #[pg_mapper(table = "images")]
 pub struct SimpleImages {
   pub id: i32,
