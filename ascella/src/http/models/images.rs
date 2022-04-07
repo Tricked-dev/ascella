@@ -4,7 +4,3 @@ use crate::prelude::*;
 pub struct QueryData {
   pub skip: i32,
 }
-
-#[derive(Serialize, Deserialize, Apiv2Schema)]
-pub struct GetImagesResponse(pub Vec<SimpleImages>);
-apply_responders!(GetImagesResponse);

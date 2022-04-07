@@ -68,5 +68,3 @@ pub struct Users {
   pub upload_key: Option<String>,
   pub url_style: i32,
 }
-
-apply_responders!(Users);

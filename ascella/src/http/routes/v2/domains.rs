@@ -9,7 +9,7 @@ pub struct GetDomainsResponse(Vec<Domain>);
 /// Returns all ascella domains
 #[api_v2_operation(tags(Etc), consumes = "application/json", produces = "application/json")]
 #[get("/domains")]
-pub async fn get() -> Result<GetDomainsResponse, Error> {
+pub async fn get() -> Result<OkResponse<Vec<Domain>>, Error> {
   let data = get_domains::exec().await.unwrap();
 
   let data_domains = data
@@ -20,6 +20,5 @@ pub async fn get() -> Result<GetDomainsResponse, Error> {
       domain: domain.domain,
     })
     .collect::<Vec<_>>();
-  Ok(GetDomainsResponse(data_domains))
+  Ok(OkResponse(data_domains))
 }
-apply_responders!(GetDomainsResponse);

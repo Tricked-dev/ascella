@@ -7,7 +7,7 @@ use crate::prelude::*;
 /// View the stats & info of an image
 #[api_v2_operation(tags(Images), consumes = "application/json", produces = "application/json")]
 #[get("/view/{image}/stats")]
-pub async fn get(image: web::Path<String>) -> Result<StatsResponse, Error> {
+pub async fn get(image: web::Path<String>) -> Result<OkResponse<StatsResponse>, Error> {
   let data = get_image_vanity_only::exec(image.to_string()).await;
 
   if let Ok(image) = data {
@@ -30,7 +30,7 @@ pub async fn get(image: web::Path<String>) -> Result<StatsResponse, Error> {
         embed: get_embed::exec(user.id).await.ok(),
       };
 
-      Ok(json)
+      Ok(OkResponse(json))
     } else {
       Err(Error::MissingData)
     }

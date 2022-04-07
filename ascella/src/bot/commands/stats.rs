@@ -55,7 +55,6 @@ impl AscellaStats {
     AscellaStats::new(image_count, domains_count, users_count)
   }
 }
-apply_responders!(AscellaStats);
 
 pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
   let stats = AscellaStats::new_with_stats().await;

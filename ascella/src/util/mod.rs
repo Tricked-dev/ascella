@@ -1,7 +1,4 @@
-pub mod apply_responder;
-
 use crate::{
-  apply_responders,
   database::{
     queries::{get_user_auth, get_user_token},
     structs::Users,
@@ -13,13 +10,19 @@ use anyhow::Result;
 use futures::Future;
 use http::StatusCode;
 use paperclip::{
-  actix::{Apiv2Schema, Apiv2Security},
-  v2::schema::Apiv2Errors,
+  actix::{Apiv2Schema, Apiv2Security, OperationModifier},
+  v2::{
+    models::{DefaultOperationRaw, DefaultSchemaRaw, Either},
+    schema::Apiv2Errors,
+  },
 };
 use rand::{distributions::Alphanumeric, Rng};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
-use std::{fmt::Display, pin::Pin};
+use std::{
+  fmt::{self, Display},
+  pin::Pin,
+};
 
 //Users
 
@@ -244,7 +247,6 @@ impl UploadSuccess {
     }
   }
 }
-apply_responders!(UploadSuccess, SendMessage);
 
 pub fn ran_str() -> String {
   rand::thread_rng().sample_iter(&Alphanumeric).take(10).map(char::from).collect()
@@ -267,4 +269,79 @@ pub async fn log_shit(data: Value) -> Result<()> {
     .await?;
 
   Ok(())
+}
+pub struct OkResponse<T: Serialize + Apiv2Schema>(pub T);
+
+impl<T> fmt::Debug for OkResponse<T>
+where
+  T: fmt::Debug + Serialize + Apiv2Schema + fmt::Display,
+{
+  fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    let status: StatusCode = StatusCode::CREATED;
+    let status_str = status.canonical_reason().unwrap_or(status.as_str());
+    f.write_fmt(std::fmt::Arguments::new_v1(
+      &[],
+      &[
+        std::fmt::ArgumentV1::new(&(status_str), std::fmt::Display::fmt),
+        std::fmt::ArgumentV1::new(&(self.0), std::fmt::Display::fmt),
+      ],
+    ))
+  }
+}
+impl<T> fmt::Display for OkResponse<T>
+where
+  T: fmt::Display + Serialize + Apiv2Schema,
+{
+  fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fmt::Display::fmt(&self.0, f)
+  }
+}
+impl<T> Responder for OkResponse<T>
+where
+  T: Serialize + Apiv2Schema,
+{
+  type Body = BoxBody;
+  fn respond_to(self, _: &HttpRequest) -> HttpResponse<BoxBody> {
+    let status: StatusCode = StatusCode::OK;
+    let body = match serde_json::to_string(&self.0) {
+      Ok(body) => body,
+      Err(e) => return e.error_response(),
+    };
+    HttpResponse::build(status).content_type("application/json").body(body)
+  }
+}
+
+impl<T> Apiv2Schema for OkResponse<T>
+where
+  T: Serialize + Apiv2Schema,
+{
+  fn name() -> Option<String> {
+    T::name()
+  }
+  fn raw_schema() -> DefaultSchemaRaw {
+    T::raw_schema()
+  }
+}
+use paperclip::v2::models::Response;
+use paperclip::v2::schema::Apiv2Schema;
+
+impl<T> OperationModifier for OkResponse<T>
+where
+  T: Serialize + Apiv2Schema,
+{
+  fn update_response(op: &mut DefaultOperationRaw) {
+    let status: StatusCode = StatusCode::CREATED;
+    op.responses.insert(
+      status.as_str().into(),
+      Either::Right(Response {
+        description: status.canonical_reason().map(ToString::to_string),
+        schema: Some({
+          let mut def = T::schema_with_ref();
+          def.retain_ref();
+          def
+        }),
+        ..Default::default()
+      }),
+    );
+  }
 }

@@ -68,7 +68,7 @@ mod test_urls {
 /// Upload a image to ascella
 #[api_v2_operation(tags(Images), consumes = "multipart/form-data", produces = "application/json")]
 #[post("/upload")]
-pub async fn post(mut payload: Multipart, data: AccessToken) -> Result<UploadSuccess, Error> {
+pub async fn post(mut payload: Multipart, data: AccessToken) -> Result<OkResponse<UploadSuccess>, Error> {
   if let Ok(Some(mut field)) = payload.try_next().await {
     let mut file_size: usize = 0;
     let mut buf: Vec<u8> = Vec::new();
@@ -113,7 +113,7 @@ pub async fn post(mut payload: Multipart, data: AccessToken) -> Result<UploadSuc
       name = &data.name(),
       id = &data.id()
     )));
-    Ok(UploadSuccess::new(&img.vanity, &data.domain()))
+    Ok(OkResponse(UploadSuccess::new(&img.vanity, &data.domain())))
   } else {
     Err(Error::BadRequest)
   }

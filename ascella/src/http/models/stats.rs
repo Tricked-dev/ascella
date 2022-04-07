@@ -13,4 +13,3 @@ pub struct StatsResponse {
   #[serde(skip_serializing_if = "Option::is_none")]
   pub(crate) embed: Option<Embeds>,
 }
-apply_responders!(StatsResponse);

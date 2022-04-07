@@ -1,3 +1,5 @@
+#![feature(fmt_internals)]
+
 pub mod bot;
 pub mod cron;
 pub mod database;
@@ -13,7 +15,6 @@ pub mod prelude {
     pub static ref REVIEWS: OnceCell<Vec<Comment>> = OnceCell::new();
   }
 
-  pub use crate::apply_responders;
   pub use crate::bot::bot::Comment;
   pub use crate::bot::utils::*;
   pub use crate::database::queries::*;
