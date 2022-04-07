@@ -69,7 +69,7 @@ pub async fn start_actix() -> std::io::Result<()> {
           external_docs: None,
         },
       ],
-      host: Some("https://ascella.wtf".into()),
+      host: Some("ascella.wtf".into()),
       ..DefaultApiRaw::default()
     };
 
