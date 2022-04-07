@@ -74,19 +74,14 @@ impl FromRequest for AccessToken {
 
   fn from_request(req: &HttpRequest, _payload: &mut Payload) -> Self::Future {
     let headers = req.headers().clone();
-    fn get_auth(headers: HeaderMap) -> Option<String> {
-      headers.get("Authorization")?.to_str().map(|x| x.to_owned()).ok()
-    }
-    fn get_user_id(headers: HeaderMap) -> Option<String> {
-      headers.get("x-user-id")?.to_str().map(|x| x.to_owned()).ok()
-    }
-    fn get_user_token(headers: HeaderMap) -> Option<String> {
-      headers.get("x-user-id")?.to_str().map(|x| x.to_owned()).ok()
-    }
-    let auth = get_auth(headers.clone()).unwrap_or_default();
-    let user_id = get_user_id(headers.clone()).unwrap_or_else(|| "-1".to_string()).parse::<i32>().unwrap();
-    let user_token = get_user_token(headers).unwrap_or_default();
 
+    fn get_header(headers: HeaderMap, header: &str) -> Option<String> {
+      headers.get(header)?.to_str().map(|x| x.to_owned()).ok()
+    }
+
+    let auth = get_header(headers.clone(), "Authorization").unwrap_or_default();
+    let user_id = get_header(headers.clone(), "x-user-id").unwrap_or_else(|| "-1".to_string()).parse::<i32>().unwrap();
+    let user_token = get_header(headers, "x-user-token").unwrap_or_default();
     Box::pin(async move {
       if !auth.is_empty() {
         if let Ok(user) = get_user_auth::exec(auth.to_owned()).await {

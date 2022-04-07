@@ -72,7 +72,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
     .field(EmbedFieldBuilder::new("Uptime", &stats.uptime.to_string()).inline())
     .field(EmbedFieldBuilder::new("Fast", &stats.fast.to_string()).inline())
     .field(EmbedFieldBuilder::new("Rustc info", &stats.rustc.to_string()).inline())
-    .field(EmbedFieldBuilder::new("Commit Hash", &stats.commit_hash.to_string()).inline())
+    .field(EmbedFieldBuilder::new("Commit Hash", format!("[{}]({})", &env!("GIT_HASH")[..7], &stats.commit_hash.to_string())).inline())
     .build()?;
 
   client
