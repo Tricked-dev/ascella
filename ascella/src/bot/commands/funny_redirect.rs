@@ -31,7 +31,6 @@ lazy_static! {
     "st0k",
     "exe",
     "ascella",
-    "ascella.host",
     "tricked",
     "dmg",
     "download",

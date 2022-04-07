@@ -35,7 +35,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --locked
+          args: --release --locked --bin ascella
 
       - name: Strip release binary (linux and macos)
         run: strip "target/release/$BIN_NAME"
