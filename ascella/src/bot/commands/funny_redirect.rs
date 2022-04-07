@@ -1,6 +1,6 @@
-use crate::prelude::*;
+use crate::{http::routes::v2::upload::hacker_url, prelude::*};
 lazy_static! {
-  static ref FUNNY_WORDS: Vec<&'static str> = vec![
+  pub static ref FUNNY_WORDS: Vec<&'static str> = vec![
     "fbi",
     "vault",
     "scam",
@@ -11,6 +11,11 @@ lazy_static! {
     "56",
     "420",
     "69",
+    "steal",
+    "stolen",
+    "group",
+    "struct",
+    "fn",
     "aa",
     "ja",
     "ha",
@@ -19,22 +24,20 @@ lazy_static! {
     "kl",
     "s1",
     "sdf",
-    "$",
-    "!!",
-    "[",
     "869",
     "gov",
     "hacking",
     "steal",
     "st0k",
     "exe",
+    "ascella",
+    "ascella.host",
+    "tricked",
     "dmg",
     "download",
     "free",
     "download-here",
     "sale",
-    ".",
-    "..",
     "ransomware",
     "bitcoin",
     "monaro",
@@ -64,14 +67,9 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
 
   let url = get_arg_default(command_args.clone(), "url", "https//tricked.pro/aethor");
   let domain = get_arg_default(command_args.clone(), "domain", "https//i.tricked.pro");
-  let mut clone = FUNNY_WORDS.clone();
-
-  clone.shuffle(&mut rand::thread_rng());
-
-  let vanity = clone.into_iter().take(rand::thread_rng().gen_range(4..20)).collect::<Vec<&str>>().join("");
+  let vanity = hacker_url();
 
   let data = format!("https://{}/{}", domain, vanity);
-  println!("{}", data);
   let embed = create_embed()
     .title("Successfully created the redirect")
     .url(&data)

@@ -4,12 +4,19 @@ use crate::prelude::*;
 /// 1 = ulid id
 /// 2 = gfycat
 /// 3 = zws
+/// 4 = hacker
 
 pub fn command() -> Command {
   CommandBuilder::new("url_style".into(), "Change the url style of your uploads".into(), CommandType::ChatInput)
     .option(
       IntegerBuilder::new("style".into(), "Change your url style!".to_owned())
-        .choices(vec![("default".to_owned(), 0), ("ulid".to_owned(), 1), ("gfycat".to_owned(), 2), ("zws".to_owned(), 3)])
+        .choices(vec![
+          ("default".to_owned(), 0),
+          ("ulid".to_owned(), 1),
+          ("gfycat".to_owned(), 2),
+          ("zws".to_owned(), 3),
+          ("hacker".to_owned(), 4),
+        ])
         .required(true),
     )
     .build()

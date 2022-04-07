@@ -1,4 +1,4 @@
-use crate::database::s3::S3;
+use crate::{bot::commands::funny_redirect::FUNNY_WORDS, database::s3::S3};
 use lazy_static::lazy_static;
 use rand::prelude::SliceRandom;
 
@@ -41,6 +41,13 @@ fn zws_url() -> String {
   }
   s
 }
+pub fn hacker_url() -> String {
+  let mut clone = FUNNY_WORDS.clone();
+
+  clone.shuffle(&mut rand::thread_rng());
+
+  clone.into_iter().take(rand::thread_rng().gen_range(4..10)).collect::<Vec<&str>>().join("")
+}
 
 #[cfg(test)]
 mod test_urls {
@@ -53,6 +60,7 @@ mod test_urls {
     println!("{}", ulid_url());
     println!("{}", gfycat_url());
     println!("{}", zws_url());
+    println!("{}", hacker_url());
   }
 }
 #[api_v2_operation(tags(Images), summary = "create image", description = "Upload a image", consumes = "multipart/form-data", produces = "application/json")]
@@ -86,6 +94,7 @@ pub async fn post(_req: HttpRequest, mut payload: Multipart, data: AccessToken) 
       1 => ulid_url(),
       2 => gfycat_url(),
       3 => zws_url(),
+      4 => hacker_url(),
       _ => default_url(),
     };
 
