@@ -26,17 +26,13 @@ pub fn update_config<T: Into<PathBuf>>(path: T) -> Result<(), Error> {
     .map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?
     .map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?;
 
-  let config: AscellaConfig = serde_json::from_str(&serde_json::to_string(&r["Headers"]).map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?)
-    .map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?;
+  let config: AscellaConfig =
+    serde_json::from_str(&serde_json::to_string(&r["Headers"]).map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?).map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?;
 
   let mut write_path = home_dir().unwrap();
 
   write_path.extend(&[".ascella", "config.toml"]);
-  std::fs::write(
-    &write_path,
-    toml::to_string_pretty(&config).map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?,
-  )
-  .map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?;
+  std::fs::write(&write_path, toml::to_string_pretty(&config).map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?).map_err(|x| Error::new(ErrorKind::Other, x.to_string()))?;
   Ok(())
 }
 
@@ -128,12 +124,7 @@ pub fn upload<P: AsRef<Path>>(path: P) -> Result<String, Error> {
   headers.insert("user-agent", HeaderValue::from_str("Ascella-uploader").unwrap());
 
   let client = reqwest::Client::new();
-  let mut resp = client
-    .post("https://ascella.wtf/v2/ascella/upload")
-    .headers(headers)
-    .multipart(form)
-    .send()
-    .unwrap();
+  let mut resp = client.post("https://ascella.wtf/v2/ascella/upload").headers(headers).multipart(form).send().unwrap();
 
   let text = resp.text().unwrap();
 
@@ -155,12 +146,7 @@ fn copy(t: String) {
     use std::io::prelude::*;
     use std::process::Command;
     use std::process::Stdio;
-    let child = Command::new("xclip")
-      .arg("-selection")
-      .arg("clipboard")
-      .stdin(Stdio::piped())
-      .stdout(Stdio::piped())
-      .spawn();
+    let child = Command::new("xclip").arg("-selection").arg("clipboard").stdin(Stdio::piped()).stdout(Stdio::piped()).spawn();
     if let Ok(mut child) = child {
       {
         let child_stdin = child.stdin.as_mut().unwrap();

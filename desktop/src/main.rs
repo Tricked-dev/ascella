@@ -14,31 +14,19 @@ pub fn main() -> iced::Result {
     .author(crate_authors!())
     .about(crate_description!())
     .subcommand(
-      App::new("area").about("Screenshot a area").arg(
-        Arg::new("delay")
-          .help("delay to take the screenshot")
-          .short('d')
-          .long("delay")
-          .takes_value(true),
-      ),
+      App::new("area")
+        .about("Screenshot a area")
+        .arg(Arg::new("delay").help("delay to take the screenshot").short('d').long("delay").takes_value(true)),
     )
     .subcommand(
-      App::new("window").about("screenshot the current window").arg(
-        Arg::new("delay")
-          .help("delay to take the screenshot")
-          .short('d')
-          .long("delay")
-          .takes_value(true),
-      ),
+      App::new("window")
+        .about("screenshot the current window")
+        .arg(Arg::new("delay").help("delay to take the screenshot").short('d').long("delay").takes_value(true)),
     )
     .subcommand(
-      App::new("full").about("screenshot all screens").arg(
-        Arg::new("delay")
-          .help("delay to take the screenshot")
-          .short('d')
-          .long("delay")
-          .takes_value(true),
-      ),
+      App::new("full")
+        .about("screenshot all screens")
+        .arg(Arg::new("delay").help("delay to take the screenshot").short('d').long("delay").takes_value(true)),
     )
     .subcommand(
       App::new("upload")
@@ -46,12 +34,9 @@ pub fn main() -> iced::Result {
         .arg(Arg::new("file").help("path to image to upload").required(true).takes_value(true)),
     )
     .subcommand(
-      App::new("config").about("set the config file").arg(
-        Arg::new("config")
-          .help("path to the config file ( ascella.sxcu )")
-          .required(true)
-          .takes_value(true),
-      ),
+      App::new("config")
+        .about("set the config file")
+        .arg(Arg::new("config").help("path to the config file ( ascella.sxcu )").required(true).takes_value(true)),
     );
 
   let matches = app.get_matches();

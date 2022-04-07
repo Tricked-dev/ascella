@@ -133,11 +133,7 @@ pub fn screenshot_full(file: String) {
 
 fn flameshot(option: ScreenshotKind, file: String) {
   let output = match option {
-    ScreenshotKind::Area => Command::new("flameshot")
-      .args(&["gui", "-p", &file])
-      .stdout(Stdio::piped())
-      .output()
-      .expect("flameshot did not launch"),
+    ScreenshotKind::Area => Command::new("flameshot").args(&["gui", "-p", &file]).stdout(Stdio::piped()).output().expect("flameshot did not launch"),
     ScreenshotKind::Window => Command::new("flameshot")
       .args(&["screen", "-p", &file])
       .stdout(Stdio::piped())
@@ -171,10 +167,7 @@ fn gnome(option: ScreenshotKind, file: String, freeze: bool) {
         }
         Err(_) => Command::new("sh").arg("-c").arg("echo Feh does not exist").spawn().unwrap(),
       };
-      Command::new("gnome-screenshot")
-        .args(&["-a", "-f", &file])
-        .output()
-        .expect("gnome-screenshot did not launch");
+      Command::new("gnome-screenshot").args(&["-a", "-f", &file]).output().expect("gnome-screenshot did not launch");
       if freeze {
         match fs::remove_file(SELECTION_TEMPORARY_FILE) {
           Ok(ok) => ok,
@@ -193,10 +186,7 @@ fn gnome(option: ScreenshotKind, file: String, freeze: bool) {
         .expect("gnome-screenshot did not launch");
     }
     ScreenshotKind::Full => {
-      Command::new("gnome-screenshot")
-        .args(&["-f", &file])
-        .output()
-        .expect("gnome-screenshot did not launch");
+      Command::new("gnome-screenshot").args(&["-f", &file]).output().expect("gnome-screenshot did not launch");
     }
   };
 }
@@ -240,22 +230,13 @@ fn sway(option: ScreenshotKind, file: String) {
 fn mac(option: ScreenshotKind, file: String) {
   match option {
     ScreenshotKind::Area => {
-      Command::new("screencapture")
-        .args(&["-s", &file])
-        .output()
-        .expect("screencapture did not launch");
+      Command::new("screencapture").args(&["-s", &file]).output().expect("screencapture did not launch");
     }
     ScreenshotKind::Window => {
-      Command::new("screencapture")
-        .args(&["-w", &file])
-        .output()
-        .expect("screencapture did not launch");
+      Command::new("screencapture").args(&["-w", &file]).output().expect("screencapture did not launch");
     }
     ScreenshotKind::Full => {
-      Command::new("screencapture")
-        .args(&["-S", &file])
-        .output()
-        .expect("screencapture did not launch");
+      Command::new("screencapture").args(&["-S", &file]).output().expect("screencapture did not launch");
     }
   };
 }
@@ -286,10 +267,7 @@ fn scrot(option: ScreenshotKind, file: String, freeze: bool) {
       }
     }
     ScreenshotKind::Window => {
-      Command::new("scrot")
-        .args(&["--border", "--focused", &file])
-        .output()
-        .expect("gnome-screenshot did not launch");
+      Command::new("scrot").args(&["--border", "--focused", &file]).output().expect("gnome-screenshot did not launch");
     }
     ScreenshotKind::Full => {
       Command::new("scrot").args(&[&file]).output().expect("gnome-screenshot did not launch");

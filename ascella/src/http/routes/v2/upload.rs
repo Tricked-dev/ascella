@@ -63,9 +63,12 @@ mod test_urls {
     println!("{}", hacker_url());
   }
 }
-#[api_v2_operation(tags(Images), summary = "create image", description = "Upload a image", consumes = "multipart/form-data", produces = "application/json")]
+/// create a image
+///
+/// Upload a image to ascella
+#[api_v2_operation(tags(Images), consumes = "multipart/form-data", produces = "application/json")]
 #[post("/upload")]
-pub async fn post(_req: HttpRequest, mut payload: Multipart, data: AccessToken) -> Result<UploadSuccess, Error> {
+pub async fn post(mut payload: Multipart, data: AccessToken) -> Result<UploadSuccess, Error> {
   if let Ok(Some(mut field)) = payload.try_next().await {
     let mut file_size: usize = 0;
     let mut buf: Vec<u8> = Vec::new();
@@ -100,13 +103,12 @@ pub async fn post(_req: HttpRequest, mut payload: Multipart, data: AccessToken) 
 
     let img = create_image::exec(data.id(), content_type.clone(), url).await.unwrap();
 
-    // create_dir_all(format!("images/{}", data.id)).await.unwrap();
     let dest = format!("{}/{}", data.id(), img.id,);
 
     S3.upload_file(&content_type, dest.as_str(), buf.into()).await.map_err(|_| Error::BadRequest)?;
-
+    // i dont want to have to do this but its neccasry
     actix_web::rt::spawn(send_text_webhook(format!(
-      "**[IMAGE]** [image](<https://ascella.wtf/v2/ascella/view/{image}>) **[OWNER]** {name} ({id})",
+      "**[IMAGE]** [image](<https://ascella.wtf/v2/ascella/view/{image}.png>) **[OWNER]** {name} ({id})",
       image = &img.vanity,
       name = &data.name(),
       id = &data.id()

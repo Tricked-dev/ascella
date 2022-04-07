@@ -42,7 +42,7 @@ use lazy_static::lazy_static;
 lazy_static! {
   pub static ref S3: Arc<S3Host> = Arc::new(
     S3Host::new(
-      &dotenv::var("S3_BUCKET").unwrap_or("ascella".to_owned()),
+      &dotenv::var("S3_BUCKET").unwrap_or_else(|_| "ascella".to_owned()),
       "EU1",
       "https://gateway.eu1.storjshare.io",
       &dotenv::var("S3_ID").unwrap(),
@@ -80,8 +80,8 @@ impl S3Host {
   pub async fn upload_file(&self, content_type: &str, file_name: &str, file_bytes: Bytes) -> Result<UploadFileData, FileHostingError> {
     let bytes = file_bytes.bytes().filter(|x| x.is_ok()).map(|x| x.unwrap()).collect::<Vec<_>>();
 
-    let file_name_clone = file_name.clone().to_owned();
-    let content_type_clone = content_type.clone().to_owned();
+    let file_name_clone = file_name.to_owned();
+    let content_type_clone = content_type.to_owned();
     tokio::spawn(async move {
       S3.bucket
         .put_object_with_content_type(format!("/{}", &file_name_clone), &bytes, &content_type_clone)

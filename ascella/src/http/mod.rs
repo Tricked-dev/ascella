@@ -1,16 +1,15 @@
+use crate::prelude::Error;
 use crate::ratelimit::{Governor, GovernorConfigBuilder};
-// pub use crate::util::*;
-pub mod routes;
+use routes::v2::*;
+
 use actix_cors::Cors;
 use actix_web::{middleware, ResponseError};
 use actix_web::{App, HttpServer};
-
 use paperclip::actix::{web, OpenApiExt};
 use paperclip::v2::models::{Contact, DefaultApiRaw, Info, License, Tag};
 
-use crate::prelude::Error;
-
-use routes::v2::*;
+pub mod models;
+pub mod routes;
 
 pub fn set_endpoints(cfg: &mut web::ServiceConfig) {
   cfg
@@ -40,7 +39,7 @@ pub async fn start_actix() -> std::io::Result<()> {
       info: Info {
         version: "2.0".into(),
         title: "Ascella Image uploader".into(),
-        description: Some("Ascella is the fastest image uploader utilizing rust to bring you the fastest upload speeds\n\n# Suggesting new routes\n\nYou can suggest new routes in the discord or send tricked#3777 a dm privaty for your use case for the route.  Or even better you can make a pull request adding the route".into()),
+        description: Some(include_str!("../../api_description.md").into()),
         contact: Some(Contact {
           name: Some("Tricked".into()),
           url: Some("https://tricked.pro".into()),
@@ -79,9 +78,7 @@ pub async fn start_actix() -> std::io::Result<()> {
       .wrap_api_with_spec(spec)
       .wrap(cors)
       .wrap(Governor::new(&GovernorConfigBuilder::default().per_second(60).burst_size(30).finish().unwrap()))
-      .wrap(Governor::new(
-        &GovernorConfigBuilder::default().per_second(3600).burst_size(128).finish().unwrap(),
-      ))
+      .wrap(Governor::new(&GovernorConfigBuilder::default().per_second(3600).burst_size(128).finish().unwrap()))
       .wrap(middleware::Logger::default())
       .with_json_spec_at("/v2/ascella/spec/v2")
       .service(web::scope("/v2/ascella").configure(set_endpoints))

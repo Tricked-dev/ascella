@@ -1,9 +1,11 @@
-use crate::{bot::commands::stats::AscellaStats, prelude::*};
+use crate::bot::commands::stats::AscellaStats;
+use crate::prelude::*;
 
-#[api_v2_operation(tags(Etc), summary = "get ascella stats", description = "provides some cool stats about ascella to use", produces = "application/json")]
+/// get ascella stats
+///
+/// provides some cool stats about ascella to use somewhere
+#[api_v2_operation(tags(Etc), produces = "application/json")]
 #[post("/stats.json")]
 pub async fn get() -> Result<AscellaStats, Error> {
   Ok(AscellaStats::new_with_stats().await)
 }
-
-apply_responders!(AscellaStats);

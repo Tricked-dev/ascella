@@ -1,22 +1,13 @@
+use crate::http::models::domains::Domain;
 use crate::prelude::*;
 
 #[derive(Serialize, Deserialize, Apiv2Schema)]
 pub struct GetDomainsResponse(Vec<Domain>);
 
-#[derive(Serialize, Deserialize, Apiv2Schema)]
-pub struct Domain {
-  apex: bool,
-  owner: i32,
-  domain: String,
-}
-
-#[api_v2_operation(
-  tags(Etc),
-  summary = "get domains",
-  description = "Returns all ascella domains",
-  consumes = "application/json",
-  produces = "application/json"
-)]
+/// get domains
+///
+/// Returns all ascella domains
+#[api_v2_operation(tags(Etc), consumes = "application/json", produces = "application/json")]
 #[get("/domains")]
 pub async fn get() -> Result<GetDomainsResponse, Error> {
   let data = get_domains::exec().await.unwrap();

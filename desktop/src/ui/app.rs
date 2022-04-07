@@ -101,10 +101,7 @@ impl Application for AscellaDesktop {
         .on_press(Message::ButtonPressed)
         .style(self.theme);
 
-      let config = Button::new(&mut self.config, Text::new("Upload config"))
-        .padding(10)
-        .on_press(Message::NewConfig)
-        .style(self.theme);
+      let config = Button::new(&mut self.config, Text::new("Upload config")).padding(10).on_press(Message::NewConfig).style(self.theme);
 
       Row::new().push(button).push(config).spacing(20)
     } else {
@@ -128,12 +125,6 @@ impl Application for AscellaDesktop {
       .push(Rule::horizontal(38).style(self.theme))
       .push(text);
 
-    Container::new(content)
-      .width(Length::Fill)
-      .height(Length::Fill)
-      .center_x()
-      .center_y()
-      .style(self.theme)
-      .into()
+    Container::new(content).width(Length::Fill).height(Length::Fill).center_x().center_y().style(self.theme).into()
   }
 }

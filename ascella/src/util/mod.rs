@@ -84,7 +84,7 @@ impl FromRequest for AccessToken {
       headers.get("x-user-id")?.to_str().map(|x| x.to_owned()).ok()
     }
     let auth = get_auth(headers.clone()).unwrap_or_default();
-    let user_id = get_user_id(headers.clone()).unwrap_or("-1".to_string()).parse::<i32>().unwrap();
+    let user_id = get_user_id(headers.clone()).unwrap_or_else(|| "-1".to_string()).parse::<i32>().unwrap();
     let user_token = get_user_token(headers).unwrap_or_default();
 
     Box::pin(async move {

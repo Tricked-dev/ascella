@@ -1,31 +1,11 @@
-use actix_web::body::BoxBody;
-use actix_web::Responder;
-
 use crate::database::s3::S3;
+use crate::http::models::stats::StatsResponse;
 use crate::prelude::*;
 
-#[derive(Deserialize, Apiv2Schema, Clone, Serialize)]
-pub struct StatsResponse {
-  user_name: String,
-  user_id: i32,
-  id: i32,
-  #[serde(skip_serializing_if = "Option::is_none")]
-  redirect: Option<String>,
-  content_type: String,
-  #[serde(skip_serializing_if = "Option::is_none")]
-  image_size: Option<String>,
-  #[serde(skip_serializing_if = "Option::is_none")]
-  embed: Option<Embeds>,
-}
-apply_responders!(StatsResponse);
-
-#[api_v2_operation(
-  tags(Images),
-  summary = "get image stats",
-  description = "View info about a image",
-  consumes = "application/json",
-  produces = "application/json"
-)]
+/// get image stats
+///
+/// View the stats & info of an image
+#[api_v2_operation(tags(Images), consumes = "application/json", produces = "application/json")]
 #[get("/view/{image}/stats")]
 pub async fn get(image: web::Path<String>) -> Result<StatsResponse, Error> {
   let data = get_image_vanity_only::exec(image.to_string()).await;

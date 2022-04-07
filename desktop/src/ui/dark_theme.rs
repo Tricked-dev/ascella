@@ -136,10 +136,7 @@ impl scrollable::StyleSheet for Scrollable {
 
     scrollable::Scrollbar {
       background: Color { a: 0.5, ..SURFACE }.into(),
-      scroller: scrollable::Scroller {
-        color: HOVERED,
-        ..active.scroller
-      },
+      scroller: scrollable::Scroller { color: HOVERED, ..active.scroller },
       ..active
     }
   }
@@ -176,10 +173,7 @@ impl slider::StyleSheet for Slider {
     let active = self.active();
 
     slider::Style {
-      handle: slider::Handle {
-        color: HOVERED,
-        ..active.handle
-      },
+      handle: slider::Handle { color: HOVERED, ..active.handle },
       ..active
     }
   }
@@ -252,11 +246,7 @@ impl toggler::StyleSheet for Toggler {
     toggler::Style {
       background: if is_active { ACTIVE } else { SURFACE },
       background_border: None,
-      foreground: if is_active {
-        Color { a: 0.5, ..Color::WHITE }
-      } else {
-        Color { a: 0.5, ..ACTIVE }
-      },
+      foreground: if is_active { Color { a: 0.5, ..Color::WHITE } } else { Color { a: 0.5, ..ACTIVE } },
       foreground_border: None,
     }
   }

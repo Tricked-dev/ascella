@@ -39,7 +39,6 @@ model images {
   vanity       String   @db.VarChar(200)
   public       Boolean?
   created      DateTime @default(now())
-  uuid         String   @default("")
 }
 
 model users {
