@@ -25,7 +25,6 @@ pub struct UploadFileData {
   pub file_name: String,
   pub content_length: u32,
   pub content_type: String,
-  pub upload_timestamp: u64,
 }
 
 #[derive(Debug, Clone)]
@@ -95,7 +94,6 @@ impl S3Host {
       file_name: file_name.to_string(),
       content_length: file_bytes.len() as u32,
       content_type: content_type.to_string(),
-      upload_timestamp: chrono::Utc::now().timestamp_millis() as u64,
     })
   }
 

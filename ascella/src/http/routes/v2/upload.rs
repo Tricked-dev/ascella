@@ -1,6 +1,7 @@
-use crate::{bot::commands::funny_redirect::FUNNY_WORDS, database::s3::S3};
+use crate::{bot::commands::funny_redirect::FUNNY_WORDS, database::s3::S3, http::ImageCache};
 use lazy_static::lazy_static;
 use rand::prelude::SliceRandom;
+use tokio::sync::Mutex;
 
 use crate::prelude::*;
 const ANIMALS: &str = include_str!("../../../../assets/animals.txt");
@@ -68,7 +69,7 @@ mod test_urls {
 /// Upload a image to ascella
 #[api_v2_operation(tags(Images), consumes = "multipart/form-data", produces = "application/json")]
 #[post("/upload")]
-pub async fn post(mut payload: Multipart, data: AccessToken) -> Result<OkResponse<UploadSuccess>, Error> {
+pub async fn post(mut payload: Multipart, data: AccessToken, cache: web::Data<Mutex<ImageCache>>) -> Result<OkResponse<UploadSuccess>, Error> {
   if let Ok(Some(mut field)) = payload.try_next().await {
     let mut file_size: usize = 0;
     let mut buf: Vec<u8> = Vec::new();
@@ -104,7 +105,7 @@ pub async fn post(mut payload: Multipart, data: AccessToken) -> Result<OkRespons
     let img = create_image::exec(data.id(), content_type.clone(), url).await.unwrap();
 
     let dest = format!("{}/{}", data.id(), img.id,);
-
+    cache.lock().await.set(img.vanity.clone(), content_type.clone(), buf.clone());
     S3.upload_file(&content_type, dest.as_str(), buf.into()).await.map_err(|_| Error::BadRequest)?;
     // i dont want to have to do this but its neccasry
     actix_web::rt::spawn(send_text_webhook(format!(

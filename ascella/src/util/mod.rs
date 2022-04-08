@@ -8,7 +8,6 @@ use crate::{
 use actix_web::{body::BoxBody, dev::Payload, http::header::HeaderMap, FromRequest, HttpRequest, HttpResponse, Responder, ResponseError};
 use anyhow::Result;
 use futures::Future;
-use http::StatusCode;
 use paperclip::{
   actix::{Apiv2Schema, Apiv2Security, OperationModifier},
   v2::{
@@ -17,6 +16,7 @@ use paperclip::{
   },
 };
 use rand::{distributions::Alphanumeric, Rng};
+use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::{

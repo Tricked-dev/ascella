@@ -7,9 +7,41 @@ use actix_web::{middleware, ResponseError};
 use actix_web::{App, HttpServer};
 use paperclip::actix::{web, OpenApiExt};
 use paperclip::v2::models::{Contact, DefaultApiRaw, Info, License, Tag};
+use tokio::sync::Mutex;
 
 pub mod models;
 pub mod routes;
+#[derive(Clone)]
+pub struct ImageCache {
+  key: String,
+  inner: Vec<u8>,
+  content_type: String,
+}
+
+impl ImageCache {
+  pub fn new() -> Self {
+    Self {
+      key: String::new(),
+      inner: Vec::new(),
+      content_type: String::new(),
+    }
+  }
+
+  pub fn set(&mut self, key: String, content_type: String, inner: Vec<u8>) {
+    self.inner = inner;
+    self.key = key;
+    self.content_type = content_type;
+  }
+  pub fn get(&self) -> &[u8] {
+    &self.inner
+  }
+  pub fn get_key(&self) -> &str {
+    &self.key
+  }
+  pub fn get_content_type(&self) -> &str {
+    &self.content_type
+  }
+}
 
 pub fn set_endpoints(cfg: &mut web::ServiceConfig) {
   cfg
@@ -34,7 +66,9 @@ pub fn set_endpoints(cfg: &mut web::ServiceConfig) {
 pub async fn start_actix() -> std::io::Result<()> {
   tracing_subscriber::fmt().init();
 
-  HttpServer::new(|| {
+  let data = web::Data::new(Mutex::new(ImageCache::new()));
+
+  HttpServer::new(move || {
     let spec = DefaultApiRaw {
       info: Info {
         version: "2.0".into(),
@@ -76,6 +110,7 @@ pub async fn start_actix() -> std::io::Result<()> {
 
     App::new()
       .wrap_api_with_spec(spec)
+      .app_data(data.clone())
       .wrap(cors)
       .wrap(Governor::new(&GovernorConfigBuilder::default().per_second(60).burst_size(30).finish().unwrap()))
       .wrap(Governor::new(&GovernorConfigBuilder::default().per_second(3600).burst_size(128).finish().unwrap()))
