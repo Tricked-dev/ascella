@@ -9,8 +9,8 @@ pub mod util;
 
 pub mod prelude {
   lazy_static! {
-    pub static ref START_TIME: OnceCell<Instant> = OnceCell::new();
     pub static ref CLIENT: reqwest::Client = reqwest::Client::new();
+    pub static ref START_TIME: OnceCell<Instant> = OnceCell::new();
     pub static ref HTTP: OnceCell<Arc<Client>> = OnceCell::new();
     pub static ref REVIEWS: OnceCell<Vec<Comment>> = OnceCell::new();
   }

@@ -243,7 +243,7 @@ impl UploadSuccess {
       code: 200,
       success: true,
       url: format!("{}/{}", domain, vanity),
-      raw: format!("https://ascella.wtf/images/raw/{}", vanity),
+      raw: format!("https://ascella.wtf/v2/ascella/view/{}.png", vanity),
     }
   }
 }

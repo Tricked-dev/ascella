@@ -109,6 +109,7 @@ pub async fn start_actix() -> std::io::Result<()> {
     let cors = Cors::default().allow_any_origin().allow_any_header().allow_any_method().max_age(3600);
 
     App::new()
+      .service(openapi_3::get)
       .wrap_api_with_spec(spec)
       .app_data(data.clone())
       .wrap(cors)
