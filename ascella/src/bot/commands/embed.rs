@@ -3,6 +3,7 @@ pub fn command() -> Command {
   CommandBuilder::new("embed".into(), "Set the embed to be used when uploading.".into(), CommandType::ChatInput)
     .option(StringBuilder::new("title".into(), "Title of the embed".into()))
     .option(StringBuilder::new("link".into(), "Link appended to your url.".into()))
+    .option(StringBuilder::new("author".into(), "Set the author of the embed".into()))
     .option(StringBuilder::new("description".into(), "Description of the embed.".into()))
     .option(StringBuilder::new("color".into(), "Embed color to be used.".into()))
     .build()
@@ -16,13 +17,14 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
   let url = get_arg(command_args.clone(), "url");
   let description = get_arg(command_args.clone(), "description");
   let color = get_arg(command_args.clone(), "color");
+  let author = get_arg(command_args.clone(), "author");
 
   let embed = create_embed()
     .title("Updated the embed")
     .description("Your domain has been updated, Take a new screenshot to test the embed out.\n\n*please wait up to 2 minutes for your embed to update this is due to caching*")
     .build()?;
 
-  set_embed::exec(user.id, description, title, url, color).await?;
+  set_embed::exec(user.id, description, title, url, color, author).await?;
 
   client
     .interaction_callback(

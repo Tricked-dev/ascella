@@ -25,6 +25,7 @@ model codes {
 model embeds {
   color       String?
   description String?  @db.VarChar(2000)
+  author      String?  @db.VarChar(2000)
   owner       Int      @id
   title       String?  @db.VarChar(2000)
   url         String?  @db.VarChar(200)

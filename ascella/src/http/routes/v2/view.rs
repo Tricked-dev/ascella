@@ -12,7 +12,7 @@ use crate::prelude::*;
 pub async fn get(params: web::Path<(String, String)>, cache: web::Data<Mutex<ImageCache>>) -> Result<HttpResponse, Error> {
   let cache = cache.lock().await.clone();
   let (image, _ext) = params.into_inner();
-  if cache.get_key() == &image {
+  if cache.get_key() == image {
     return Ok(
       HttpResponse::Ok()
         .append_header(("content-type", cache.get_content_type()))

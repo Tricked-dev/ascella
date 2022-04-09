@@ -9,7 +9,7 @@ use crate::prelude::*;
 pub async fn post(embed: web::Json<EmbedData>, data: AccessToken) -> Result<OkResponse<SendMessage>, Error> {
   let embed = embed.clone();
 
-  set_embed::exec(data.id(), embed.description, embed.title, embed.url, embed.color)
+  set_embed::exec(data.id(), embed.description, embed.title, embed.url, embed.color, embed.author)
     .await
     .map_err(|_| Error::BadRequest)?;
   Ok(OkResponse(SendMessage::new(200, true, "Successfully updated your domain.")))

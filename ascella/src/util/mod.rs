@@ -63,28 +63,29 @@ impl AccessToken {
     self.inner.url_style
   }
 }
-/// This code makes me want to cry
-/// i spend 1 hour trying to make ownershiop work
-/// and i succeeded
-/// but at what cost
-///
-///
-/// someone save me from this programming language
+
+trait GetHeaderFn {
+  fn get_hdr(&self, key: &str) -> Option<String>;
+}
+
+impl GetHeaderFn for HeaderMap {
+  fn get_hdr(&self, key: &str) -> Option<String> {
+    self.get(key)?.to_str().map(|x| x.to_owned()).ok()
+  }
+}
+
 impl FromRequest for AccessToken {
   type Error = Error;
 
   type Future = Pin<Box<dyn Future<Output = Result<Self, Self::Error>>>>;
 
   fn from_request(req: &HttpRequest, _payload: &mut Payload) -> Self::Future {
-    let headers = req.headers().clone();
+    let headers = req.headers();
 
-    fn get_header(headers: HeaderMap, header: &str) -> Option<String> {
-      headers.get(header)?.to_str().map(|x| x.to_owned()).ok()
-    }
+    let auth = headers.get_hdr("Authorization").unwrap_or_default();
+    let user_id = headers.get_hdr("x-user-id").unwrap_or_else(|| "-1".to_string()).parse::<i32>().unwrap();
+    let user_token = headers.get_hdr("x-user-token").unwrap_or_default();
 
-    let auth = get_header(headers.clone(), "Authorization").unwrap_or_default();
-    let user_id = get_header(headers.clone(), "x-user-id").unwrap_or_else(|| "-1".to_string()).parse::<i32>().unwrap();
-    let user_token = get_header(headers, "x-user-token").unwrap_or_default();
     Box::pin(async move {
       if !auth.is_empty() {
         if let Ok(user) = get_user_auth::exec(auth.to_owned()).await {

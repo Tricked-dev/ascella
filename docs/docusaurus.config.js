@@ -114,7 +114,7 @@ const config = {
             items: [
               {
                 label: "GitHub",
-                href: "https://github.com/Tricked-dev/ascellas",
+                href: "https://github.com/Tricked-dev/ascella",
               },
             ],
           },

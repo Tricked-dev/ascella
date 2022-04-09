@@ -3,6 +3,12 @@
 version = 3
 
 [[package]]
+name = "Inflector"
+version = "0.11.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fe438c63458706e03479442743baae6c88256498e6431708f6dfc520a26515d3"
+
+[[package]]
 name = "ab_glyph"
 version = "0.2.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5222,6 +5228,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "ts-rs"
+version = "6.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3d26cba30c9b3a2f537f765cf754126f11c983b7426d280ae0b4cef2374cab98"
+dependencies = [
+ "thiserror",
+ "ts-rs-macros",
+]
+
+[[package]]
+name = "ts-rs-macros"
+version = "6.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fd8e302fbcf5b60dfa1df443535967511442c5ce4eac8b4c9fa811f2274280a4"
+dependencies = [
+ "Inflector",
+ "proc-macro2",
+ "quote",
+ "syn",
+ "termcolor",
+]
+
+[[package]]
 name = "tsunami"
 version = "0.1.0"
 dependencies = [
@@ -5256,6 +5285,7 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "tree_magic",
+ "ts-rs",
  "twilight-embed-builder",
  "twilight-gateway",
  "twilight-http",

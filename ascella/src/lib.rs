@@ -14,7 +14,6 @@ pub mod prelude {
     pub static ref HTTP: OnceCell<Arc<Client>> = OnceCell::new();
     pub static ref REVIEWS: OnceCell<Vec<Comment>> = OnceCell::new();
   }
-
   pub use crate::bot::bot::Comment;
   pub use crate::bot::utils::*;
   pub use crate::database::queries::*;
@@ -52,6 +51,7 @@ pub mod prelude {
   pub use std::{fs, io, time::Instant};
   pub use tokio::fs::create_dir_all;
   pub use tokio_pg_mapper::FromTokioPostgresRow;
+  pub use ts_rs::TS;
   pub use twilight_embed_builder::{EmbedBuilder, EmbedFieldBuilder};
   pub use twilight_gateway::{cluster::ShardScheme, Cluster, Event, Intents};
   pub use twilight_http::Client;

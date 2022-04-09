@@ -1,6 +1,9 @@
 use crate::prelude::*;
-
-#[derive(Deserialize, Apiv2Schema, Clone, Serialize)]
+//// Stats
+///
+/// View stats of a image
+#[derive(Deserialize, Apiv2Schema, Clone, Serialize, TS)]
+#[ts(export)]
 pub struct StatsResponse {
   pub(crate) user_name: String,
   pub(crate) user_id: i32,

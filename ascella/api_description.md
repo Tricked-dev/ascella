@@ -7,3 +7,7 @@ You can suggest new routes in the discord or send tricked#3777 a dm privaty for 
 # Contributing
 
 You can help by setting the right status code for every response this would help a ton in making the api docs!
+
+# Typescript interfaces
+
+You can find typescript interfaces in the github repository in the ascella/bindings directory

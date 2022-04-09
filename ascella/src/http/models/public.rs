@@ -1,6 +1,10 @@
 use crate::prelude::*;
 
-#[derive(Deserialize)]
+/// ImageData
+///
+/// stuff
+#[derive(Deserialize, TS, Serialize)]
+#[ts(export)]
 pub struct ImageData {
   pub image_id: i32,
 }
