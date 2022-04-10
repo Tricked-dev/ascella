@@ -11,6 +11,7 @@ You can contribute to ascella using pull requests
 - proper theming
 - dockerize things
 - make selfhosting easier
+- see [/api](/api)
 
 ---
 
