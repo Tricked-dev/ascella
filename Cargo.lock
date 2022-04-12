@@ -2646,6 +2646,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c4da24a77a3d8a6d4862d95f72e6fdb9c09a643ecdb402d754004a557f2bec75"
 dependencies = [
  "scopeguard",
+ "serde",
 ]
 
 [[package]]
@@ -2656,7 +2657,6 @@ checksum = "327fa5b6a6940e4699ec49a9beae1ea4845c6bab9314e4f84ac68742139d8c53"
 dependencies = [
  "autocfg 1.1.0",
  "scopeguard",
- "serde",
 ]
 
 [[package]]
@@ -3343,8 +3343,8 @@ dependencies = [
 
 [[package]]
 name = "paperclip"
-version = "0.6.1"
-source = "git+https://github.com/fritterhoff/paperclip#25da29022471a1b2085c7e7eb807f9ceeb3941c7"
+version = "0.7.0"
+source = "git+https://github.com/paperclip-rs/paperclip#e627d1d4a10fbe52ffc665e347a962bd3d6fb6ab"
 dependencies = [
  "anyhow",
  "itertools",
@@ -3352,20 +3352,20 @@ dependencies = [
  "paperclip-actix",
  "paperclip-core",
  "paperclip-macros",
- "parking_lot 0.12.0",
- "semver 0.11.0",
+ "parking_lot 0.10.2",
+ "semver 0.9.0",
  "serde",
  "serde_derive",
  "serde_json",
  "serde_yaml",
  "thiserror",
- "url 2.2.2",
+ "url 1.7.2",
 ]
 
 [[package]]
 name = "paperclip-actix"
-version = "0.4.2"
-source = "git+https://github.com/fritterhoff/paperclip#25da29022471a1b2085c7e7eb807f9ceeb3941c7"
+version = "0.5.0"
+source = "git+https://github.com/paperclip-rs/paperclip#e627d1d4a10fbe52ffc665e347a962bd3d6fb6ab"
 dependencies = [
  "actix-service",
  "actix-web",
@@ -3373,21 +3373,21 @@ dependencies = [
  "once_cell",
  "paperclip-core",
  "paperclip-macros",
- "parking_lot 0.12.0",
+ "parking_lot 0.10.2",
  "serde_json",
 ]
 
 [[package]]
 name = "paperclip-core"
-version = "0.4.1"
-source = "git+https://github.com/fritterhoff/paperclip#25da29022471a1b2085c7e7eb807f9ceeb3941c7"
+version = "0.5.1"
+source = "git+https://github.com/paperclip-rs/paperclip#e627d1d4a10fbe52ffc665e347a962bd3d6fb6ab"
 dependencies = [
  "actix-multipart",
  "actix-web",
  "mime",
  "once_cell",
  "paperclip-macros",
- "parking_lot 0.12.0",
+ "parking_lot 0.10.2",
  "pin-project",
  "regex",
  "serde",
@@ -3398,8 +3398,8 @@ dependencies = [
 
 [[package]]
 name = "paperclip-macros"
-version = "0.5.1"
-source = "git+https://github.com/fritterhoff/paperclip#25da29022471a1b2085c7e7eb807f9ceeb3941c7"
+version = "0.6.0"
+source = "git+https://github.com/paperclip-rs/paperclip#e627d1d4a10fbe52ffc665e347a962bd3d6fb6ab"
 dependencies = [
  "heck",
  "http 0.2.6",

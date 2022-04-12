@@ -46,7 +46,7 @@ governor = "0.4.2"
 humantime = "2.1.0"
 lazy_static = "1.4.0"
 once_cell = "1.9.0"
-paperclip = { git = "https://github.com/fritterhoff/paperclip", features = ["actix4", "actix-multipart"] }
+paperclip = { git = "https://github.com/paperclip-rs/paperclip", features = ["actix4", "actix-multipart"] }
 paste = "1.0.7"
 rand = "0.8.5"
 reqwest = { version = "0.11.8", features = ["gzip", "brotli"] }
