@@ -35,7 +35,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --locked --bin ascella
+          args: --release --locked
 
       - name: Strip release binary (linux and macos)
         run: strip "target/release/$BIN_NAME"
@@ -47,9 +47,9 @@ jobs:
         shell: bash
         run: cp "target/release/$BIN_NAME" "dist/"
 
-      # - name: Build archive
-      #   shell: bash
-      #   run: cp "target/release/desktop" "dist/"
+      - name: Build archive
+        shell: bash
+        run: cp "target/release/desktop" "dist/"
 
       - uses: actions/upload-artifact@v2.2.4
         with:
