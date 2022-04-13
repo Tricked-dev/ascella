@@ -88,7 +88,7 @@ const config = {
           },
 
           {
-            title: "Styff",
+            title: "Stuff",
             items: [
               {
                 label: "Terms",

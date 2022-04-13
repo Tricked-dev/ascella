@@ -5,7 +5,7 @@ description: Privacy policy of Ascella Images
 
 ### What data do we save?
 
-- All images uploaded are saved on a namecheap vps.
+- All images uploaded are saved on a Contabo vps.
 - When you create a account using `/redeem` in the discord the following
   information is stored: name, discord id, account creation date and selected
   domain.
