@@ -249,8 +249,8 @@ impl UploadSuccess {
   }
 }
 
-pub fn ran_str() -> String {
-  rand::thread_rng().sample_iter(&Alphanumeric).take(10).map(char::from).collect()
+pub fn ran_str(len: usize) -> String {
+  rand::thread_rng().sample_iter(&Alphanumeric).take(len).map(char::from).collect()
 }
 
 pub async fn send_text_webhook<T: Display>(data: T) -> Result<()> {

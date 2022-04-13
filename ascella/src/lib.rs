@@ -17,13 +17,9 @@ pub mod prelude {
   pub use crate::bot::bot::Comment;
   pub use crate::bot::utils::*;
   pub use crate::database::queries::*;
-  pub use crate::database::queries::*;
   pub use crate::database::structs::*;
-  pub use crate::database::structs::*;
-  pub use crate::database::*;
   pub use crate::database::*;
   pub use crate::util::*;
-  pub use crate::util::{create_config, ran_str, send_text_webhook, Error, SendMessage};
   pub use actix_multipart::Multipart;
   pub use actix_web::body::BoxBody;
   pub use actix_web::Responder;

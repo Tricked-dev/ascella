@@ -9,7 +9,7 @@ pub fn create_embed() -> EmbedBuilder {
   })
 }
 
-pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 18] {
+pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 19] {
   [
     adddomain::command(),
     autodelete::command(),
@@ -23,6 +23,7 @@ pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 18] {
     url_style::command(),
     eval::command(),
     funny_redirect::command(domain_options.clone()),
+    gencodes::command(),
     help::command(),
     profile::command(),
     redeem::command(),

@@ -6,6 +6,7 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
   let value = match (cmd.data.name.as_str(), user, is_owner) {
     ("eval", Ok(user), true) => eval::execute(client, cmd, user).await,
     ("codedrop", Ok(user), true) => codedrop::execute(client, cmd, user).await,
+    ("gencodes", Ok(user), true) => gencodes::execute(client, cmd, user).await,
 
     ("autodelete", Ok(user), _) => autodelete::execute(client, cmd, user).await,
     ("codes", Ok(user), _) => codes::execute(client, cmd, user).await,
@@ -77,6 +78,7 @@ pub mod domains;
 pub mod embed;
 pub mod eval;
 pub mod funny_redirect;
+pub mod gencodes;
 pub mod help;
 pub mod profile;
 pub mod redeem;

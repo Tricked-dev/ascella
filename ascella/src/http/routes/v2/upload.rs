@@ -15,7 +15,7 @@ const ZWS_CHARS: [char; 4] = ['\u{200C}', '\u{200B}', '\u{200D}', '\u{2060}'];
 /// 3 = zws
 
 fn default_url() -> String {
-  ran_str()
+  ran_str(8)
 }
 fn ulid_url() -> String {
   ulid::Ulid::new().to_string()

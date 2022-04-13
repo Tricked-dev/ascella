@@ -21,7 +21,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
         .exec()
         .await?;
       let name = discord_user.name.clone();
-      let user = create_user::exec("https://ascella.host", id, ran_str(), name, ulid::Ulid::new().to_string()).await?;
+      let user = create_user::exec("https://ascella.host", id, ran_str(7), name, ulid::Ulid::new().to_string()).await?;
       claim_code::exec(code, &user.id).await?;
 
       let message = format!(
