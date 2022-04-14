@@ -1,24 +1,28 @@
+/**
+ * Deno deply embed service
+ * fetches the backend to check if a image exists and sends some plain,
+ * for various services to be able to embed the image as intended
+ *
+ * We use deno deploy since its faster than sveltekit dynamic routes!
+ */
+
 import { serve } from "https://deno.land/std@0.117.0/http/server.ts";
 
 console.log("Listening for requests...");
-const headers = ["discord", "Discordbot/2.0;", "github", "twitter", "youtube", "instagram", "linkedin", "github", "twitter", "youtube", "instagram", "linkedin", "element", "revolt", "curl"];
+const headers = ["discord", "github", "twitter", "youtube", "instagram", "linkedin", "github", "twitter", "youtube", "instagram", "linkedin", "element", "revolt", "curl"];
 await serve(
   async (req) => {
-    console.log(req.headers);
-    const id = new URL(req.url).pathname.split("/");
-    const name = id[id.length - 1];
+    const name = new URL(req.url).pathname.split("/").at(-1) || "";
     if (name.includes(".")) {
       const [id, ext] = name.split(".");
       return Response.redirect(`https://ascella.wtf/v2/ascella/view/${id}.${ext}`);
     }
     if (headers.some(x => req.headers.get("user-agent")?.toLowerCase().includes(x))) {
-      console.log("Discord header accepted!");
       const r = await fetch(
         `https://ascella.wtf/v2/ascella/view/${name}/stats`,
       );
       if (r.ok) {
         const rson = await r.json();
-
         // {"content_type":"image/png","embed":{"color":"","description":"","title":"","url":""},"id":2814,"image_size":"1.05 KB","redirect":null,"user_id":0,"user_name":"tricked"}
         return new Response(
           `<html>
@@ -42,17 +46,9 @@ await serve(
             },
           },
         );
-      } else {
-        return await new Response(undefined, {
-          status: 301,
-          headers: new Headers({
-            ["location"]: `https://ascella.host/${name}`,
-          }),
-        });
       }
-    } else {
-      return Response.redirect(`https://ascella.host/${name}`, 301);
     }
+    return Response.redirect(`https://ascella.host/${name}`, 301);
   },
   { addr: ":3000" },
 );
