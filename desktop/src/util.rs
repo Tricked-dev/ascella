@@ -4,6 +4,8 @@ use std::process::Command;
 
 use crate::{take_ss, ScreenshotKind};
 use clipboard::{ClipboardContext, ClipboardProvider};
+use clipboard_ext::prelude::*;
+use clipboard_ext::x11_bin::ClipboardContext as LinuxContext;
 use home::home_dir;
 use native_dialog::{MessageDialog, MessageType};
 use reqwest::header::{HeaderMap, HeaderValue};
@@ -130,22 +132,34 @@ pub fn upload<P: AsRef<Path>>(path: P) -> Result<String, Error> {
 
   let r: Value = serde_json::from_str(&text).unwrap();
   let url = r["url"].as_str().expect("Invalid image type");
-  let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
 
   println!("{url}");
-  ctx.set_contents(url.to_owned()).unwrap();
   copy(url.clone().to_owned());
 
   Ok(url.to_owned())
 }
 
 fn copy(t: String) {
-  //I hate rust
+  let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
+
+  ctx.set_contents(t.to_owned()).unwrap();
+
+  // Linux workarounds
   #[cfg(target_os = "linux")]
   {
     use std::io::prelude::*;
-    use std::process::Command;
     use std::process::Stdio;
+    use wl_clipboard_rs::paste::{get_contents, ClipboardType, MimeType, Seat};
+
+    let mut ctx = LinuxContext::new().unwrap();
+    ctx.set_contents(t.clone()).unwrap();
+
+    let result = get_contents(ClipboardType::Regular, Seat::Unspecified, MimeType::Text);
+    if let Ok((mut pipe, _)) = result {
+      let mut contents = vec![];
+      pipe.read_to_end(&mut contents).expect("Failed to read pipe");
+    }
+
     let child = Command::new("xclip").arg("-selection").arg("clipboard").stdin(Stdio::piped()).stdout(Stdio::piped()).spawn();
     if let Ok(mut child) = child {
       {

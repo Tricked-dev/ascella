@@ -4,9 +4,9 @@ use std::{fs, thread, time};
 use clap::{crate_authors, crate_description, crate_name, crate_version, App, Arg, ArgMatches};
 use iced::{Application, Settings};
 
-use ascella::ui::app::AscellaDesktop;
-use ascella::util::{screenshot, update_config, upload};
-use ascella::ScreenshotKind;
+use ascella_desktop::ui::app::AscellaDesktop;
+use ascella_desktop::util::{screenshot, update_config, upload};
+use ascella_desktop::ScreenshotKind;
 
 pub fn main() -> iced::Result {
   let app = App::new(crate_name!())

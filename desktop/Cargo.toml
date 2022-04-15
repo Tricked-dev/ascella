@@ -1,6 +1,6 @@
 [package]
-name = "ascella"
-version = "0.4.4"
+name = "ascella-desktop"
+version = "0.4.5"
 authors = ["Tricked-dev"]
 edition = "2021"
 homepage = "https://docs.ascella.host/ascella-desktop"
@@ -8,12 +8,14 @@ license = "AGPL-3.0"
 readme = "README.md"
 repository = "https://github.com/Tricked-dev/ascella"
 description = "Ascella desktop app uploader"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 chrono = "0.4.19"
 clap = { version = "3.0.5", features = ["cargo", "color"] }
 clipboard = "0.5.0"
+clipboard-ext = "0.2.0"
 home = "0.5.3"
 iced = { git = "https://github.com/iced-rs/iced", rev = "4db0f4a570a1fb3398062c78770c542d9efb8a64", features = ["tokio", "debug", "glow"] }
 itertools = "0.10.3"
@@ -26,6 +28,7 @@ serde_json = "1.0.74"
 tokio = { version = "1.15.0", features = ["sync"] }
 toml = "0.5.8"
 winit = "0.26.1"
+wl-clipboard-rs = "0.6.0"
 
 [target.'cfg(unix)'.dependencies]
 openssl = { version = "0.10.38", features = ["vendored"] }
@@ -35,12 +38,12 @@ libc = "0.2.112"
 winapi = "0.3.9"
 
 [[bin]]
-name = "desktop"
+name = "ascella-desktop"
 path = "src/main.rs"
 
 [package.metadata.generate-rpm]
 assets = [
-  { source = "target/release/desktop", dest = "/usr/bin/ascella", mode = "0755" },
+  { source = "target/release/ascella-desktop", dest = "/usr/bin/ascella", mode = "0755" },
   { source = "LICENSE", dest = "/usr/share/doc/ascella/LICENSE", doc = true, mode = "0644" },
   { source = "README.md", dest = "/usr/share/doc/ascella/README.md", doc = true, mode = "0644" },
 ]
@@ -54,7 +57,7 @@ depends = "$auto"
 section = "utility"
 priority = "optional"
 assets = [
-  ["target/release/desktop", "usr/bin/", "755"],
+  ["target/release/ascella-desktop", "usr/bin/ascella", "755"],
   ["LICENSE", "usr/share/doc/ascella/LICENSE", "644"],
   ["README.md", "usr/share/doc/ascella/README.md", "644"],
 ]

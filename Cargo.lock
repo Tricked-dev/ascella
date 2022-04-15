@@ -329,12 +329,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8da52d66c7071e2e3fa2a1e5c6d088fec47b593032b254f5e980de8ea54454d6"
 
 [[package]]
-name = "ascella"
-version = "0.4.4"
+name = "ascella-desktop"
+version = "0.4.5"
 dependencies = [
  "chrono",
  "clap",
  "clipboard",
+ "clipboard-ext",
  "home",
  "iced",
  "itertools",
@@ -349,6 +350,7 @@ dependencies = [
  "toml",
  "winapi 0.3.9",
  "winit 0.26.1",
+ "wl-clipboard-rs",
 ]
 
 [[package]]
@@ -589,6 +591,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "bytecount"
+version = "0.6.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "72feb31ffc86498dacdbd0fcebb56138e7177a8cc5cea4516031d15ae85a742e"
+
+[[package]]
 name = "bytemuck"
 version = "1.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -761,6 +769,18 @@ dependencies = [
  "objc",
  "objc-foundation",
  "objc_id",
+ "x11-clipboard",
+]
+
+[[package]]
+name = "clipboard-ext"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ac0b9a9fdf4e6100bfcdc6587c9c26a6a1d1d8247e74684c18a113d635d3dc78"
+dependencies = [
+ "clipboard",
+ "libc",
+ "which 3.1.1",
  "x11-clipboard",
 ]
 
@@ -1258,6 +1278,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "derive-new"
+version = "0.5.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3418329ca0ad70234b9735dc4ceed10af4df60eff9c8e7b06cb5e520d92c3535"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "derive_more"
 version = "0.99.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1499,6 +1530,12 @@ name = "fixedbitset"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "37ab347416e802de484e4d03c7316c48f1ecb56574dfd4a46a80f173ce1de04d"
+
+[[package]]
+name = "fixedbitset"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "279fb028e20b3c4c320317955b77c5e0c9701f05a1d309905d6fc702cdc5053e"
 
 [[package]]
 name = "flate2"
@@ -2646,7 +2683,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c4da24a77a3d8a6d4862d95f72e6fdb9c09a643ecdb402d754004a557f2bec75"
 dependencies = [
  "scopeguard",
- "serde",
 ]
 
 [[package]]
@@ -2657,6 +2693,7 @@ checksum = "327fa5b6a6940e4699ec49a9beae1ea4845c6bab9314e4f84ac68742139d8c53"
 dependencies = [
  "autocfg 1.1.0",
  "scopeguard",
+ "serde",
 ]
 
 [[package]]
@@ -2934,7 +2971,7 @@ dependencies = [
  "raw-window-handle 0.4.3",
  "thiserror",
  "wfd",
- "which",
+ "which 4.2.5",
  "winapi 0.3.9",
 ]
 
@@ -3076,6 +3113,19 @@ name = "nix"
 version = "0.22.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e4916f159ed8e5de0082076562152a76b7a1f64a01fd9d1e0fea002c37624faf"
+dependencies = [
+ "bitflags",
+ "cc",
+ "cfg-if 1.0.0",
+ "libc",
+ "memoffset 0.6.5",
+]
+
+[[package]]
+name = "nix"
+version = "0.23.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9f866317acbd3a240710c63f065ffb1e4fd466259045ccb504130b7f668f35c6"
 dependencies = [
  "bitflags",
  "cc",
@@ -3315,6 +3365,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "os_pipe"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2c92f2b54f081d635c77e7120862d48db8e91f7f21cef23ab1b4fe9971c59f55"
+dependencies = [
+ "libc",
+ "winapi 0.3.9",
+]
+
+[[package]]
 name = "os_str_bytes"
 version = "6.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3352,14 +3412,14 @@ dependencies = [
  "paperclip-actix",
  "paperclip-core",
  "paperclip-macros",
- "parking_lot 0.10.2",
- "semver 0.9.0",
+ "parking_lot 0.12.0",
+ "semver 0.11.0",
  "serde",
  "serde_derive",
  "serde_json",
  "serde_yaml",
  "thiserror",
- "url 1.7.2",
+ "url 2.2.2",
 ]
 
 [[package]]
@@ -3373,7 +3433,7 @@ dependencies = [
  "once_cell",
  "paperclip-core",
  "paperclip-macros",
- "parking_lot 0.10.2",
+ "parking_lot 0.12.0",
  "serde_json",
 ]
 
@@ -3387,7 +3447,7 @@ dependencies = [
  "mime",
  "once_cell",
  "paperclip-macros",
- "parking_lot 0.10.2",
+ "parking_lot 0.12.0",
  "pin-project",
  "regex",
  "serde",
@@ -3563,7 +3623,17 @@ version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "467d164a6de56270bd7c4d070df81d07beace25012d5103ced4e9ff08d6afdb7"
 dependencies = [
- "fixedbitset",
+ "fixedbitset 0.2.0",
+ "indexmap",
+]
+
+[[package]]
+name = "petgraph"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4a13a2fa9d0b63e5f22328828741e523766fff0ee9e779316902290dff3f824f"
+dependencies = [
+ "fixedbitset 0.4.1",
  "indexmap",
 ]
 
@@ -5209,7 +5279,21 @@ dependencies = [
  "lazy_static",
  "nom 3.2.1",
  "parking_lot 0.10.2",
- "petgraph",
+ "petgraph 0.5.1",
+]
+
+[[package]]
+name = "tree_magic_mini"
+version = "3.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "91adfd0607cacf6e4babdb870e9bec4037c1c4b151cfd279ccefc5e0c7feaa6d"
+dependencies = [
+ "bytecount",
+ "fnv",
+ "lazy_static",
+ "nom 7.1.1",
+ "once_cell",
+ "petgraph 0.6.0",
 ]
 
 [[package]]
@@ -5960,6 +6044,16 @@ dependencies = [
 
 [[package]]
 name = "which"
+version = "3.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d011071ae14a2f6671d0b74080ae0cd8ebf3a6f8c9589a2cd45f23126fe29724"
+dependencies = [
+ "failure",
+ "libc",
+]
+
+[[package]]
+name = "which"
 version = "4.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5c4fb54e6113b6a8772ee41c3404fb0301ac79604489467e0a9ce1f3e97c24ae"
@@ -6175,6 +6269,24 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5d129932f4644ac2396cb456385cbf9e63b5b30c6e8dc4820bdca4eb082037a5"
 dependencies = [
  "winapi 0.3.9",
+]
+
+[[package]]
+name = "wl-clipboard-rs"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "be5ca3d1bf382a9baf6ef08b635e8f417c83a8a459bc88b4179a663abd8acd8b"
+dependencies = [
+ "derive-new",
+ "derive_more",
+ "libc",
+ "log",
+ "nix 0.23.1",
+ "os_pipe",
+ "tempfile",
+ "tree_magic_mini",
+ "wayland-client 0.29.4",
+ "wayland-protocols",
 ]
 
 [[package]]

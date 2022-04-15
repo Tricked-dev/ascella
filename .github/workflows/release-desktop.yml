@@ -6,7 +6,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  BIN_NAME: desktop
+  BIN_NAME: ascella-desktop
   PROJECT_NAME: ascella
   REPO_NAME: Tricked-dev/ascella
 
@@ -66,12 +66,10 @@ jobs:
         with:
           use-cross: ${{ matrix.cross }}
           command: build
-          args: --release --target ${{ matrix.target }} --bin desktop
+          args: --release --target ${{ matrix.target }}
 
       - name: Strip release binary (linux and macos)
         run: strip "./target/${{ matrix.target }}/release/$BIN_NAME"
-
-      # - run: mv ./target .
 
       - name: make dist
         run: mkdir dist
@@ -79,14 +77,7 @@ jobs:
       - name: Build archive
         if: matrix.build == 'x86_64-macos'
         shell: bash
-        run: |
-
-          if [ "${{ matrix.os }}" = "windows-2019" ]; then
-            # cp target/wix/ascella* dist/
-            cp "target/${{ matrix.target }}/release/$BIN_NAME.exe" "dist/"
-          else
-            cp "target/${{ matrix.target }}/release/$BIN_NAME" "dist/"
-          fi
+        run: cp "target/${{ matrix.target }}/release/$BIN_NAME" "dist/"
       - name: Build stuff
         if: matrix.build == 'x86_64-linux'
         run: chmod +x ./.github/workflows/linux.sh && ./.github/workflows/linux.sh
@@ -125,8 +116,8 @@ jobs:
           set -ex
           mkdir dist
 
-          mv ascella-x86_64-linux/* dist/
-          tar -czvf dist/ascella-x86_64-macos.tar.xz ascella-x86_64-macos
+          mv ascella-desktop-x86_64-linux/* dist/
+          tar -czvf dist/ascella-desktop-x86_64-macos.tar.xz ascella-desktop-x86_64-macos
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2

@@ -133,14 +133,18 @@ pub fn screenshot_full(file: String) {
 
 fn flameshot(option: ScreenshotKind, file: String) {
   let output = match option {
-    ScreenshotKind::Area => Command::new("flameshot").args(&["gui", "-p", &file]).stdout(Stdio::piped()).output().expect("flameshot did not launch"),
+    ScreenshotKind::Area => Command::new("flameshot")
+      .args(&["gui", "-c", "-p", &file])
+      .stdout(Stdio::piped())
+      .output()
+      .expect("flameshot did not launch"),
     ScreenshotKind::Window => Command::new("flameshot")
-      .args(&["screen", "-p", &file])
+      .args(&["screen", "-c", "-p", &file])
       .stdout(Stdio::piped())
       .output()
       .expect("flameshot did not launch"),
     ScreenshotKind::Full => Command::new("flameshot")
-      .args(&["full", "-p", &file])
+      .args(&["full", "-c", "-p", &file])
       .stdout(Stdio::piped())
       .output()
       .expect("flameshot did not launch"),

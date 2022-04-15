@@ -11,7 +11,7 @@ sudo mv appimagetool-x86_64.AppImage /bin/appimagetool
 cd desktop
 
 run() {
-    strip -s target/release/ascella
+    strip -s target/release/ascella-desktop
     echo installing cargo $1
     cargo install cargo-$1 &>/dev/null
     echo Running cargo $1
@@ -26,8 +26,8 @@ run generate-rpm
 mkdir ../dist &>/dev/null
 
 mv PKGBUILD ../dist/
-mv ascella-*.AppImage ../dist/
-mv ascella-*.tar.gz ../dist/
-mv target/debian/ascella_*.deb ../dist/
-mv target/generate-rpm/ascella-*.rpm ../dist/
+mv ascella-desktop-*.AppImage ../dist/
+mv ascella-desktop-*.tar.gz ../dist/
+mv target/debian/ascella-desktop*.deb ../dist/
+mv target/generate-rpm/ascella-desktop-*.rpm ../dist/
 cp LICENSE ../dist/
