@@ -49,7 +49,7 @@ jobs:
 
       - name: Build archive
         shell: bash
-        run: cp "target/release/desktop" "dist/"
+        run: cp "target/release/ascella-desktop" "dist/"
 
       - uses: actions/upload-artifact@v2.2.4
         with:
