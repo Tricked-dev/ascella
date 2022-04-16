@@ -21,12 +21,12 @@ jobs:
         include:
           - build: x86_64-linux
             os: ubuntu-20.04
-            rust: stable
+            rust: nightly
             target: x86_64-unknown-linux-gnu
             cross: false
           - build: x86_64-macos
             os: macos-latest
-            rust: stable
+            rust: nightly
             target: x86_64-apple-darwin
             cross: false
           # Windows builts dont work properly, x86_64-windows
@@ -66,7 +66,7 @@ jobs:
         with:
           use-cross: ${{ matrix.cross }}
           command: build
-          args: --release --target ${{ matrix.target }}
+          args: --release --target ${{ matrix.target }} --bin ascella-desktop
 
       - name: Strip release binary (linux and macos)
         run: strip "./target/${{ matrix.target }}/release/$BIN_NAME"
