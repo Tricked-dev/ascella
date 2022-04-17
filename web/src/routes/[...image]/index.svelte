@@ -81,65 +81,54 @@
 		src="https://analytics.tricked.pro/umami.js"></script>
 </svelte:head>
 
-<div class="flex-1 flex flex-col">
-	<nav
-		class=" px-4 flex justify-between bg-gray-700 h-8 border-b-2 text-white"
-		style={`border-color: ${embed.color || '#00a41b'}`}
-	>
-		<ul class="flex items-center">
-			<li>
-				{image_size}
-			</li>
-		</ul>
-
-		<ul class="flex items-center">
-			<li>
-				<h1 class="pl-8 lg:pl-0"><a href="https://www.ascella.host">Ascella</a></h1>
-			</li>
-		</ul>
-
-		<ul class="flex items-center">
-			<li>
-				{user_name}
-			</li>
-		</ul>
-	</nav>
-</div>
-
 <div class="main">
 	<div class="box mx-auto">
 		<a href={`https://ascella.wtf/v2/ascella/view/${url}.png`} target="_blank">
 			<img class="image" alt="" src={`https://ascella.wtf/v2/ascella/view/${url}.png`} />
 		</a>
-		<p>Views {views}</p>
+		<div class="bar">
+			<p>Views {views}</p>
+			<p>Owner {user_name}</p>
+			<p>Size {image_size}</p>
+			<p class="lnk">
+				<a href="/">Ascella.host</a>
+			</p>
+			<!-- <a href="/report?image=!!">Report</a> -->
+		</div>
 	</div>
 </div>
-<footer
-	style={`border-color: ${embed.color || '#00a41b'}`}
-	class="footer bg-gray-700 text-white border-t-2 fixed inset-x-0 bottom-0 h-8 pt-4 pb-2"
->
-	<a class="text-larger font-bold" href="https://www.ascella.host">Ascella.host</a>
-</footer>
 
 <style lang="postcss">
-	.footer {
+	:global(a) {
+		text-decoration-line: none;
+		color: whitesmoke;
+	}
+	.lnk :hover,
+	.lnk :focus {
+		color: deeppink;
+	}
+	:global(body) {
+		background-color: midnightblue;
+		background-image: none !important;
+	}
+	.bar {
+		font-family: Roboto;
+		color: whitesmoke;
 		display: flex;
-		align-items: center;
-		justify-content: center;
+		gap: 30px 30px;
+		justify-items: center;
+		text-align: center;
 	}
 	.image {
 		object-fit: contain;
-		height: 100%;
-		width: 100%;
 	}
 	.box {
-		width: 40rem;
-		height: 55rem;
+		vertical-align: middle;
 		justify-content: center;
 	}
 	.main {
-		padding-top: 4rem;
 		display: grid;
+		height: 100%;
 		justify-content: center;
 	}
 </style>

@@ -7,6 +7,7 @@ pub mod images;
 pub mod openapi_3;
 pub mod public;
 pub mod redirect;
+pub mod report;
 pub mod reviews;
 pub mod stats;
 pub mod upload;

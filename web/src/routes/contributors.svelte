@@ -1,4 +1,5 @@
 <script>
+	import '../css/app.scss';
 	//Feel free to add yourself to this
 	const contributors = [
 		{

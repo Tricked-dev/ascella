@@ -108,7 +108,7 @@ pub async fn post(mut payload: Multipart, data: AccessToken, cache: web::Data<Mu
     cache.lock().await.set(img.vanity.clone(), content_type.clone(), buf.clone());
     S3.upload_file(&content_type, dest.as_str(), buf.into()).await.map_err(|_| Error::BadRequest)?;
     // i dont want to have to do this but its neccasry
-    actix_web::rt::spawn(send_text_webhook(format!(
+    tokio::spawn(send_text_webhook(format!(
       "**[IMAGE]** [image](<https://ascella.wtf/v2/ascella/view/{image}.png>) **[OWNER]** {name} ({id})",
       image = &img.vanity,
       name = &data.name(),

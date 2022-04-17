@@ -2,8 +2,9 @@
 </script>
 
 <script lang="ts">
-	import '../css/app.scss';
 	import '@fontsource/roboto';
+	import '@fontsource/material-icons';
+	import '@fontsource/roboto-mono';
 	const bottomLinks = [
 		[
 			// {
@@ -186,6 +187,14 @@
 </template>
 
 <style lang="postcss">
+	@tailwind base;
+	@tailwind components;
+	@tailwind utilities;
+
+	:global(body) {
+		@apply bg-gradient-to-br from-cyan-600 to-sky-600;
+	}
+
 	/* .a-btn {
 		@apply duration-500 block border-b-4 border-blue-300 hover:border-teal-500 mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-teal-800 mr-2;
 	}

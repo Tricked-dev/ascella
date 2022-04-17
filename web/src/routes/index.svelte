@@ -2,6 +2,7 @@
 	import { getReviews } from '$lib/api';
 	import { media } from '$lib/media';
 	import { onMount } from 'svelte';
+	import '../css/app.scss';
 
 	let Carousel;
 	let carousel;
