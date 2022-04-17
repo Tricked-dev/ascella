@@ -43,6 +43,7 @@
 	export let image_size: string = '10kb';
 	export let embed: Record<string, string> = {};
 	export let url: string;
+	export let views: string;
 </script>
 
 <svelte:head>
@@ -110,6 +111,7 @@
 		<a href={`https://ascella.wtf/v2/ascella/view/${url}.png`} target="_blank">
 			<img class="image" alt="" src={`https://ascella.wtf/v2/ascella/view/${url}.png`} />
 		</a>
+		<p>Views {views}</p>
 	</div>
 </div>
 <footer

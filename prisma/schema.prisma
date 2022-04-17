@@ -36,6 +36,7 @@ model images {
   content_type String   @db.VarChar(50)
   id           Int      @id @default(autoincrement())
   owner        Int
+  views        Int      @default(0)
   redirect     String?  @db.VarChar(200)
   vanity       String   @db.VarChar(200)
   public       Boolean?

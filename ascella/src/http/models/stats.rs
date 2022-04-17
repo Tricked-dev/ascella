@@ -8,6 +8,8 @@ pub struct StatsResponse {
   pub(crate) user_name: String,
   pub(crate) user_id: i32,
   pub(crate) id: i32,
+  pub(crate) views: i32,
+
   #[serde(skip_serializing_if = "Option::is_none")]
   pub(crate) redirect: Option<String>,
   pub(crate) content_type: String,

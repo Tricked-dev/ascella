@@ -19,11 +19,14 @@ pub async fn get(image: web::Path<String>) -> Result<OkResponse<StatsResponse>, 
       } else {
         None
       };
+      // Updates the view count in a non blocking way this endpoint gets called on every view
+      tokio::task::spawn(async move { update_image_views::exec(image.id).await.ok() });
 
       let json = StatsResponse {
         user_name: user.name,
         user_id: user.id,
         id: image.id,
+        views: image.views,
         redirect: image.redirect,
         content_type: image.content_type,
         image_size: data,

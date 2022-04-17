@@ -18,16 +18,24 @@ pub async fn start_cron() {
           tokio::spawn(async {
             //This removes the startup run but it isnt needed anyway!
             if let Some(client) = HTTP.get() {
-              let users = get_users_autodelete::exec().await.unwrap();
+              let users = get_users_autodelete::exec().await;
+              if users.is_err() {
+                return;
+              }
               let summary: Vec<String> = users
+                .unwrap()
                 .iter()
                 .filter_map(|x| {
                   block_on(async {
-                    let amount = delete_all(x.0, x.1).await.unwrap();
-                    if amount == 0 {
-                      None
+                    let amount = delete_all(x.0, x.1).await;
+                    if let Ok(amount) = amount {
+                      if amount == 0 {
+                        None
+                      } else {
+                        Some(format!("{}: `{}`", x.2, amount))
+                      }
                     } else {
-                      Some(format!("{}: `{}`", x.2, amount))
+                      None
                     }
                   })
                 })
@@ -37,13 +45,7 @@ pub async fn start_cron() {
               }
 
               let embed = create_embed().title("Deleted images summary").description(&summary.join("\n")).build().unwrap();
-              client
-                .create_message(ChannelId::new(929698255300882522u64).unwrap())
-                .embeds(&vec![embed])
-                .unwrap()
-                .exec()
-                .await
-                .unwrap();
+              client.create_message(ChannelId::new(929698255300882522u64).unwrap()).embeds(&vec![embed]).unwrap().exec().await.ok();
             }
           });
         },

@@ -8,7 +8,7 @@
 
 import { serve } from "https://deno.land/std@0.117.0/http/server.ts";
 
-console.log("Listening for requests...");
+console.log("Listening for requests... PORT: 3000");
 const headers = ["discord", "github", "twitter", "youtube", "instagram", "linkedin", "github", "twitter", "youtube", "instagram", "linkedin", "element", "revolt", "curl"];
 await serve(
   async (req) => {
@@ -21,6 +21,7 @@ await serve(
       const r = await fetch(
         `https://ascella.wtf/v2/ascella/view/${name}/stats`,
       );
+
       if (r.ok) {
         const rson = await r.json();
         // {"content_type":"image/png","embed":{"color":"","description":"","title":"","url":""},"id":2814,"image_size":"1.05 KB","redirect":null,"user_id":0,"user_name":"tricked"}

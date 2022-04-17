@@ -43,6 +43,7 @@ pub struct Images {
   pub redirect: Option<String>,
   pub vanity: String,
   pub public: Option<bool>,
+  pub views: i32,
 }
 
 #[derive(PostgresMapper, Serialize, Deserialize, Clone, Apiv2Schema, TS)]
