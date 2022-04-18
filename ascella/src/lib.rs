@@ -1,4 +1,5 @@
 #![feature(fmt_internals)]
+#![feature(test)]
 
 pub mod bot;
 pub mod cron;

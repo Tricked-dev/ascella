@@ -101,7 +101,6 @@ pub async fn post(mut payload: Multipart, data: AccessToken, cache: web::Data<Mu
       4 => hacker_url(),
       _ => default_url(),
     };
-
     let img = create_image::exec(data.id(), content_type.clone(), url).await.unwrap();
 
     let dest = format!("{}/{}", data.id(), img.id,);

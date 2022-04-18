@@ -5,8 +5,8 @@ description: Ascella Desktop app guide
 
 # Ascella Desktop
 
-- ### [- Guide](#guide)
-- ### [- Installing](#installing)
+- ### [Guide](#guide)
+- ### [Installing](#installing)
   - [Macos](#macos)
   - [Linux](#linux)
 

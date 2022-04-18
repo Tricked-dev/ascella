@@ -1,3 +1,8 @@
+---
+title: Tech
+description: Tech used in ascella
+---
+
 ## Frontend
 
 The document website is made with docusaurus. The main website is made with sveltekit and the dashboard is written with nextjs. all websites are deployed to vercel.

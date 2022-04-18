@@ -16,5 +16,14 @@ pub struct StatsResponse {
   #[serde(skip_serializing_if = "Option::is_none")]
   pub(crate) image_size: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
-  pub(crate) embed: Option<Embeds>,
+  pub(crate) embed: Option<DisplayEmbed>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Default, Clone, Apiv2Schema, TS)]
+#[ts(export)]
+pub struct DisplayEmbed {
+  pub color: Option<String>,
+  pub description: Option<String>,
+  pub title: Option<String>,
+  pub url: Option<String>,
 }

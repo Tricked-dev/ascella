@@ -8,6 +8,7 @@
 <form
 	on:submit|preventDefault={async () => {
 		let v = await fetch('https://ascella.wtf/v2/ascella/report', {
+			method: 'POST',
 			body: JSON.stringify({
 				id: parseInt(image.toString())
 			})
