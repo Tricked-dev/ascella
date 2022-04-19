@@ -33,8 +33,7 @@ const config = {
         debug: Boolean(process.env.DEBUG || process.env.CI),
         specs: [
           {
-            // spec: '/openapi.json',
-            spec: "https://converter.swagger.io/api/convert?url=https://ascella.wtf/v2/ascella/spec/v2",
+            spec: "https://ascella.wtf/v2/ascella/spec/v3",
             route: "/api/",
           },
         ],
