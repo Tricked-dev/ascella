@@ -13,7 +13,7 @@
 				id: parseInt(image.toString())
 			})
 		});
-		r = v.text();
+		r = await v.text();
 	}}
 >
 	<p>Report a image</p>
