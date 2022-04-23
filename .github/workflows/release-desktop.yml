@@ -29,12 +29,6 @@ jobs:
             rust: nightly
             target: x86_64-apple-darwin
             cross: false
-          # Windows builts dont work properly, x86_64-windows
-          # - build: x86_64-windows
-          #   os: windows-2019
-          #   rust: stable
-          #   target: x86_64-pc-windows-msvc
-          #   cross: false
 
     steps:
       - name: Checkout sources
@@ -93,21 +87,21 @@ jobs:
               run() {
                   strip -s target/release/ascella-desktop
                   echo installing cargo $1
-                  cargo install cargo-$1 &>/dev/null
+                  cargo install cargo-$1  &>/dev/null
                   echo Running cargo $1
-                  cargo $1 &>/dev/null
+                  cargo $1 
               }
               run deb
               run aur
               run appimage
               run generate-rpm
-              mkdir ../dist &>/dev/null
+              mkdir ../dist
               mv PKGBUILD ../dist/
               mv ascella-desktop-*.AppImage ../dist/
               mv ascella-desktop-*.tar.gz ../dist/
               mv target/debian/ascella-desktop*.deb ../dist/
               mv target/generate-rpm/ascella-desktop-*.rpm ../dist/
-              cp LICENSE ../dist/
+              ls dist
       - uses: actions/upload-artifact@v2.2.4
         with:
           name: ascella-${{ matrix.build }}
