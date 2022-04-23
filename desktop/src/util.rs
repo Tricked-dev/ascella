@@ -151,8 +151,10 @@ fn copy(t: String) {
     use std::process::Stdio;
     use wl_clipboard_rs::paste::{get_contents, ClipboardType, MimeType, Seat};
 
-    let mut ctx = LinuxContext::new().unwrap();
-    ctx.set_contents(t.clone()).unwrap();
+    let ctx = LinuxContext::new().ok();
+    if let Some(mut ctx) = ctx {
+      ctx.set_contents(t.clone()).ok();
+    }
 
     let result = get_contents(ClipboardType::Regular, Seat::Unspecified, MimeType::Text);
     if let Ok((mut pipe, _)) = result {
@@ -163,8 +165,10 @@ fn copy(t: String) {
     let child = Command::new("xclip").arg("-selection").arg("clipboard").stdin(Stdio::piped()).stdout(Stdio::piped()).spawn();
     if let Ok(mut child) = child {
       {
-        let child_stdin = child.stdin.as_mut().unwrap();
-        child_stdin.write_all((&t).to_string().as_bytes()).ok();
+        let child_stdin = child.stdin.as_mut();
+        if let Some(child_stdin) = child_stdin {
+          child_stdin.write_all((&t).to_string().as_bytes()).ok();
+        }
       }
       let _ = child.wait().ok();
     }
