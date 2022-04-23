@@ -72,18 +72,18 @@ jobs:
         with:
           use-cross: ${{ matrix.cross }}
           command: build
-          args: --release --target ${{ matrix.target }} --bin ascella-desktop
+          args: --release
 
       - name: Strip release binary (linux and macos)
-        run: strip "./target/${{ matrix.target }}/release/$BIN_NAME"
+        run: strip "./target/release/$BIN_NAME"
 
       - name: make dist
         run: mkdir dist
 
       - name: Build archive
-        if: matrix.build == 'x86_64-macos'
         shell: bash
-        run: cp "target/${{ matrix.target }}/release/$BIN_NAME" "dist/"
+        run: cp "target/release/$BIN_NAME" "dist/"
+        
       - name: Build stuff
         if: matrix.build == 'x86_64-linux'
         run: |
