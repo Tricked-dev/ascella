@@ -12,16 +12,6 @@ pub struct Domains {
   pub owner: i32,
 }
 
-#[derive(PostgresMapper, Serialize, Deserialize, Clone, TS)]
-#[pg_mapper(table = "codes")]
-#[ts(export)]
-pub struct Codes {
-  pub id: i32,
-  pub claimed_by: Option<i32>,
-  pub owner: i32,
-  pub key: String,
-}
-
 #[derive(PostgresMapper, Serialize, Deserialize, Clone, Apiv2Schema, TS)]
 #[pg_mapper(table = "embeds")]
 #[ts(export)]
@@ -75,4 +65,6 @@ pub struct Users {
   pub deleteall: Option<i32>,
   pub upload_key: Option<String>,
   pub url_style: i32,
+  pub invite_code: String,
+  pub invited_by: i32,
 }

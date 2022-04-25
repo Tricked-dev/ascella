@@ -9,12 +9,10 @@ pub fn create_embed() -> EmbedBuilder {
   })
 }
 
-pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 19] {
+pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 16] {
   [
     adddomain::command(),
     autodelete::command(),
-    codedrop::command(),
-    codes::command(),
     delete_latest::command(),
     delete::command(),
     domain::command(domain_options.clone()),
@@ -23,7 +21,6 @@ pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 19] {
     url_style::command(),
     eval::command(),
     funny_redirect::command(domain_options.clone()),
-    gencodes::command(),
     help::command(),
     profile::command(),
     redeem::command(),
@@ -57,4 +54,31 @@ pub fn get_arg_int(mut args: Iter<CommandDataOption>, key: &str) -> Option<i64> 
 }
 pub fn get_arg_default(args: Iter<CommandDataOption>, key: &str, default: &str) -> String {
   get_arg(args, key).unwrap_or_else(|| default.to_owned())
+}
+
+pub fn format_profile(user: &Users, images: Option<i64>, upload_key: Option<String>) -> String {
+  format!(
+    r"dashboard: https://dash.ascella.host
+id: `{id}`
+name: `{name}`
+discord id: `{discord}`
+password: `{pass}`
+invite_code: `{invite}`
+domain: `{domain}`
+images: `{images}`
+
+download config [here](https://ascella.wtf/v2/ascella/config?auth={upload_key})
+```json
+{config}
+```",
+    id = user.id,
+    name = user.name,
+    discord = user.discord_id,
+    pass = user.key,
+    domain = user.domain,
+    invite = user.invite_code,
+    config = serde_json::to_string_pretty(&create_config(&user.upload_key.as_ref().unwrap())).unwrap(),
+    images = images.unwrap_or(0),
+    upload_key = if let Some(key) = upload_key { key } else { user.upload_key.as_ref().unwrap().to_string() }
+  )
 }

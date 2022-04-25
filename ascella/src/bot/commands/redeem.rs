@@ -13,39 +13,17 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
 
   if data.is_err() {
     //Ownership is aids please don't hate me
-    let code_data = get_unclaimed_code::exec(code.clone()).await;
+    let code_data = get_user_code::exec(code.clone()).await;
 
-    if code_data.is_ok() {
+    if let Ok(user) = code_data {
       client
         .add_guild_member_role(cmd.guild_id.unwrap(), discord_user.id, RoleId(core::num::NonZeroU64::new(878730206024720404).unwrap()))
         .exec()
         .await?;
       let name = discord_user.name.clone();
-      let user = create_user::exec("https://ascella.host", id, ran_str(7), name, ulid::Ulid::new().to_string()).await?;
-      claim_code::exec(code, &user.id).await?;
+      let user = create_user::exec("https://ascella.host", id, ran_str(7), name, ulid::Ulid::new().to_string(), ran_str(7), user.id).await?;
 
-      let message = format!(
-        r"dashboard: https://dash.ascella.host
-            id: `{id}`
-            name: `{name}`
-            discord_id: `{discord}`
-            password: `{pass}`
-            
-            domain: `{domain}`
-            images: `0`
-            
-            download config [here](https://ascella.wtf/v2/ascella/config?auth={upload_key})
-            ```json
-            {config}
-            ```",
-        id = user.id,
-        name = user.name,
-        discord = user.discord_id,
-        pass = user.key,
-        domain = user.domain,
-        config = serde_json::to_string_pretty(&create_config(&user.upload_key.as_ref().unwrap())).unwrap(),
-        upload_key = user.upload_key.as_ref().unwrap()
-      );
+      let message = format_profile(&user, None, None);
 
       let embed = create_embed().title("Code redeemed!").description(message).build()?;
 

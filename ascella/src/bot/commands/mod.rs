@@ -5,11 +5,8 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
   let is_owner = cmd.member.as_ref().unwrap().user.as_ref().unwrap().id.to_string() == "336465356304678913";
   let value = match (cmd.data.name.as_str(), user, is_owner) {
     ("eval", Ok(user), true) => eval::execute(client, cmd, user).await,
-    ("codedrop", Ok(user), true) => codedrop::execute(client, cmd, user).await,
-    ("gencodes", Ok(user), true) => gencodes::execute(client, cmd, user).await,
 
     ("autodelete", Ok(user), _) => autodelete::execute(client, cmd, user).await,
-    ("codes", Ok(user), _) => codes::execute(client, cmd, user).await,
     ("delete_latest", Ok(user), _) => delete_latest::execute(client, cmd, user).await,
     ("delete", Ok(user), _) => delete::execute(client, cmd, user).await,
     ("domain", Ok(user), _) => domain::execute(client, cmd, user).await,
@@ -69,8 +66,6 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
 
 pub mod adddomain;
 pub mod autodelete;
-pub mod codedrop;
-pub mod codes;
 pub mod delete;
 pub mod delete_latest;
 pub mod domain;
@@ -78,7 +73,6 @@ pub mod domains;
 pub mod embed;
 pub mod eval;
 pub mod funny_redirect;
-pub mod gencodes;
 pub mod help;
 pub mod profile;
 pub mod redeem;

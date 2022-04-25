@@ -20,7 +20,7 @@
 		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[prisma]": {
-		"editor.defaultFormatter": "Prisma.prisma"
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"deno.enable": true,
 	"deno.lint": true,

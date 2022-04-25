@@ -14,14 +14,6 @@ model domains {
   created DateTime @default(now())
 }
 
-model codes {
-  id         Int      @id @default(autoincrement())
-  created    DateTime @default(now())
-  claimed_by Int?
-  owner      Int
-  key        String   @db.VarChar(200)
-}
-
 model embeds {
   color       String?
   description String?  @db.VarChar(2000)
@@ -39,19 +31,20 @@ model images {
   views        Int      @default(0)
   redirect     String?  @db.VarChar(200)
   vanity       String   @db.VarChar(200)
-  public       Boolean?
   created      DateTime @default(now())
 }
 
 model users {
-  discord_id String   @unique
-  domain     String   @db.VarChar(200)
-  id         Int      @id @default(autoincrement())
-  key        String   @db.VarChar(200)
-  name       String   @db.VarChar(200)
-  autodelete Int?
-  deleteall  Int?     @default(90)
-  created    DateTime @default(now())
-  upload_key String?  @default(uuid())
-  url_style  Int      @default(0)
+  discord_id  String   @unique
+  domain      String   @db.VarChar(200)
+  id          Int      @id @default(autoincrement())
+  key         String   @db.VarChar(200) 
+  name        String   @db.VarChar(200)
+  autodelete  Int?
+  deleteall   Int?     @default(90)
+  created     DateTime @default(now())
+  upload_key  String?  @default(uuid()) @unique
+  url_style   Int      @default(0)
+  invite_code String   @default(uuid()) @db.VarChar(200) @unique
+  invited_by  Int      @default(0)
 }

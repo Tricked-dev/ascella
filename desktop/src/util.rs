@@ -1,6 +1,6 @@
-use std::io::{Error, ErrorKind};
+use std::io::{Error, ErrorKind, Write};
 use std::path::{Path, PathBuf};
-use std::process::Command;
+use std::process::{Command, Stdio};
 
 use crate::{take_ss, ScreenshotKind};
 use clipboard::{ClipboardContext, ClipboardProvider};
@@ -147,21 +147,6 @@ fn copy(t: String) {
   // Linux workarounds
   #[cfg(target_os = "linux")]
   {
-    use std::io::prelude::*;
-    use std::process::Stdio;
-    use wl_clipboard_rs::paste::{get_contents, ClipboardType, MimeType, Seat};
-
-    let ctx = LinuxContext::new().ok();
-    if let Some(mut ctx) = ctx {
-      ctx.set_contents(t.clone()).ok();
-    }
-
-    let result = get_contents(ClipboardType::Regular, Seat::Unspecified, MimeType::Text);
-    if let Ok((mut pipe, _)) = result {
-      let mut contents = vec![];
-      pipe.read_to_end(&mut contents).expect("Failed to read pipe");
-    }
-
     let child = Command::new("xclip").arg("-selection").arg("clipboard").stdin(Stdio::piped()).stdout(Stdio::piped()).spawn();
     if let Ok(mut child) = child {
       {
