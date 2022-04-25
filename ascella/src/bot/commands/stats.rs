@@ -44,7 +44,7 @@ impl AscellaStats {
       usage: bytes_to(if let Ok(r) = usage.trim_end().parse::<u128>().map(|x| x * 1024) { r } else { 100000 }),
       upload_size: "0".into(),
       discord_api_version: 9,
-      uptime: format_duration(Instant::now().duration_since(*START_TIME.get().unwrap())).to_string(),
+      uptime: format_duration(Instant::now().duration_since(*START_TIME)).to_string(),
       fast: true,
       rustc: env!("RUST_DATA").to_owned(),
       commit_hash: format!("https://github.com/Tricked-dev/ascella/commit/{hash}", hash = env!("GIT_HASH")),

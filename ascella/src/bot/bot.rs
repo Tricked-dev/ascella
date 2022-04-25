@@ -23,7 +23,7 @@ pub async fn start_bot() -> Result<()> {
   let domain_options: Vec<(String, String)> = domains.iter().map(|d| (d.domain.clone(), d.domain.clone())).collect();
 
   let token = dotenv::var("DISCORD_TOKEN")?;
-
+  log::info!("Starting bot");
   let (cluster, mut events) = Cluster::builder(&*token, Intents::GUILD_MESSAGES)
     .presence(
       UpdatePresencePayload::new(
@@ -44,6 +44,7 @@ pub async fn start_bot() -> Result<()> {
     .await?;
 
   cluster.up().await;
+  log::info!("Bot started");
   let http = Arc::new(Client::new((&*token).to_string()));
   http.set_application_id(ApplicationId(env::var("APPLICATION_ID").unwrap().parse::<core::num::NonZeroU64>().unwrap()));
 
@@ -54,7 +55,6 @@ pub async fn start_bot() -> Result<()> {
   let data = http.set_guild_commands(GuildId(core::num::NonZeroU64::new(748956745409232945).unwrap()), commands.as_ref()).unwrap();
 
   data.exec().await?;
-  START_TIME.set(Instant::now()).unwrap();
   while let Some((_shard_id, event)) = events.next().await {
     match event {
       Event::InteractionCreate(inter) => match inter.0 {
@@ -119,7 +119,7 @@ pub async fn start_bot() -> Result<()> {
           REVIEWS.set(pins).ok();
         };
 
-        log::info!("Bot got on")
+        log::info!("Bot connected")
       }
       _ => {}
     }
