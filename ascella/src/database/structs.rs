@@ -65,6 +65,6 @@ pub struct Users {
   pub deleteall: Option<i32>,
   pub upload_key: Option<String>,
   pub url_style: i32,
-  pub invite_code: String,
+  pub invite_code: Option<String>,
   pub invited_by: i32,
 }

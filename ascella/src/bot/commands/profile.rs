@@ -13,6 +13,12 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
   } else {
     None
   };
+
+  if user.invite_code.is_none() {
+    let key = ran_str(6);
+    set_invite_code::exec(user.id, &key).await?;
+  };
+
   let message = format_profile(
     &user,
     Some(get_user_image_count::exec(user.id).await?),

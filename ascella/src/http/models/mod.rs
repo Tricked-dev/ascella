@@ -5,5 +5,5 @@ pub mod embed;
 pub mod images;
 pub mod public;
 pub mod redirect;
-pub mod stats;
 pub mod report;
+pub mod stats;

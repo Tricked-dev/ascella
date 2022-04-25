@@ -27,6 +27,7 @@ pub mod set_autodelete;
 pub mod set_domain;
 pub mod set_domain_discord;
 pub mod set_embed;
+pub mod set_invite_code;
 pub mod set_upload_key;
 pub mod set_url_style;
 pub mod update_image_views;

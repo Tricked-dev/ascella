@@ -38,13 +38,13 @@ model users {
   discord_id  String   @unique
   domain      String   @db.VarChar(200)
   id          Int      @id @default(autoincrement())
-  key         String   @db.VarChar(200) 
+  key         String   @db.VarChar(200)
   name        String   @db.VarChar(200)
   autodelete  Int?
   deleteall   Int?     @default(90)
   created     DateTime @default(now())
-  upload_key  String?  @default(uuid()) @unique
+  upload_key  String?  @unique @default(uuid())
   url_style   Int      @default(0)
-  invite_code String   @default(uuid()) @db.VarChar(200) @unique
+  invite_code String?  @unique @default(uuid()) @db.VarChar(200)
   invited_by  Int      @default(0)
 }
