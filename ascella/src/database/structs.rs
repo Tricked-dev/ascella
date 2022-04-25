@@ -32,7 +32,6 @@ pub struct Images {
   pub owner: i32,
   pub redirect: Option<String>,
   pub vanity: String,
-  pub public: Option<bool>,
   pub views: i32,
 }
 
