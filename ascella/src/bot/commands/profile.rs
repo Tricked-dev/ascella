@@ -21,7 +21,8 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
 
   let message = format_profile(
     &user,
-    Some(get_user_image_count::exec(user.id).await?),
+    get_invite_count::exec(user.id).await?,
+    get_user_image_count::exec(user.id).await?,
     Some(user.upload_key.as_ref().unwrap_or(&new_key.unwrap_or("please wait 120 seconds".to_owned())).to_string()),
   );
 

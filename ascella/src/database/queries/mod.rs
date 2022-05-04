@@ -12,6 +12,7 @@ pub mod get_image_owner;
 pub mod get_image_vanity;
 pub mod get_image_vanity_only;
 pub mod get_images;
+pub mod get_invite_count;
 pub mod get_latest_image;
 pub mod get_paste_content;
 pub mod get_user;

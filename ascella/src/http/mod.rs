@@ -64,8 +64,6 @@ pub fn set_endpoints(cfg: &mut web::ServiceConfig) {
     );
 }
 pub async fn start_actix() -> std::io::Result<()> {
-  tracing_subscriber::fmt().init();
-
   let data = web::Data::new(Mutex::new(ImageCache::new()));
 
   HttpServer::new(move || {

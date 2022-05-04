@@ -82,8 +82,8 @@ mod tests {
       url: Some(String::new()),
     };
     for (k, v) in replacers {
-      embed.title = embed.title.map(|x| x.replace(k, &v));
-      embed.description = embed.description.map(|x| x.replace(k, &v));
+      embed.title = embed.title.map(|x| x.replace(k, v));
+      embed.description = embed.description.map(|x| x.replace(k, v));
     }
     dbg!(embed);
   }

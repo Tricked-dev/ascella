@@ -37,7 +37,7 @@ fn gfycat_url() -> String {
 fn zws_url() -> String {
   let mut rng = rand::thread_rng();
   let mut s = String::new();
-  for _ in 0..8 {
+  for _ in 0..9 {
     s.push(*ZWS_CHARS.choose(&mut rng).unwrap());
   }
   s

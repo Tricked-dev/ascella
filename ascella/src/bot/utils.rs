@@ -56,7 +56,7 @@ pub fn get_arg_default(args: Iter<CommandDataOption>, key: &str, default: &str) 
   get_arg(args, key).unwrap_or_else(|| default.to_owned())
 }
 
-pub fn format_profile(user: &Users, images: Option<i64>, upload_key: Option<String>) -> String {
+pub fn format_profile(user: &Users, invites: i64, images: i64, upload_key: Option<String>) -> String {
   let key = if let Some(key) = upload_key { key } else { user.upload_key.as_ref().unwrap().to_string() };
   format!(
     r"dashboard: https://dash.ascella.host
@@ -67,7 +67,7 @@ password: `{pass}`
 invite_code: `{invite}`
 domain: `{domain}`
 images: `{images}`
-
+users invited: `{invites}`
 download config [here](https://ascella.wtf/v2/ascella/config?auth={upload_key})
 ```json
 {config}
@@ -79,7 +79,7 @@ download config [here](https://ascella.wtf/v2/ascella/config?auth={upload_key})
     domain = user.domain,
     invite = user.invite_code.as_ref().unwrap_or(&"none".to_owned()),
     config = serde_json::to_string_pretty(&create_config(&key)).unwrap(),
-    images = images.unwrap_or(0),
+    images = images,
     upload_key = key
   )
 }

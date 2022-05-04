@@ -4,8 +4,7 @@ use std::process::{Command, Stdio};
 
 use crate::{take_ss, ScreenshotKind};
 use clipboard::{ClipboardContext, ClipboardProvider};
-use clipboard_ext::prelude::*;
-use clipboard_ext::x11_bin::ClipboardContext as LinuxContext;
+
 use home::home_dir;
 use native_dialog::{MessageDialog, MessageType};
 use reqwest::header::{HeaderMap, HeaderValue};

@@ -1,8 +1,28 @@
+use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
+use tracing_subscriber::util::SubscriberInitExt;
+
 use tsunami::bot::start_bot;
 use tsunami::cron::start_cron;
 use tsunami::http::start_actix;
 
 fn main() -> std::io::Result<()> {
+  if let Ok(url) = dotenv::var("SENTRY_URL") {
+    tracing_subscriber::registry().with(tracing_subscriber::fmt::layer()).with(sentry_tracing::layer()).try_init().unwrap();
+    let _guard = sentry::init((
+      url,
+      sentry::ClientOptions {
+        release: sentry::release_name!(),
+        attach_stacktrace: true,
+
+        ..Default::default()
+      },
+    ));
+
+    log::info!("Sentry is enabled");
+  } else {
+    tracing_subscriber::registry().with(tracing_subscriber::fmt::layer()).try_init().unwrap();
+  }
+
   let rt = tokio::runtime::Builder::new_multi_thread()
     .worker_threads(4)
     .thread_name("ascella-rt")

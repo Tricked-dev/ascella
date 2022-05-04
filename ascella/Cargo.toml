@@ -9,7 +9,6 @@ openssl-vendored = ["openssl/vendored"]
 [[bin]]
 name = "ascella"
 path = "src/main.rs"
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 actix-cors = "0.6.1"
@@ -36,6 +35,10 @@ twilight-model = "=0.8"
 twilight-util = { version = "=0.8", features = ["builder"] }
 
 openssl = { version = "0.10.38", optional = true }
+
+sentry = { version = "0.25.0", default-features = false, features = ["backtrace", "contexts", "panic", "reqwest", "rustls"] }
+sentry-panic = "0.25.0"
+sentry-tracing = "0.25.0"
 
 byte-unit = "4.0.13"
 bytes = "1.1.0"

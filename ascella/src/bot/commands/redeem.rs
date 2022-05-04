@@ -23,7 +23,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
       let name = discord_user.name.clone();
       let user = create_user::exec("https://ascella.host", id, ran_str(7), name, ulid::Ulid::new().to_string(), ran_str(7), user.id).await?;
 
-      let message = format_profile(&user, None, None);
+      let message = format_profile(&user, 0, 0, None);
 
       let embed = create_embed().title("Code redeemed!").description(message).build()?;
 
@@ -82,7 +82,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
             replied_user: true,
           }),
           components: None,
-          content: Some(String::from("Your already a image uploader user keep staying awesome")),
+          content: Some(String::from("You're already an Ascella user - stay awesome!")),
           embeds: Some(vec![]),
           flags: Some(MessageFlags::EPHEMERAL),
           tts: Some(false),
