@@ -25,7 +25,11 @@ await serve(
         const rson = await r.json();
         if (!rson.embed.title && !rson.embed.description) {
           let res = await fetch(`https://ascella.wtf/v2/ascella/view/${name}.png`);
-          return new Response(res.body);
+          return new Response(res.body, {
+            headers: {
+              "content-type": rson.content_type,
+            },
+          });
         }
 
         // {"content_type":"image/png","embed":{"color":"","description":"","title":"","url":""},"id":2814,"image_size":"1.05 KB","redirect":null,"user_id":0,"user_name":"tricked"}
