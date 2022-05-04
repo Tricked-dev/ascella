@@ -7,10 +7,7 @@
 	import '@fontsource/roboto-mono';
 	const bottomLinks = [
 		[
-			// {
-			// 	href: '/docs/faq',
-			// 	a: 'Faq'
-			// },
+		
 			{
 				href: 'https://docs.ascella.host/rules',
 				a: 'Rules'
@@ -58,7 +55,6 @@
 			a: 'Discord'
 		},
 		{ href: 'https://dash.ascella.host', a: 'Dashboard' },
-		{ href: '/', a: 'Home' },
 		{ href: 'https://docs.ascella.host/signup', a: 'Create an account' }
 	];
 	import { onMount } from 'svelte';
@@ -110,41 +106,14 @@
 	<nav class="bg-sky-700">
 		<div class="flex flex-col">
 			<div class="flex items-center">
-				<div class="flex flex-col md:flex-row gap-4 p-2 align-middle">
+				<div class="flex flex-col md:flex-row gap-4 p-2">
 					<a class="text-sky-200 text-xl" href="https://ascella.host">Ascella.host</a>
 					{#each topLinks as link}
-						<a class="hover:text-sky-100 text-sky-300 underline text-lg" href={link.href}
+						<a class="hover:text-sky-100 text-sky-300 text-lg border-2 border-zinc-900 rounded-lg px-2 py-0.5" href={link.href}
 							>{link.a}</a
 						>
 					{/each}
 				</div>
-				<div class="p-2 items-center">
-					<button on:click={setExpended}>
-						<p class="flex text-slate-200 gap-2 hover:text-slate-300 underline items-center">
-							<svg class="w-5 h-5 -mr-1" viewBox="0 0 20 20" fill="currentColor">
-								<path
-									fill-rule="evenodd"
-									d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-									clip-rule="evenodd"
-								/>
-							</svg>Other
-						</p>
-					</button>
-					<div class="md:hidden inline">
-						{#if expended}
-							<ul class="flex gap-2 flex-col md:flex-row px-2 pb-1">
-								{#each otherLinks as link (link.a)}
-									<li transition:scale={{ delay: 250, duration: 300, easing: quintOut }}>
-										<a href={link.href} class="text-slate-300 underline hover:text-teal-500"
-											>{link.a}</a
-										>
-									</li>
-								{/each}
-							</ul>
-						{/if}
-					</div>
-				</div>
-			</div>
 			<div class="md:inline hidden">
 				{#if expended}
 					<ul class="flex gap-2 flex-col md:flex-row px-2 pb-1">
@@ -160,7 +129,6 @@
 		</div>
 	</nav>
 	<div class="pb-0.5 bg-sky-800" />
-	<div class="pb-4" />
 	<slot />
 
 	<div class="pb-7" />

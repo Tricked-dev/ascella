@@ -25,5 +25,8 @@
   "deno.enable": true,
   "deno.lint": true,
   "deno.path": "~/.deno/bin/deno",
-  "dprint.path": "~/.dprint/bin/dprint"
+  "dprint.path": "~/.dprint/bin/dprint",
+  "[svelte]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  }
 }

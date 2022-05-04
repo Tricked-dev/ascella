@@ -12,3 +12,5 @@ zws: `<nothing cause you cannot see>`
 hacker: `govfnstealjabitfbibitcoinminerstruct`
 
 <!-- dprint-ignore-end -->
+
+Use `/upload_style` to change your upload style!

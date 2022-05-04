@@ -2,7 +2,9 @@
 	import { getReviews } from '$lib/api';
 	import { media } from '$lib/media';
 	import { onMount } from 'svelte';
+	
 	import '../css/app.scss';
+
 
 	let Carousel;
 	let carousel;
@@ -57,16 +59,14 @@
 	});
 </script>
 
-<div class="mx-auto md:p-4 p-2">
+<div class="mx-auto">
 	<div class="">
-		<div class="text-center">
-			<h1 class="text-7xl text-sky-100 p-1">Welcome to the Ascella uploader</h1>
-			<h2 class="text-sky-100 text-3xl pb-6">
-				Looking to score an invite? Join the <a
-					class="underline text-green-500"
-					href="https://discord.gg/mY8zTARu4g">Discord.</a
-				>
-			</h2>
+		<div class="text-center py-6 px-2 bg-gradient-to-tr from-zinc-900 to-gray-900 pb-10">
+			<h1 class="text-7xl text-white p-1 font-extrabold">Ascella</h1>
+			<h2 class="text-white p-1 pb-10">A <b>Fast</b> Image uploader made for <b>all</b> platforms</h2>
+			<a href="https://docs.ascella.host/signup">
+			<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Get started</button>
+			</a>
 		</div>
 		<div>
 			{#each features as feature, index}
@@ -105,10 +105,13 @@
 					{#each reviews as review}
 						<div>
 							<div class="flex text-white text-lg gap-2 bg-[#36393F] p-2 h-full">
-								<img class="rounded-[50%] p-2" src={`${review.avatar}`} alt={review.name} />
+								<img class="rounded-[50%] p-2 w-20 h-20" src={`${review.avatar}`} alt={review.name} on:error={(event)=> {
+									event.target.src = "https://cdn.discordapp.com/embed/avatars/5.png"
+  event.onerror = null
+								}} />
 								<div>
-									<p class="text-2xl font-bold text-amber-400">{review.name}</p>
-									<p class="text-white">{review.comment}</p>
+									<p class="text-1xl font-bold text-amber-400">{review.name}</p>
+									<p class="text-white text-sm	 text-">{review.comment}</p>
 								</div>
 							</div>
 						</div>
@@ -117,52 +120,6 @@
 			</div>
 		{/if}
 
-		<!-- {#if reviews.length !== 0}
-			<div class="grid justify-center gap-2 w-full">
-				<div class="bg-[#36393F] p-4 max-h-48">
-					<div class="h-auto">
-						{#each reviews as _, index}
-							{#if index == image}
-								<div in:fly={{ x: 200, duration: 400 }} out:fly={{ x: -200, duration: 400 }}>
-									<div class="flex text-white text-lg gap-2 absolute">
-										<img
-											class="rounded-[50%] p-2"
-											src={`${reviews[image].avatar}`}
-											alt={reviews[image].name}
-											on:error={(e) => {
-												//@ts-ignore -
-												if (e.target.src == reviews[image + 1].avatar) return;
-												//@ts-ignore -
-												e.target.src = reviews[image + 1].avatar;
-											}}
-										/>
-										<div>
-											<p class="text-2xl font-bold text-amber-400">{reviews[image].name}</p>
-											<p class="text-white">{reviews[image].comment}</p>
-										</div>
-									</div>
-								</div>
-							{/if}
-						{/each}
-					</div>
-
-					<div class="md:flex gap-2 justify-center md:w-full hidden ">
-						{#each reviews as _, index}
-							{#if index == image}
-								<button
-									on:click={() => (image = index)}
-									class="py-1 px-4 bg-slate-400 rounded-lg"
-								/>
-							{:else}
-								<button
-									on:click={() => (image = index)}
-									class="py-1 px-4 bg-slate-200 rounded-lg"
-								/>
-							{/if}
-						{/each}
-					</div>
-				</div>
-			</div>
-		{/if} -->
+	
 	</div>
 </div>

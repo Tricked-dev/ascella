@@ -3,6 +3,5 @@ title: Signup
 description: How to signup
 ---
 
-Join the [discord](https://discord.gg/mY8zTARu4g), then just ping tricked and ask for a code.
-
-once you have received your code do /redeem using the ascella.host bot and your done all thats left now is to download your config!
+Join the [discord](https://discord.gg/mY8zTARu4g), And ask for a refferal code to get invited to the uploader.
+Once you have recieved a refferal code from someone you can use it join ascella with the `/redeem` command.
