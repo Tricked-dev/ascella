@@ -81,7 +81,6 @@ pub async fn post(mut payload: Multipart, data: AccessToken, cache: web::Data<Mu
     let s = &content_type[..];
 
     match s {
-      //"image/png" |
       "image/png" | "image/gif" | "image/webp" => {}
       _ => return Err(Error::FileTypeNotAllowed),
     };
@@ -98,7 +97,7 @@ pub async fn post(mut payload: Multipart, data: AccessToken, cache: web::Data<Mu
 
     let dest = format!("{}/{}", data.id(), img.id,);
     cache.lock().await.set(img.vanity.clone(), content_type.clone(), buf.clone());
-    S3.upload_file(&content_type, dest.as_str(), buf.into()).await.map_err(|_| Error::BadRequest)?;
+    S3.upload_file(&content_type, dest.as_str(), buf.into()).await.map_err(|_| Error::DatabaseError)?;
     // i dont want to have to do this but its neccasry
     tokio::spawn(send_text_webhook(format!(
       "**[IMAGE]** [image](<https://ascella.wtf/v2/ascella/view/{image}.png>) **[OWNER]** {name} ({id})",
@@ -108,6 +107,6 @@ pub async fn post(mut payload: Multipart, data: AccessToken, cache: web::Data<Mu
     )));
     Ok(OkResponse(UploadSuccess::new(&img.vanity, &data.domain())))
   } else {
-    Err(Error::BadRequest)
+    Err(Error::MissingData)
   }
 }
