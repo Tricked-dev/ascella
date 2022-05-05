@@ -82,4 +82,7 @@ impl Users {
       _ => Lang::En,
     }
   }
+  pub fn set_lang<T: ToString>(&mut self, lang: T) {
+    self.lang = lang.to_string();
+  }
 }

@@ -23,11 +23,11 @@ pub fn command() -> Command {
     .build()
 }
 
-pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
-  let style = get_arg(cmd.data.options.iter(), "lang");
+pub async fn execute(_client: &Client, cmd: &ApplicationCommand, mut user: Users) -> Result<BotResponse> {
+  let language = get_arg(cmd.data.options.iter(), "lang").unwrap();
 
-  set_language::exec(user.id, style.unwrap()).await?;
-
+  set_language::exec(user.id, language.clone()).await?;
+  user.set_lang(language);
   let embed = create_embed().title(user.lang().language_updated()).build();
 
   Ok(BotResponse::new().embed(embed))
