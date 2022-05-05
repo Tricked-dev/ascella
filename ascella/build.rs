@@ -14,6 +14,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     .source("es", "../locales/es.json")
     .source("fr", "../locales/fr.json")
     .source("nl", "../locales/nl.json")
+    .source("bg", "../locales/bg.json")
     .fallback("en")
     .generate()?;
 

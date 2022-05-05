@@ -16,6 +16,7 @@ pub fn command() -> Command {
           ("Dutch".to_owned(), "nl".into()),
           ("Polish".to_owned(), "pl".into()),
           ("Fr*nch".to_owned(), "fr".into()),
+          ("Bulgarian".to_owned(), "bg".into()),
         ])
         .required(true),
     )

@@ -78,6 +78,7 @@ impl Users {
       "nl" => Lang::Nl,
       "es" => Lang::Es,
       "fr" => Lang::Fr,
+      "bg" => Lang::Bg,
       _ => Lang::En,
     }
   }
