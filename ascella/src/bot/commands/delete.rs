@@ -29,10 +29,7 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
   };
   let response = if let Some((id, vanity)) = data {
     delete_image::exec(id).await?;
-    let embed = create_embed()
-      .title(user.lang().delete_image_title())
-      .description(user.lang().delete_image_desc(id,vanity))
-      .build();
+    let embed = create_embed().title(user.lang().delete_image_title()).description(user.lang().delete_image_desc(id, vanity)).build();
     BotResponse::new().private().embed(embed)
   } else {
     BotResponse::new().private().content(user.lang().delete_image_not_found())

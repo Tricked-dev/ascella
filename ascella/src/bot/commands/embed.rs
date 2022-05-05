@@ -19,10 +19,7 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
   let color = get_arg(command_args.clone(), "color");
   let author = get_arg(command_args.clone(), "author");
 
-  let embed = create_embed()
-    .title(user.lang().embed_update_title())
-    .description(user.lang().embed_update_desc())
-    .build();
+  let embed = create_embed().title(user.lang().embed_update_title()).description(user.lang().embed_update_desc()).build();
 
   set_embed::exec(user.id, description, title, url, color, author).await?;
   Ok(BotResponse::new().embed(embed))

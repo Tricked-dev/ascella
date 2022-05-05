@@ -16,6 +16,7 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
     ("embed", Ok(user), _) => embed::execute(client, cmd, user).await,
     ("url_style", Ok(user), _) => url_style::execute(client, cmd, user).await,
     ("funny_redirect", Ok(user), _) => funny_redirect::execute(client, cmd, user).await,
+    ("language", Ok(user), _) => lang::execute(client, cmd, user).await,
     ("profile", Ok(user), _) => profile::execute(client, cmd, user).await,
     ("redirect", Ok(user), _) => redirect::execute(client, cmd, user).await,
 
@@ -79,6 +80,7 @@ pub mod embed;
 pub mod eval;
 pub mod funny_redirect;
 pub mod help;
+pub mod lang;
 pub mod profile;
 pub mod redeem;
 pub mod redirect;

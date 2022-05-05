@@ -1,11 +1,3 @@
-use futures::executor::block_on;
-use tokio_cron_scheduler::{Job, JobScheduler, JobToRun};
-use twilight_model::id::Id;
-
-use crate::{
-  database::queries::{get_images::delete_all, get_users_autodelete},
-  prelude::{create_embed, HTTP},
-};
 pub async fn start_cron() {}
 // pub async fn start_cron() {
 //   let mut sched = JobScheduler::new();

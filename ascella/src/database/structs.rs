@@ -74,7 +74,11 @@ impl Users {
   pub fn lang(&self) -> Lang {
     match self.lang.as_str() {
       "en" => Lang::En,
-      _ => todo!(),
+      "pl" => Lang::Pl,
+      "nl" => Lang::Nl,
+      "es" => Lang::Es,
+      "fr" => Lang::Fr,
+      _ => Lang::En,
     }
   }
 }

@@ -8,7 +8,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
   let rust_data = String::from_utf8(rustc_output.stdout).unwrap();
   println!("cargo:rustc-env=RUST_DATA={}", rust_data);
 
-  rosetta_build::config().source("en", "../locales/en.json").fallback("en").generate()?;
+  rosetta_build::config()
+    .source("en", "../locales/en.json")
+    .source("pl", "../locales/pl.json")
+    .source("es", "../locales/es.json")
+    .source("fr", "../locales/fr.json")
+    .source("nl", "../locales/nl.json")
+    .fallback("en")
+    .generate()?;
 
   Ok(())
 }
