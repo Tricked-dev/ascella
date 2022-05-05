@@ -1,3 +1,6 @@
+use twilight_model::http::interaction::{InteractionResponse, InteractionResponseType};
+use twilight_util::builder::InteractionResponseDataBuilder;
+
 use crate::prelude::*;
 
 pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
@@ -22,34 +25,35 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
     ("redeem", _, _) => redeem::execute(client, cmd).await,
     ("unknown", _, _) => unknown::execute(client, cmd).await,
     ("user", _, _) => user::execute(client, cmd).await,
-    _ => {
-      client
-        .interaction_callback(
-          cmd.id,
-          &cmd.token,
-          &ChannelMessageWithSource(CallbackData {
-            allowed_mentions: Some(AllowedMentions {
-              parse: vec![],
-              users: vec![],
-              roles: vec![],
-              replied_user: true,
-            }),
-            components: None,
-            content: Some(String::from("Not a user of the image uploader")),
-            embeds: Some(vec![]),
-            flags: Some(MessageFlags::EPHEMERAL),
-            tts: Some(false),
-          }),
-        )
-        .exec()
-        .await?;
-      Ok(())
-    }
+    _ => Ok(BotResponse::new().content("Not a user of the image uploader").private()),
   };
 
   send_text_webhook(format!("**{}**: {}", cmd.data.name.as_str(), cmd.member.as_ref().unwrap().user.as_ref().unwrap().name)).await?;
   match value {
-    Ok(_) => {}
+    Ok(value) => {
+      let mut response = InteractionResponseDataBuilder::new();
+      if let Some(content) = value.get_content() {
+        response = response.content(content.to_string());
+      }
+      if let Some(embed) = value.get_embed() {
+        response = response.embeds([embed.to_owned()]);
+      }
+      if value.is_private() {
+        response = response.flags(MessageFlags::EPHEMERAL);
+      }
+      client
+        .interaction(Id::new(env::var("APPLICATION_ID").unwrap().parse::<u64>().unwrap()))
+        .create_response(
+          cmd.id,
+          &cmd.token,
+          &InteractionResponse {
+            kind: InteractionResponseType::ChannelMessageWithSource,
+            data: Some(response.build()),
+          },
+        )
+        .exec()
+        .await?;
+    }
     Err(err) => {
       send_text_webhook(format!(
         "**{}**: {}, ERROR OCCURRED {:?}",
@@ -59,6 +63,7 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
       ))
       .await?;
       println!("-+ {:?}", err);
+      log::error!("-+ {:?}", err);
     }
   };
   Ok(())

@@ -24,7 +24,7 @@ pub async fn start_bot() -> Result<()> {
 
   let token = dotenv::var("DISCORD_TOKEN")?;
   log::info!("Starting bot");
-  let (cluster, mut events) = Cluster::builder(&*token, Intents::GUILD_MESSAGES)
+  let (cluster, mut events) = Cluster::builder(token.clone(), Intents::GUILD_MESSAGES)
     .presence(
       UpdatePresencePayload::new(
         vec![MinimalActivity {
@@ -45,16 +45,21 @@ pub async fn start_bot() -> Result<()> {
 
   cluster.up().await;
   log::info!("Bot started");
-  let http = Arc::new(Client::new((&*token).to_string()));
-  http.set_application_id(ApplicationId(env::var("APPLICATION_ID").unwrap().parse::<core::num::NonZeroU64>().unwrap()));
+  let http = Arc::new(Client::new(token));
+  // http.set_application_id(ApplicationId(env::var("APPLICATION_ID").unwrap().parse::<core::num::NonZeroU64>().unwrap()));
 
   let commands = get_commands(domain_options);
 
   HTTP.set(Arc::clone(&http)).unwrap();
 
-  let data = http.set_guild_commands(GuildId(core::num::NonZeroU64::new(748956745409232945).unwrap()), commands.as_ref()).unwrap();
-
-  data.exec().await?;
+  http
+    .interaction(Id::new(env::var("APPLICATION_ID").unwrap().parse::<u64>().unwrap()))
+    .set_guild_commands(Id::new(748956745409232945), commands.as_ref())
+    .exec()
+    .await?;
+  if START_TIME.get().is_none() {
+    START_TIME.set(Instant::now()).expect("Failed to set starttime");
+  }
   while let Some((_shard_id, event)) = events.next().await {
     match event {
       Event::InteractionCreate(inter) => match inter.0 {
@@ -63,26 +68,6 @@ pub async fn start_bot() -> Result<()> {
           log::info!("slash command called {} {}", cmd.data.name, cmd.member.as_ref().unwrap().user.as_ref().unwrap().name);
           let r = commands::builtin_exec(&http, &cmd).await;
           if let Err(r) = r {
-            http
-              .interaction_callback(
-                cmd.id,
-                &cmd.token,
-                &ChannelMessageWithSource(CallbackData {
-                  allowed_mentions: Some(AllowedMentions {
-                    parse: vec![],
-                    users: vec![],
-                    roles: vec![],
-                    replied_user: true,
-                  }),
-                  components: None,
-                  content: Some(String::from("Not a user of the image uploader")),
-                  embeds: Some(vec![]),
-                  flags: Some(MessageFlags::EPHEMERAL),
-                  tts: Some(false),
-                }),
-              )
-              .exec()
-              .await?;
             send_text_webhook(format!(
               "**{}**: {}, ERROR OCCURRED {:?}",
               cmd.data.name.as_str(),
@@ -98,7 +83,7 @@ pub async fn start_bot() -> Result<()> {
       Event::Ready(_) => {
         if REVIEWS.get().is_none() {
           let pins = http
-            .pins(ChannelId(core::num::NonZeroU64::new(937239935545663498).unwrap()))
+            .pins(Id::new(937239935545663498))
             .exec()
             .await?
             .models()
@@ -110,7 +95,15 @@ pub async fn start_bot() -> Result<()> {
               let user = &x.author;
               let name = user.name.clone();
               Comment {
-                avatar: format!("https://cdn.discordapp.com/avatars/{}/{}.png", &user.id, &user.avatar.as_ref().unwrap_or(&"".to_owned())),
+                avatar: if let Some(avatar) = user.avatar {
+                  format!(
+                    "https://cdn.discordapp.com/avatars/{}/{}.png",
+                    &user.id,
+                    avatar.bytes().iter().map(|x| format!("{:02x}", x)).collect::<String>()
+                  )
+                } else {
+                  String::new()
+                },
                 comment,
                 name,
               }

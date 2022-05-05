@@ -9,7 +9,7 @@ pub fn command() -> Command {
     .build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<()> {
+pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   let command_args = cmd.data.options.iter();
 
   let title = get_arg(command_args.clone(), "title");
@@ -22,30 +22,8 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
   let embed = create_embed()
     .title("Updated the embed")
     .description("Your domain has been updated, Take a new screenshot to test the embed out.\n\n*please wait up to 2 minutes for your embed to update this is due to caching*")
-    .build()?;
+    .build();
 
   set_embed::exec(user.id, description, title, url, color, author).await?;
-
-  client
-    .interaction_callback(
-      cmd.id,
-      &cmd.token,
-      &ChannelMessageWithSource(CallbackData {
-        allowed_mentions: Some(AllowedMentions {
-          parse: vec![],
-          users: vec![],
-          roles: vec![],
-          replied_user: true,
-        }),
-        components: None,
-        content: None,
-        embeds: Some(vec![embed]),
-        flags: None,
-        tts: Some(false),
-      }),
-    )
-    .exec()
-    .await?;
-
-  Ok(())
+  Ok(BotResponse::new().embed(embed))
 }

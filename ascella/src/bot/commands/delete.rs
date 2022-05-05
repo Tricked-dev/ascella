@@ -5,7 +5,7 @@ pub fn command() -> Command {
     .option(StringBuilder::new("vanity".into(), "Vanity of the image".into()))
     .build()
 }
-pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<()> {
+pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   let command_args = cmd.data.options.iter();
 
   let data = if let Some(val) = get_arg(command_args.clone(), "id") {
@@ -27,55 +27,16 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
   } else {
     None
   };
-  if let Some((id, vanity)) = data {
+  let response = if let Some((id, vanity)) = data {
     delete_image::exec(id).await?;
     let embed = create_embed()
       .title("Deleted your image image ;)")
       .description(format!("Deleted image {vanity} with id {id}", id = id, vanity = vanity))
-      .build()?;
-
-    client
-      .interaction_callback(
-        cmd.id,
-        &cmd.token,
-        &ChannelMessageWithSource(CallbackData {
-          allowed_mentions: Some(AllowedMentions {
-            parse: vec![],
-            users: vec![],
-            roles: vec![],
-            replied_user: true,
-          }),
-          components: None,
-          content: None,
-          embeds: Some(vec![embed]),
-          flags: Some(MessageFlags::EPHEMERAL),
-          tts: Some(false),
-        }),
-      )
-      .exec()
-      .await?;
+      .build();
+    BotResponse::new().private().embed(embed)
   } else {
-    client
-      .interaction_callback(
-        cmd.id,
-        &cmd.token,
-        &ChannelMessageWithSource(CallbackData {
-          allowed_mentions: Some(AllowedMentions {
-            parse: vec![],
-            users: vec![],
-            roles: vec![],
-            replied_user: true,
-          }),
-          components: None,
-          content: Some("Could not find the specified image.".to_string()),
-          embeds: Some(vec![]),
-          flags: Some(MessageFlags::EPHEMERAL),
-          tts: Some(false),
-        }),
-      )
-      .exec()
-      .await?;
-  }
+    BotResponse::new().private().content("Could not find specified image")
+  };
 
-  Ok(())
+  Ok(response)
 }

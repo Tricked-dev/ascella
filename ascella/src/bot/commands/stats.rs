@@ -1,4 +1,5 @@
 use tokio::join;
+use twilight_embed_builder::EmbedFieldBuilder;
 
 use crate::prelude::*;
 
@@ -44,7 +45,7 @@ impl AscellaStats {
       usage: bytes_to(if let Ok(r) = usage.trim_end().parse::<u128>().map(|x| x * 1024) { r } else { 100000 }),
       upload_size: "0".into(),
       discord_api_version: 9,
-      uptime: format_duration(Instant::now().duration_since(*START_TIME)).to_string(),
+      uptime: format_duration(Instant::now().duration_since(*START_TIME.get().expect("Start time is not defined"))).to_string(),
       fast: true,
       rustc: env!("RUST_DATA").to_owned(),
       commit_hash: format!("https://github.com/Tricked-dev/ascella/commit/{hash}", hash = env!("GIT_HASH")),
@@ -56,7 +57,7 @@ impl AscellaStats {
   }
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
+pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotResponse> {
   let stats = AscellaStats::new_with_stats().await;
 
   let embed = create_embed()
@@ -72,28 +73,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
     .field(EmbedFieldBuilder::new("Fast", &stats.fast.to_string()).inline())
     .field(EmbedFieldBuilder::new("Rustc info", &stats.rustc.to_string()).inline())
     .field(EmbedFieldBuilder::new("Commit Hash", format!("[{}]({})", &env!("GIT_HASH")[..7], &stats.commit_hash.to_string())).inline())
-    .build()?;
+    .build();
 
-  client
-    .interaction_callback(
-      cmd.id,
-      &cmd.token,
-      &ChannelMessageWithSource(CallbackData {
-        allowed_mentions: Some(AllowedMentions {
-          parse: vec![],
-          users: vec![],
-          roles: vec![],
-          replied_user: true,
-        }),
-        components: None,
-        content: None,
-        embeds: Some(vec![embed]),
-        flags: None,
-        tts: Some(false),
-      }),
-    )
-    .exec()
-    .await?;
-
-  Ok(())
+  Ok(BotResponse::new().embed(embed))
 }

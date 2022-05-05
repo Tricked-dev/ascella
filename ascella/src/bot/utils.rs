@@ -1,3 +1,6 @@
+use twilight_model::channel::embed::Embed;
+use twilight_util::builder::embed::EmbedBuilder;
+
 use crate::bot::commands::*;
 use crate::prelude::*;
 
@@ -82,4 +85,40 @@ download config [here](https://ascella.wtf/v2/ascella/config?auth={upload_key})
     images = images,
     upload_key = key
   )
+}
+#[derive(Clone, Debug)]
+pub struct BotResponse {
+  content: Option<String>,
+  embed: Option<Embed>,
+  private: bool,
+}
+impl BotResponse {
+  pub fn new() -> Self {
+    Self {
+      content: None,
+      embed: None,
+      private: false,
+    }
+  }
+  pub fn content<T: Into<String>>(mut self, content: T) -> Self {
+    self.content = Some(content.into());
+    self
+  }
+  pub fn embed(mut self, embed: Embed) -> Self {
+    self.embed = Some(embed);
+    self
+  }
+  pub fn private(mut self) -> Self {
+    self.private = true;
+    self
+  }
+  pub fn get_content(&self) -> Option<&str> {
+    self.content.as_ref().map(|s| s.as_str())
+  }
+  pub fn get_embed(&self) -> Option<&Embed> {
+    self.embed.as_ref()
+  }
+  pub fn is_private(&self) -> bool {
+    self.private
+  }
 }

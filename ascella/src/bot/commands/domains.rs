@@ -3,7 +3,7 @@ pub fn command() -> Command {
   CommandBuilder::new("domains".into(), "View the domains ascella has.".into(), CommandType::ChatInput).build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
+pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotResponse> {
   let data = get_domains::exec().await?;
 
   // data_embed
@@ -19,28 +19,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
     message.push(body.to_string());
   }
 
-  let embed = create_embed().title("Embed").description(message.join("\n")).build()?;
+  let embed = create_embed().title("Embed").description(message.join("\n")).build();
 
-  client
-    .interaction_callback(
-      cmd.id,
-      &cmd.token,
-      &ChannelMessageWithSource(CallbackData {
-        allowed_mentions: Some(AllowedMentions {
-          parse: vec![],
-          users: vec![],
-          roles: vec![],
-          replied_user: true,
-        }),
-        components: None,
-        content: None,
-        embeds: Some(vec![embed]),
-        flags: None,
-        tts: Some(false),
-      }),
-    )
-    .exec()
-    .await?;
-
-  Ok(())
+  Ok(BotResponse::new().embed(embed))
 }

@@ -11,10 +11,11 @@ pub mod util;
 pub mod prelude {
   lazy_static! {
     pub static ref CLIENT: reqwest::Client = reqwest::Client::new();
-    pub static ref START_TIME: Instant = Instant::now();
+    pub static ref START_TIME: OnceCell<Instant> = OnceCell::new();
     pub static ref HTTP: OnceCell<Arc<Client>> = OnceCell::new();
     pub static ref REVIEWS: OnceCell<Vec<Comment>> = OnceCell::new();
   }
+
   pub use crate::bot::bot::Comment;
   pub use crate::bot::utils::*;
   pub use crate::database::queries::*;
@@ -49,10 +50,8 @@ pub mod prelude {
   pub use tokio::fs::create_dir_all;
   pub use tokio_pg_mapper::FromTokioPostgresRow;
   pub use ts_rs::TS;
-  pub use twilight_embed_builder::{EmbedBuilder, EmbedFieldBuilder};
   pub use twilight_gateway::{cluster::ShardScheme, Cluster, Event, Intents};
   pub use twilight_http::Client;
-  pub use twilight_model::application::callback::{CallbackData, InteractionResponse::ChannelMessageWithSource};
   pub use twilight_model::application::command::{Command, CommandType};
   pub use twilight_model::application::interaction::application_command::{CommandDataOption, CommandOptionValue};
   pub use twilight_model::application::interaction::{ApplicationCommand, Interaction};

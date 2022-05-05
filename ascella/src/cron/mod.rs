@@ -1,5 +1,5 @@
 use futures::executor::block_on;
-use twilight_model::id::ChannelId;
+use twilight_model::id::{ChannelId, Id};
 
 use crate::{
   database::queries::{get_images::delete_all, get_users_autodelete},
@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub async fn start_cron() {
-  let mut sched = tokio_cron_scheduler::JobScheduler::new();
+  let mut sched = tokio_cron_scheduler::JobScheduler::new().unwrap();
 
   sched
     .add(
@@ -44,8 +44,8 @@ pub async fn start_cron() {
                 return;
               }
 
-              let embed = create_embed().title("Deleted images summary").description(&summary.join("\n")).build().unwrap();
-              client.create_message(ChannelId::new(929698255300882522u64).unwrap()).embeds(&vec![embed]).unwrap().exec().await.ok();
+              let embed = create_embed().title("Deleted images summary").description(&summary.join("\n")).build();
+              client.create_message(Id::new(929698255300882522u64)).embeds(&vec![embed]).unwrap().exec().await.ok();
             }
           });
         },
@@ -54,5 +54,7 @@ pub async fn start_cron() {
     )
     .unwrap();
 
-  sched.start().await.unwrap();
+  if let Err(e) = sched.start() {
+    eprintln!("Error on scheduler {:?}", e);
+  }
 }

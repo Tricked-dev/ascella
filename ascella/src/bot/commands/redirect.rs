@@ -7,7 +7,7 @@ pub fn command(domain_options: impl IntoIterator<Item = (String, String)>) -> Co
     .build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<()> {
+pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   let command_args = cmd.data.options.iter();
 
   let url = get_arg_default(command_args.clone(), "url", "https//tricked.pro/aethor");
@@ -20,29 +20,7 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
     .title("Successfully created the redirect")
     .url(&data)
     .description(format!("Made a fancy vanity {}", &data))
-    .build()?;
+    .build();
   create_redirect::exec(user.id, url, vanity).await?;
-
-  client
-    .interaction_callback(
-      cmd.id,
-      &cmd.token,
-      &ChannelMessageWithSource(CallbackData {
-        allowed_mentions: Some(AllowedMentions {
-          parse: vec![],
-          users: vec![],
-          roles: vec![],
-          replied_user: true,
-        }),
-        components: None,
-        content: Some(data),
-        embeds: Some(vec![embed]),
-        flags: None,
-        tts: Some(false),
-      }),
-    )
-    .exec()
-    .await?;
-
-  Ok(())
+  Ok(BotResponse::new().embed(embed).content(data))
 }

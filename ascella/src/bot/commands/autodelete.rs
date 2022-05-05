@@ -6,7 +6,7 @@ pub fn command() -> Command {
     .build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<()> {
+pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   // let command_args = cmd.data.options[0];
 
   let v = if let CommandOptionValue::Integer(v) = cmd.data.options[0].value {
@@ -22,34 +22,13 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> 
     create_embed()
       .title("Auto image deletion")
       .description(format!("Your images will now be automatically deleted after {} days", v))
-      .build()?
+      .build()
   } else {
     create_embed()
       .title("Auto image deletion")
       .description(format!("{} is not a valid amount of days please choose a time between 1 and 365 days", v.err().unwrap()))
-      .build()?
+      .build()
   };
 
-  client
-    .interaction_callback(
-      cmd.id,
-      &cmd.token,
-      &ChannelMessageWithSource(CallbackData {
-        allowed_mentions: Some(AllowedMentions {
-          parse: vec![],
-          users: vec![],
-          roles: vec![],
-          replied_user: true,
-        }),
-        components: None,
-        content: None,
-        embeds: Some(vec![embed]),
-        flags: None,
-        tts: Some(false),
-      }),
-    )
-    .exec()
-    .await?;
-
-  Ok(())
+  Ok(BotResponse::new().embed(embed))
 }

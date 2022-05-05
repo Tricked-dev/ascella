@@ -5,7 +5,7 @@ pub fn command() -> Command {
     .build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
+pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotResponse> {
   let id = cmd.data.options.iter().find(|e| e.name == "user").unwrap();
   if let CommandOptionValue::User(user) = id.value {
     if let Ok(user) = get_user_discord::exec(user.to_string()).await {
@@ -19,53 +19,12 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<()> {
         images = images,
       );
 
-      let embed = create_embed().title(format!("Profile of {}", &user.name)).description(message).build()?;
+      let embed = create_embed().title(format!("Profile of {}", &user.name)).description(message).build();
 
-      client
-        .interaction_callback(
-          cmd.id,
-          &cmd.token,
-          &ChannelMessageWithSource(CallbackData {
-            allowed_mentions: Some(AllowedMentions {
-              parse: vec![],
-              users: vec![],
-              roles: vec![],
-              replied_user: true,
-            }),
-            components: None,
-            content: None,
-            embeds: Some(vec![embed]),
-            flags: None,
-            tts: Some(false),
-          }),
-        )
-        .exec()
-        .await?;
-      return Ok(());
+      return Ok(BotResponse::new().embed(embed));
     }
   }
-  let embed = create_embed().title("User profile").description("User isn't a registered user").build()?;
+  let embed = create_embed().title("User profile").description("User isn't a registered user").build();
 
-  client
-    .interaction_callback(
-      cmd.id,
-      &cmd.token,
-      &ChannelMessageWithSource(CallbackData {
-        allowed_mentions: Some(AllowedMentions {
-          parse: vec![],
-          users: vec![],
-          roles: vec![],
-          replied_user: true,
-        }),
-        components: None,
-        content: None,
-        embeds: Some(vec![embed]),
-        flags: Some(MessageFlags::EPHEMERAL),
-        tts: Some(false),
-      }),
-    )
-    .exec()
-    .await?;
-
-  Ok(())
+  Ok(BotResponse::new().embed(embed))
 }

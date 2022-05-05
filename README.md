@@ -2,6 +2,8 @@
 
 Ascella is the fastest opensource image uploader.
 
+![Alt](https://repobeats.axiom.co/api/embed/9b97008a7840311ce626d6162e3c64312ec250cd.svg "Repobeats analytics image")
+
 ## Features:
 
 - Custom bot to manage almost everything

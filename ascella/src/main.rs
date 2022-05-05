@@ -4,6 +4,7 @@ use tracing_subscriber::util::SubscriberInitExt;
 use tsunami::bot::start_bot;
 use tsunami::cron::start_cron;
 use tsunami::http::start_actix;
+use tsunami::prelude::START_TIME;
 
 fn main() -> std::io::Result<()> {
   if let Ok(url) = dotenv::var("SENTRY_URL") {
@@ -20,9 +21,8 @@ fn main() -> std::io::Result<()> {
 
     log::info!("Sentry is enabled");
   } else {
-    tracing_subscriber::registry().with(tracing_subscriber::fmt::layer()).try_init().unwrap();
+    tracing_subscriber::fmt().init();
   }
-
   let rt = tokio::runtime::Builder::new_multi_thread()
     .worker_threads(4)
     .thread_name("ascella-rt")
