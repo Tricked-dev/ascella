@@ -91,16 +91,12 @@ pub async fn start_bot() -> Result<()> {
             .iter()
             .map(|x| {
               let comment = x.content.clone();
-
               let user = &x.author;
               let name = user.name.clone();
+
               Comment {
                 avatar: if let Some(avatar) = user.avatar {
-                  format!(
-                    "https://cdn.discordapp.com/avatars/{}/{}.png",
-                    &user.id,
-                    avatar.bytes().iter().map(|x| format!("{:02x}", x)).collect::<String>()
-                  )
+                  format!("https://cdn.discordapp.com/avatars/{}/{}.png", &user.id, avatar)
                 } else {
                   String::new()
                 },
