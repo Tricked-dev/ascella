@@ -20,8 +20,8 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
   let author = get_arg(command_args.clone(), "author");
 
   let embed = create_embed()
-    .title("Updated the embed")
-    .description("Your domain has been updated, Take a new screenshot to test the embed out.\n\n*please wait up to 2 minutes for your embed to update this is due to caching*")
+    .title(user.lang().embed_update_title())
+    .description(user.lang().embed_update_desc())
     .build();
 
   set_embed::exec(user.id, description, title, url, color, author).await?;

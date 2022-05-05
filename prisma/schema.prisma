@@ -47,4 +47,5 @@ model users {
   url_style   Int      @default(0)
   invite_code String?  @unique @default(uuid()) @db.VarChar(200)
   invited_by  Int      @default(0)
+  lang    String   @default("en")
 }

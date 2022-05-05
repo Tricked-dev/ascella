@@ -8,8 +8,8 @@ pub async fn execute(_client: &Client, _cmd: &ApplicationCommand, user: Users) -
   delete_image::exec(img.id).await?;
 
   let embed = create_embed()
-    .title("Deleted your latest image ;)")
-    .description(format!("Deleted image {vanity} with id {id}", id = &img.id, vanity = &img.vanity))
+    .title(user.lang().delete_image_title())
+    .description(user.lang().delete_image_desc(&img.id, img.vanity))
     .build();
 
   Ok(BotResponse::new().private().embed(embed))

@@ -19,14 +19,11 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
   };
   let embed = if let Ok(v) = v {
     set_autodelete::exec(user.id, v.try_into().unwrap()).await?;
-    create_embed()
-      .title("Auto image deletion")
-      .description(format!("Your images will now be automatically deleted after {} days", v))
-      .build()
+    create_embed().title(user.lang().auto_delete_title()).description(user.lang().auto_delete_desc(v)).build()
   } else {
     create_embed()
-      .title("Auto image deletion")
-      .description(format!("{} is not a valid amount of days please choose a time between 1 and 365 days", v.err().unwrap()))
+      .title(user.lang().auto_delete_title())
+      .description(user.lang().auto_delete_out_of_range(v.err().unwrap()))
       .build()
   };
 

@@ -70,9 +70,9 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
 
   let data = format!("https://{}/{}", domain, vanity);
   let embed = create_embed()
-    .title("Successfully created the redirect")
+    .title(user.lang().redirect_create_title())
     .url(&data)
-    .description(format!("Made a fancy vanity {}", &data))
+    .description(user.lang().redirect_create_desc(&data))
     .build();
   create_redirect::exec(user.id, url, vanity).await?;
 

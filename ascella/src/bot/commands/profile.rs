@@ -26,6 +26,6 @@ pub async fn execute(_client: &Client, _cmd: &ApplicationCommand, user: Users) -
     Some(user.upload_key.as_ref().unwrap_or(&new_key.unwrap_or("please wait 120 seconds".to_owned())).to_string()),
   );
 
-  let embed = create_embed().title("User profile").description(message).build();
+  let embed = create_embed().title(user.lang().profile_name()).description(message).build();
   Ok(BotResponse::new().embed(embed).private())
 }

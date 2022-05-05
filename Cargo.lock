@@ -4157,6 +4157,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "rosetta-build"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6f697b8b3f19bee20f30dc87213d05ce091c43bc733ab1bfc98b0e5cdd9943f3"
+dependencies = [
+ "convert_case",
+ "lazy_static",
+ "proc-macro2",
+ "quote",
+ "regex",
+ "tinyjson",
+]
+
+[[package]]
+name = "rosetta-i18n"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c5298de832602aecc9458398f435d9bff0be57da7aac11221b6ff3d4ef9503de"
+
+[[package]]
 name = "rust-ini"
 version = "0.18.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4937,6 +4957,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "42657b1a6f4d817cda8e7a0ace261fe0cc946cf3a80314390b22cc61ae080792"
 
 [[package]]
+name = "tinyjson"
+version = "2.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1a8304da9f9370f6a6f9020b7903b044aa9ce3470f300a1fba5bc77c78145a16"
+
+[[package]]
 name = "tinyvec"
 version = "1.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5412,6 +5438,8 @@ dependencies = [
  "paste",
  "rand 0.8.5",
  "reqwest 0.11.10",
+ "rosetta-build",
+ "rosetta-i18n",
  "rust-s3",
  "sentry",
  "sentry-panic",

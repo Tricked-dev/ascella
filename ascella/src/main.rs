@@ -4,6 +4,7 @@ use tracing_subscriber::util::SubscriberInitExt;
 use tsunami::bot::start_bot;
 use tsunami::cron::start_cron;
 use tsunami::http::start_actix;
+use tsunami::Lang;
 
 fn main() -> std::io::Result<()> {
   if let Ok(url) = dotenv::var("SENTRY_URL") {

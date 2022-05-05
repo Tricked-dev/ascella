@@ -27,7 +27,7 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
 
   set_url_style::exec(user.id, style.unwrap().try_into().unwrap()).await?;
 
-  let embed = create_embed().title("Succesfully changed url style!".to_owned()).build();
+  let embed = create_embed().title(user.lang().url_style_success()).build();
 
   Ok(BotResponse::new().embed(embed))
 }

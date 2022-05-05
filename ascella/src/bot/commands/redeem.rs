@@ -34,8 +34,10 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotRes
     } else {
       BotResponse::new().content("Invalid code").private()
     }
+  } else if let Ok(user) = data {
+    BotResponse::new().content(user.lang().redeem_exists()).private()
   } else {
-    BotResponse::new().content("You're already an Ascella user - stay awesome!").private()
+    BotResponse::new().content("Sorry something weird happend...").private()
   };
 
   Ok(response)

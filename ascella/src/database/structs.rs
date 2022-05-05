@@ -1,3 +1,4 @@
+use crate::Lang;
 use serde::{Deserialize, Serialize};
 use tokio_pg_mapper_derive::PostgresMapper;
 
@@ -66,4 +67,14 @@ pub struct Users {
   pub url_style: i32,
   pub invite_code: Option<String>,
   pub invited_by: i32,
+  pub lang: String,
+}
+
+impl Users {
+  pub fn lang(&self) -> Lang {
+    match self.lang.as_str() {
+      "en" => Lang::En,
+      _ => todo!(),
+    }
+  }
 }

@@ -61,3 +61,5 @@ pub mod prelude {
   pub use twilight_model::id::*;
   pub use twilight_util::builder::command::*;
 }
+
+rosetta_i18n::include_translations!();
