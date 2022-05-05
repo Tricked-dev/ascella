@@ -71,16 +71,9 @@ mod test_urls {
 #[post("/upload")]
 pub async fn post(mut payload: Multipart, data: AccessToken, cache: web::Data<Mutex<ImageCache>>) -> Result<OkResponse<UploadSuccess>, Error> {
   if let Ok(Some(mut field)) = payload.try_next().await {
-    let mut file_size: usize = 0;
     let mut buf: Vec<u8> = Vec::new();
     while let Some(chunk) = field.next().await {
       let data = chunk.map_err(|_| Error::BadRequest)?;
-      file_size += data.len();
-
-      if file_size > 1000000 {
-        return Err(Error::BadRequest);
-      }
-
       buf.append(&mut data.to_vec());
     }
 
