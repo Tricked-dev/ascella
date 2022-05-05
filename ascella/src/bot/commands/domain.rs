@@ -6,7 +6,7 @@ pub fn command(domain_options: impl IntoIterator<Item = (String, String)>) -> Co
     .build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
+pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   let command_args = cmd.data.options.iter();
 
   let domain = get_arg(command_args.clone(), "domain").unwrap();

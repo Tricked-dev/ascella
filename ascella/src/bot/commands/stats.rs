@@ -57,7 +57,7 @@ impl AscellaStats {
   }
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotResponse> {
+pub async fn execute(_client: &Client, _cmd: &ApplicationCommand) -> Result<BotResponse> {
   let stats = AscellaStats::new_with_stats().await;
 
   let embed = create_embed()
@@ -66,13 +66,13 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotRes
     .field(EmbedFieldBuilder::new("Domains", &stats.total_domains.to_string()).inline())
     .field(EmbedFieldBuilder::new("Users", &stats.total_users.to_string()).inline())
     .field(EmbedFieldBuilder::new("Created", format!("<t:{}:R>", &stats.created_date)).inline())
-    .field(EmbedFieldBuilder::new("Memory Usage", &stats.usage.to_string()).inline())
-    .field(EmbedFieldBuilder::new("Upload's Size", &stats.upload_size.to_string()).inline())
+    .field(EmbedFieldBuilder::new("Memory Usage", &stats.usage).inline())
+    .field(EmbedFieldBuilder::new("Upload's Size", &stats.upload_size).inline())
     .field(EmbedFieldBuilder::new("Discord-API version", &stats.discord_api_version.to_string()).inline())
-    .field(EmbedFieldBuilder::new("Uptime", &stats.uptime.to_string()).inline())
+    .field(EmbedFieldBuilder::new("Uptime", &stats.uptime).inline())
     .field(EmbedFieldBuilder::new("Fast", &stats.fast.to_string()).inline())
-    .field(EmbedFieldBuilder::new("Rustc info", &stats.rustc.to_string()).inline())
-    .field(EmbedFieldBuilder::new("Commit Hash", format!("[{}]({})", &env!("GIT_HASH")[..7], &stats.commit_hash.to_string())).inline())
+    .field(EmbedFieldBuilder::new("Rustc info", &stats.rustc).inline())
+    .field(EmbedFieldBuilder::new("Commit Hash", format!("[{}]({})", &env!("GIT_HASH")[..7], &stats.commit_hash)).inline())
     .build();
 
   Ok(BotResponse::new().embed(embed))

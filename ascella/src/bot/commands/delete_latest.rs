@@ -3,7 +3,7 @@ pub fn command() -> Command {
   CommandBuilder::new("delete_latest".into(), "Delete your latest upload".into(), CommandType::ChatInput).build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
+pub async fn execute(_client: &Client, _cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   let img = get_latest_image::exec(user.id).await?;
   delete_image::exec(img.id).await?;
 

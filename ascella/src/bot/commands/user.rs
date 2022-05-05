@@ -5,7 +5,7 @@ pub fn command() -> Command {
     .build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotResponse> {
+pub async fn execute(_client: &Client, cmd: &ApplicationCommand) -> Result<BotResponse> {
   let id = cmd.data.options.iter().find(|e| e.name == "user").unwrap();
   if let CommandOptionValue::User(user) = id.value {
     if let Ok(user) = get_user_discord::exec(user.to_string()).await {

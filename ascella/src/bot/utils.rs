@@ -113,7 +113,7 @@ impl BotResponse {
     self
   }
   pub fn get_content(&self) -> Option<&str> {
-    self.content.as_ref().map(|s| s.as_str())
+    self.content.as_deref()
   }
   pub fn get_embed(&self) -> Option<&Embed> {
     self.embed.as_ref()

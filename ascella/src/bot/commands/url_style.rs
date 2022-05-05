@@ -22,7 +22,7 @@ pub fn command() -> Command {
     .build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
+pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   let style = get_arg_int(cmd.data.options.iter(), "style");
 
   set_url_style::exec(user.id, style.unwrap().try_into().unwrap()).await?;

@@ -1,5 +1,5 @@
 use futures::executor::block_on;
-use twilight_model::id::{ChannelId, Id};
+use twilight_model::id::Id;
 
 use crate::{
   database::queries::{get_images::delete_all, get_users_autodelete},
@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub async fn start_cron() {
-  let mut sched = tokio_cron_scheduler::JobScheduler::new().unwrap();
+  let sched = tokio_cron_scheduler::JobScheduler::new().unwrap();
 
   sched
     .add(

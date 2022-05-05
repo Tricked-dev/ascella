@@ -5,7 +5,7 @@ pub fn command() -> Command {
 
 #[allow(clippy::or_fun_call)]
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
+pub async fn execute(_client: &Client, _cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   let new_key = if user.upload_key.is_none() {
     let key = ulid::Ulid::new().to_string();
     set_upload_key::exec(user.id, &key).await?;

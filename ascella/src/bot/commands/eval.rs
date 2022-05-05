@@ -5,7 +5,7 @@ pub fn command() -> Command {
     .build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
+pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   let code = get_arg(cmd.data.options.iter(), "code");
   let res = get_tokio_postgres().await.query(&code.unwrap(), &[]).await?;
 

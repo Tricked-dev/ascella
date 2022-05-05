@@ -3,7 +3,7 @@ pub fn command() -> Command {
   CommandBuilder::new("domains".into(), "View the domains ascella has.".into(), CommandType::ChatInput).build()
 }
 
-pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotResponse> {
+pub async fn execute(_client: &Client, _cmd: &ApplicationCommand) -> Result<BotResponse> {
   let data = get_domains::exec().await?;
 
   // data_embed
