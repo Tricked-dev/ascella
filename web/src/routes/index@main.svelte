@@ -2,6 +2,7 @@
 	import { getReviews, getStats } from '$lib/api';
 	import { media } from '$lib/media';
 	import { onMount } from 'svelte';
+	import AOS from 'aos';
 
 	import '../css/app.scss';
 
@@ -52,6 +53,10 @@
 
 	$: reviews = [];
 	$: stats = {};
+	onMount(()=>{
+		AOS.init()
+		console.log('AOS Mounted')
+	})
 	onMount(async () => {
 		const [module, revs, stat] = await Promise.all([
 			import('svelte-carousel'),
@@ -66,13 +71,13 @@
 
 <div class="mx-auto">
 	<div class="">
-		<div class="text-center py-24 px-2 bg-gradient-to-tr from-zinc-900 to-gray-900 pb-20">
+		<div class="text-center py-48 px-2 bg-gradient-to-b from-zinc-900 to-slate-800 pb-48">
 			<h1 class="text-7xl text-white p-1 font-extrabold">Ascella</h1>
 			<h2 class="text-white p-1 pb-10">
 				A <b>fast</b> image uploader made for <b>all</b> platforms.
 			</h2>
 			<a href="https://docs.ascella.host/signup">
-				<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full duration-150"
+				<button data-aos="fade-up" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full duration-150"
 					>Get started</button
 				>
 			</a>
@@ -80,20 +85,23 @@
 		{#if stats.total_users}
 			<div class="flex md:flex-row flex-col justify-center gap-4 md:p-10 p-4">
 				<div
-					class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16
- px-10"
+					class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16 px-10"
+					data-aos="fade-up"
 				>
 					<p><b class="cursor-default">Users</b></p>
 					<p class="p-1 cursor-default">{stats.total_users}</p>
 				</div>
 				<div
-					class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16
- px-10"
+					class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16 px-10"
+					data-aos="fade-up"
 				>
 					<p><b class="cursor-default">Uploads</b></p>
 					<p class="p-1 cursor-default">{stats.total_uploads}</p>
 				</div>
-				<div class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16 px-10">
+				<div 
+					class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16 px-10"
+					data-aos="fade-up"
+				>
 					<p><b class="cursor-default">Domains</b></p>
 					<p class="p-1 cursor-default">{stats.total_domains}</p>
 				</div>
