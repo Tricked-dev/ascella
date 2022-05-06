@@ -110,7 +110,7 @@
 </svelte:head>
 
 <template class="flex-1 flex">
-	<nav class="bg-gradient-to-br from-slate-500 to-slate-600">
+	<nav class="bg-zinc-900">
 		<div class="flex flex-col">
 			<div class="flex items-center">
 				<div class="flex flex-col md:flex-row gap-4 p-2">
