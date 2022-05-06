@@ -23,6 +23,10 @@ await serve(
 
       if (r.ok) {
         const rson = await r.json();
+        if (rson.redirect) {
+          return Response.redirect(rson.redirect);
+        }
+
         if (!rson.embed.title && !rson.embed.description) {
           let res = await fetch(`https://ascella.wtf/v2/ascella/view/${name}.png`);
           return new Response(res.body, {
