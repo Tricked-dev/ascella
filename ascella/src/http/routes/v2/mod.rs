@@ -4,6 +4,7 @@ pub mod domain;
 pub mod domains;
 pub mod embed;
 pub mod images;
+pub mod lang;
 pub mod openapi_3;
 pub mod public;
 pub mod redirect;
