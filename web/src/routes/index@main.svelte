@@ -108,7 +108,7 @@
 						<h1 class="md:text-6xl text-2xl decoration-slate-400 text-slate-50 pb-6 cursor-default">
 							<b>{feature.title}</b>
 						</h1>
-						<h3 class="md:text-3xl text-xl cursor-default">
+						<h3 class="md:text-3xl text-xl cursor-default pb-8">
 							{feature.description}
 						</h3>
 					</div>
