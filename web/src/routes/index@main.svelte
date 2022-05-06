@@ -66,13 +66,13 @@
 
 <div class="mx-auto">
 	<div class="">
-		<div class="text-center py-6 px-2 bg-gradient-to-tr from-zinc-900 to-gray-900 pb-10">
+		<div class="text-center py-24 px-2 bg-gradient-to-tr from-zinc-900 to-gray-900 pb-20">
 			<h1 class="text-7xl text-white p-1 font-extrabold">Ascella</h1>
 			<h2 class="text-white p-1 pb-10">
-				A <b>Fast</b> Image uploader made for <b>all</b> platforms
+				A <b>fast</b> image uploader made for <b>all</b> platforms.
 			</h2>
 			<a href="https://docs.ascella.host/signup">
-				<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+				<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full duration-150"
 					>Get started</button
 				>
 			</a>
@@ -83,38 +83,40 @@
 					class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16
  px-10"
 				>
-					<p><b>Users</b></p>
-					<p class="p-1">{stats.total_users}</p>
+					<p><b class="cursor-default">Users</b></p>
+					<p class="p-1 cursor-default">{stats.total_users}</p>
 				</div>
 				<div
 					class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16
  px-10"
 				>
-					<p><b>Uploads</b></p>
-					<p class="p-1">{stats.total_uploads}</p>
+					<p><b class="cursor-default">Uploads</b></p>
+					<p class="p-1 cursor-default">{stats.total_uploads}</p>
 				</div>
 				<div class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16 px-10">
-					<p><b>Domains</b></p>
-					<p class="p-1">{stats.total_domains}</p>
+					<p><b class="cursor-default">Domains</b></p>
+					<p class="p-1 cursor-default">{stats.total_domains}</p>
 				</div>
 			</div>
 		{/if}
 		<div>
 			{#each features as feature, index}
 				<div
-					class="duration-75 md md:flex-row flex-col flex bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 md:duration-200 md:p-10 p-5 md:m-10 m-5 md:h-96"
+					class="md md:flex-row flex-col flex text-zinc-200 bg-gradient-to-br from-slate-500 to-slate-600 hover:text-slate-200 md:duration-200 md:p-10 p-5 md:m-10 m-5 md:h-96 rounded-lg duration-150"
 				>
 					<div class="w-2/3">
-						<h1 class="md:text-6xl text-2xl underline decoration-red-500 text-slate-50 pb-6">
-							{feature.title}
+						<h1 class="md:text-6xl text-2xl decoration-slate-400 text-slate-50 pb-6 cursor-default">
+							<b>{feature.title}</b>
 						</h1>
-						<h3 class="md:text-3xl text-xl text-sky-200">{feature.description}</h3>
+						<h3 class="md:text-3xl text-xl cursor-default pb-8">
+							{feature.description}
+						</h3>
 					</div>
 					<div class="md:w-1/3 md:pl-6 md:h-auto h-52 flex justify-center overflow-hidden">
 						<img
 							alt={feature.description}
 							src={feature.image}
-							class="w-max object-cover object-left"
+							class="w-max object-cover object-left rounded-lg"
 						/>
 					</div>
 				</div>
@@ -135,7 +137,7 @@
 				>
 					{#each reviews as review}
 						<div>
-							<div class="flex text-white text-lg gap-2 bg-[#36393F] p-2 h-full">
+							<div class="flex text-white text-lg gap-2 bg-[#36393F] p-2 h-full rounded-lg">
 								<img
 									class="rounded-[50%] p-2 w-20 h-20"
 									src={`${review.avatar}`}
