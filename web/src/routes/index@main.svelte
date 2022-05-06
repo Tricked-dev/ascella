@@ -105,8 +105,8 @@
 					class="md md:flex-row flex-col flex text-zinc-200 bg-gradient-to-br from-slate-500 to-slate-600 hover:text-slate-200 md:duration-200 md:p-10 p-5 md:m-10 m-5 md:h-96 rounded-lg duration-150"
 				>
 					<div class="w-2/3">
-						<h1 class="md:text-6xl text-2xl underline decoration-slate-400 text-slate-50 pb-6 cursor-default">
-							{feature.title}
+						<h1 class="md:text-6xl text-2xl decoration-slate-400 text-slate-50 pb-6 cursor-default">
+							<b>{feature.title}</b>
 						</h1>
 						<h3 class="md:text-3xl text-xl cursor-default">
 							{feature.description}
