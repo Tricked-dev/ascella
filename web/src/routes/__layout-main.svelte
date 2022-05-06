@@ -7,7 +7,6 @@
 	import '@fontsource/roboto-mono';
 	const bottomLinks = [
 		[
-		
 			{
 				href: 'https://docs.ascella.host/rules',
 				a: 'Rules'
@@ -21,6 +20,14 @@
 			{
 				href: 'https://github.com/Tricked-dev/ascella',
 				a: 'Github'
+			},
+			{
+				href: '/contributors',
+				a: 'Contributors'
+			},
+			{
+				href: '/report',
+				a: 'Report'
 			}
 		],
 		[
@@ -109,22 +116,25 @@
 				<div class="flex flex-col md:flex-row gap-4 p-2">
 					<a class="text-sky-200 text-xl" href="https://ascella.host">Ascella.host</a>
 					{#each topLinks as link}
-						<a class="hover:text-sky-100 text-sky-300 text-lg border-2 border-zinc-900 rounded-lg px-2 py-0.5" href={link.href}
-							>{link.a}</a
+						<a
+							class="hover:text-sky-100 text-sky-300 text-lg border-2 border-zinc-900 rounded-lg px-2 py-0.5"
+							href={link.href}>{link.a}</a
 						>
 					{/each}
 				</div>
-			<div class="md:inline hidden">
-				{#if expended}
-					<ul class="flex gap-2 flex-col md:flex-row px-2 pb-1">
-						{#each otherLinks as link (link.a)}
-							<li transition:scale={{ delay: 250, duration: 300, easing: quintOut }}>
-								<a href={link.href} class="text-slate-300 underline hover:text-teal-500">{link.a}</a
-								>
-							</li>
-						{/each}
-					</ul>
-				{/if}
+				<div class="md:inline hidden">
+					{#if expended}
+						<ul class="flex gap-2 flex-col md:flex-row px-2 pb-1">
+							{#each otherLinks as link (link.a)}
+								<li transition:scale={{ delay: 250, duration: 300, easing: quintOut }}>
+									<a href={link.href} class="text-slate-300 underline hover:text-teal-500"
+										>{link.a}</a
+									>
+								</li>
+							{/each}
+						</ul>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</nav>

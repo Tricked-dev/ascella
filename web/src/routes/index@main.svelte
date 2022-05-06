@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { getReviews } from '$lib/api';
+	import { getReviews, getStats } from '$lib/api';
 	import { media } from '$lib/media';
 	import { onMount } from 'svelte';
-	
-	import '../css/app.scss';
 
+	import '../css/app.scss';
 
 	let Carousel;
 	let carousel;
@@ -52,10 +51,16 @@
 	import '../css/index.scss';
 
 	$: reviews = [];
+	$: stats = {};
 	onMount(async () => {
-		const [module, revs] = await Promise.all([import('svelte-carousel'), getReviews()]);
+		const [module, revs, stat] = await Promise.all([
+			import('svelte-carousel'),
+			getReviews(),
+			getStats()
+		]);
 		Carousel = module.default;
 		reviews = revs;
+		stats = stat;
 	});
 </script>
 
@@ -63,11 +68,37 @@
 	<div class="">
 		<div class="text-center py-6 px-2 bg-gradient-to-tr from-zinc-900 to-gray-900 pb-10">
 			<h1 class="text-7xl text-white p-1 font-extrabold">Ascella</h1>
-			<h2 class="text-white p-1 pb-10">A <b>Fast</b> Image uploader made for <b>all</b> platforms</h2>
+			<h2 class="text-white p-1 pb-10">
+				A <b>Fast</b> Image uploader made for <b>all</b> platforms
+			</h2>
 			<a href="https://docs.ascella.host/signup">
-			<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Get started</button>
+				<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+					>Get started</button
+				>
 			</a>
 		</div>
+		{#if stats.total_users}
+			<div class="flex md:flex-row flex-col justify-center gap-4 md:p-10 p-4">
+				<div
+					class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16
+ px-10"
+				>
+					<p><b>Users</b></p>
+					<p class="p-1">{stats.total_users}</p>
+				</div>
+				<div
+					class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16
+ px-10"
+				>
+					<p><b>Uploads</b></p>
+					<p class="p-1">{stats.total_uploads}</p>
+				</div>
+				<div class="p-8 bg-slate-800 rounded-lg text-white text-center lg:px-40 md:px-16 px-10">
+					<p><b>Domains</b></p>
+					<p class="p-1">{stats.total_domains}</p>
+				</div>
+			</div>
+		{/if}
 		<div>
 			{#each features as feature, index}
 				<div
@@ -105,10 +136,15 @@
 					{#each reviews as review}
 						<div>
 							<div class="flex text-white text-lg gap-2 bg-[#36393F] p-2 h-full">
-								<img class="rounded-[50%] p-2 w-20 h-20" src={`${review.avatar}`} alt={review.name} on:error={(event)=> {
-									event.target.src = "https://cdn.discordapp.com/embed/avatars/5.png"
-  event.onerror = null
-								}} />
+								<img
+									class="rounded-[50%] p-2 w-20 h-20"
+									src={`${review.avatar}`}
+									alt={review.name}
+									on:error={(event) => {
+										event.target.src = 'https://cdn.discordapp.com/embed/avatars/5.png';
+										event.onerror = null;
+									}}
+								/>
 								<div>
 									<p class="text-1xl font-bold text-amber-400">{review.name}</p>
 									<p class="text-white text-sm	 text-">{review.comment}</p>
@@ -119,7 +155,5 @@
 				</svelte:component>
 			</div>
 		{/if}
-
-	
 	</div>
 </div>

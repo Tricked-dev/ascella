@@ -13,6 +13,11 @@ export async function getReviews(): Promise<any> {
     .then((r) => r.json())
     .catch(() => []);
 }
+export async function getStats(): Promise<any> {
+  return await fetch(`https://ascella.wtf/v2/ascella/stats.json`)
+    .then((r) => r.json())
+    .catch(() => ({}));
+}
 export async function getPaste(i: string): Promise<any> {
   try {
     const r = await fetch(`https://ascella.wtf/v2/paste/${i}`);
