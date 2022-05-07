@@ -24,7 +24,6 @@ const config = {
           /* other docs plugin options */
         },
         blog: false, // Optional: disable the blog plugin
-        // ...
       },
     ],
     [
