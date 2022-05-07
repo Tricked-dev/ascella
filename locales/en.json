@@ -17,8 +17,13 @@
   "redeem_claimed": "Code redeemed!",
   "redeem_invalid": "Invalid code",
   "redeem_exists": "You're already an Ascella user - stay awesome!",
+  "redeem_error": "Sorry something weird happend...",
   "url_style_success": "Succesfully changed url style!",
   "user_no_exist": "User isn't a registered user",
   "user_title": "Profile of {user}",
+  "domains_list": "**{domain}**\nApex: {apex}\nOwner: <@{id}>{name}",
+  "unknown_command": "The command you tried running **doesn't** exist...",
+  "user_unregistered": "User isn't a registered user",
+  "domains": "Domains",
   "language_updated": "Your language has been updated to English"
 }

@@ -26,7 +26,7 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
     ("redeem", _, _) => redeem::execute(client, cmd).await,
     ("unknown", _, _) => unknown::execute(client, cmd).await,
     ("user", _, _) => user::execute(client, cmd).await,
-    _ => Ok(BotResponse::new().content("Not a user of the image uploader").private()),
+    _ => Ok(BotResponse::new().content(cmd.lang().await?.not_a_user()).private()),
   };
 
   send_text_webhook(format!("**{}**: {}", cmd.data.name.as_str(), cmd.member.as_ref().unwrap().user.as_ref().unwrap().name)).await?;

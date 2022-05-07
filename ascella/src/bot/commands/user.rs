@@ -12,19 +12,20 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand) -> Result<BotRe
       let images = get_user_image_count::exec(user.id).await?;
 
       let message = format!(
-        "name: `{name}`\ndiscord_id: `{discord}`\n\ndomain: `{domain}`\nimages: `{images}`",
+        "name: `{name}`\ndiscord_id: `{discord}`\nInvites: `{invites}`\n\ndomain: `{domain}`\nimages: `{images}`",
         name = user.name,
+        invites = get_invite_count::exec(user.id).await?,
         discord = user.discord_id,
         domain = user.domain,
         images = images,
       );
 
-      let embed = create_embed().title(format!("Profile of {}", &user.name)).description(message).build();
+      let embed = create_embed().title(cmd.lang().await?.user_title(&user.name)).description(message).build();
 
       return Ok(BotResponse::new().embed(embed));
     }
   }
-  let embed = create_embed().title("User profile").description("User isn't a registered user").build();
+  let embed = create_embed().title(cmd.lang().await?.profile_name()).description(cmd.lang().await?.user_no_exist()).build();
 
   Ok(BotResponse::new().embed(embed))
 }

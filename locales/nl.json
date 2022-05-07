@@ -20,5 +20,6 @@
   "url_style_success": "Url-stijl succesvol gewijzigd!",
   "user_no_exist": "Gebruiker is geen geregistreerde gebruiker",
   "user_title": "Profiel van {user}",
+  "domains_list": "**{domain}**\nApex: {apex}\nBezitter: <@{id}>{name}",
   "language_updated": "Uw taal is veranderd naar Nederlands"
 }

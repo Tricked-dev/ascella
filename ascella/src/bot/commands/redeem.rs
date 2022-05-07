@@ -28,16 +28,16 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotRes
 
       let message = format_profile(&user, 0, 0, None);
 
-      let embed = create_embed().title("Code redeemed!").description(message).build();
+      let embed = create_embed().title(cmd.lang().await?.redeem_claimed()).description(message).build();
 
       BotResponse::new().embed(embed).private()
     } else {
-      BotResponse::new().content("Invalid code").private()
+      BotResponse::new().content(cmd.lang().await?.redeem_invalid()).private()
     }
   } else if let Ok(user) = data {
     BotResponse::new().content(user.lang().redeem_exists()).private()
   } else {
-    BotResponse::new().content("Sorry something weird happend...").private()
+    BotResponse::new().content(cmd.lang().await?.redeem_error()).private()
   };
 
   Ok(response)

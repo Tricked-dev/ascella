@@ -11,6 +11,28 @@ pub fn create_embed() -> EmbedBuilder {
     icon_url: Some("https://cdn.discordapp.com/attachments/811240979918618634/877975737141960724/a_a4ecfac9730946b91da3d40b0490b30f.gif".to_string()),
   })
 }
+use crate::Lang;
+use async_trait::async_trait;
+
+#[async_trait]
+pub trait Language {
+  async fn lang(&self) -> Result<Lang>;
+}
+
+#[async_trait]
+impl Language for ApplicationCommand {
+  async fn lang(&self) -> Result<Lang> {
+    let self_clone = self.clone();
+    if let Some(member) = self_clone.member.as_ref() {
+      if let Some(user) = member.user.as_ref() {
+        if let Ok(user) = get_user_discord::exec(user.id.to_string()).await {
+          return Ok(user.lang());
+        }
+      }
+    };
+    Ok(Lang::En)
+  }
+}
 
 pub fn get_commands(domain_options: Vec<(String, String)>) -> [Command; 17] {
   [

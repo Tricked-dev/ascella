@@ -67,3 +67,4 @@ rust-s3 = { version = "0.31.0", features = ["with-tokio", "tokio-native-tls", "t
 tree_magic = "0.2.3"
 ts-rs = "6.1.2"
 ulid = "0.5.0"
+async-trait = "0.1.53"
