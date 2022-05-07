@@ -1,5 +1,6 @@
 # Ascella Uploader
 
+[![Crowdin](https://badges.crowdin.net/ascella-uploader/localized.svg)](https://crowdin.com/project/ascella-uploader) [![GitHub license](https://img.shields.io/github/license/tricked-dev/ascella)](https://github.com/Tricked-dev/ascella/blob/master/LICENSE) ![Website](https://img.shields.io/website?url=https%3A%2F%2Fascella.host)
 Ascella is the fastest opensource image uploader.
 
 ![Alt](https://repobeats.axiom.co/api/embed/9b97008a7840311ce626d6162e3c64312ec250cd.svg "Repobeats analytics image")
