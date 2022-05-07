@@ -20,16 +20,24 @@ pub fn command() -> twilight_model::application::command::Command {
 #[derive(Serialize, Deserialize, Apiv2Schema)]
 
 pub struct AscellaStats {
+  #[openapi(example = "600")]
   pub(crate) total_uploads: i64,
+  #[openapi(example = "60")]
   pub(crate) total_domains: i64,
+  #[openapi(example = "100")]
   pub(crate) total_users: i64,
+  #[openapi(example = "1629305469")]
   pub(crate) created_date: i64,
+  #[openapi(example = "56.89 MB")]
   pub(crate) usage: String,
   pub(crate) upload_size: String,
   pub(crate) discord_api_version: i8,
+  #[openapi(example = "1day 10h 7m 42s 572ms 387us 449ns")]
   pub(crate) uptime: String,
   pub(crate) fast: bool,
+  #[openapi(example = "rustc 1.62.0-nightly (4c60a0ea5 2022-05-04)")]
   pub(crate) rustc: String,
+  #[openapi(example = "e968eb666fa3b0ea974248c30931a9210919fd44")]
   pub(crate) commit_hash: String,
 }
 

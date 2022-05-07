@@ -221,8 +221,10 @@ pub fn create_config<T: std::fmt::Display>(auth: T) -> serde_json::Value {
 }
 #[derive(Serialize, Deserialize, Apiv2Schema)]
 pub struct SendMessage {
+  #[openapi(example = "200")]
   code: i32,
   success: bool,
+  #[openapi(example = "Succesful Response")]
   message: &'static str,
 }
 impl SendMessage {

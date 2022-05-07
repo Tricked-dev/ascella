@@ -70,17 +70,21 @@ pub struct Users {
   pub lang: String,
 }
 
+pub fn locale_to_lang(locale: &str) -> Lang {
+  match locale {
+    "en" => Lang::En,
+    "pl" => Lang::Pl,
+    "nl" => Lang::Nl,
+    "es" => Lang::Es,
+    "fr" => Lang::Fr,
+    "bg" => Lang::Bg,
+    _ => Lang::En,
+  }
+}
+
 impl Users {
   pub fn lang(&self) -> Lang {
-    match self.lang.as_str() {
-      "en" => Lang::En,
-      "pl" => Lang::Pl,
-      "nl" => Lang::Nl,
-      "es" => Lang::Es,
-      "fr" => Lang::Fr,
-      "bg" => Lang::Bg,
-      _ => Lang::En,
-    }
+    locale_to_lang(self.lang.as_str())
   }
   pub fn set_lang<T: ToString>(&mut self, lang: T) {
     self.lang = lang.to_string();

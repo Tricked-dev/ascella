@@ -27,6 +27,8 @@ impl Language for ApplicationCommand {
       if let Some(user) = member.user.as_ref() {
         if let Ok(user) = get_user_discord::exec(user.id.to_string()).await {
           return Ok(user.lang());
+        } else if let Some(locale) = &user.locale {
+          return Ok(locale_to_lang(&locale));
         }
       }
     };
