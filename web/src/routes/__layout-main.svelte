@@ -30,21 +30,7 @@
 				a: 'Report'
 			}
 		],
-		[
-			{
-				href: 'https://dash.ascella.host',
-				a: 'Dashboard'
-			}
-		],
-		[
-			{
-				href: 'https://discord.gg/mY8zTARu4g',
-				a: 'Discord'
-			},
-			{
-				a: 'Build by tricked#3777'
-			}
-		]
+	
 	];
 	const otherLinks = [
 		{

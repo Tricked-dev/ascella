@@ -9,7 +9,7 @@
 			type: ['Website']
 		},
 		{
-			name: 'abd',
+			name: 'Abd',
 			discord: 'Abd#6933',
 			description: 'Fixed the navbar and various other improvements',
 			type: ['Website']

@@ -1,6 +1,8 @@
 {
   "editor.defaultFormatter": "dprint",
-  "deno.enablePaths": ["deploy"],
+  "deno.enablePaths": [
+    "deploy"
+  ],
   "[toml]": {
     "editor.defaultFormatter": "dprint.dprint"
   },
@@ -22,11 +24,26 @@
   "[prisma]": {
     "editor.defaultFormatter": "dprint.dprint"
   },
+  "[svelte]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
   "deno.enable": true,
   "deno.lint": true,
   "deno.path": "~/.deno/bin/deno",
   "dprint.path": "~/.dprint/bin/dprint",
-  "[svelte]": {
-    "editor.defaultFormatter": "dprint.dprint"
+  "editor.bracketPairColorization.enabled": true,
+  "explorer.compactFolders": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "create_image.rs": "create_*.rs",
+    "get_all_users.rs": "get_*.rs",
+    "set_autodelete.rs": "set_*.rs",
+    "Cargo.toml": "rust-toolchain.toml, Cargo.lock, .deepsource.toml, dprint.json",
+    "package.json": "package-lock.json, yarn.lock"
   }
 }
