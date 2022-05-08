@@ -1,9 +1,12 @@
+use std::time::Instant;
+
 use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 
 use tsunami::bot::start_bot;
 use tsunami::cron::start_cron;
 use tsunami::http::start_actix;
+use tsunami::prelude::START_TIME;
 
 fn main() -> std::io::Result<()> {
   if let Ok(url) = dotenv::var("SENTRY_URL") {
@@ -21,6 +24,9 @@ fn main() -> std::io::Result<()> {
     log::info!("Sentry is enabled");
   } else {
     tracing_subscriber::fmt().init();
+  }
+  if START_TIME.get().is_none() {
+    START_TIME.set(Instant::now()).expect("Failed to set starttime");
   }
   let rt = tokio::runtime::Builder::new_multi_thread()
     .worker_threads(4)
