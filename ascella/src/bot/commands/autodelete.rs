@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use twilight_model::application::interaction::application_command::CommandOptionValue;
 pub fn command() -> Command {
-  CommandBuilder::new("autodelete".into(), "auto delete images older than a certain amount of days.".into(), CommandType::ChatInput)
+  CommandBuilder::new("autodelete".into(), Lang::En.autodelete_desc().into(), CommandType::ChatInput)
     .option(IntegerBuilder::new("days".into(), "days after which the image will get deleted".into()))
     .localize()
     .build()

@@ -94,7 +94,6 @@ pub async fn start_bot() -> Result<()> {
       },
       Event::Ready(_) => {
         log::info!("Bot connected");
-
         if REVIEWS.get().is_none() {
           let pins = http
             .pins(Id::new(937239935545663498))

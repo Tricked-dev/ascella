@@ -1,6 +1,6 @@
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new("profile".into(), "View your profile.".into(), CommandType::ChatInput).localize().build()
+  CommandBuilder::new("profile".into(), Lang::En.profile_desc().into(), CommandType::ChatInput).localize().build()
 }
 
 #[allow(clippy::or_fun_call)]

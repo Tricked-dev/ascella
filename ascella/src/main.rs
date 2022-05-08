@@ -1,8 +1,5 @@
 use std::time::Instant;
 
-use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
-use tracing_subscriber::util::SubscriberInitExt;
-
 use tsunami::bot::start_bot;
 use tsunami::cron::start_cron;
 use tsunami::http::start_actix;

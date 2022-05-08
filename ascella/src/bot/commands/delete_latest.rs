@@ -1,6 +1,6 @@
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new("delete_latest".into(), "Delete your latest upload".into(), CommandType::ChatInput)
+  CommandBuilder::new("delete_latest".into(), Lang::En.delete_latest_desc().into(), CommandType::ChatInput)
     .localize()
     .build()
 }

@@ -16,6 +16,7 @@ pub mod prelude {
     pub static ref REVIEWS: OnceCell<Vec<Comment>> = OnceCell::new();
   }
 
+  pub use super::Lang;
   pub use crate::bot::bot::Comment;
   pub use crate::bot::utils::*;
   pub use crate::database::queries::*;

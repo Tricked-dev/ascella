@@ -7,7 +7,7 @@ use crate::prelude::*;
 /// 4 = hacker
 
 pub fn command() -> Command {
-  CommandBuilder::new("language".into(), "Change the bots language".into(), CommandType::ChatInput)
+  CommandBuilder::new("language".into(), Lang::En.language_desc().into(), CommandType::ChatInput)
     .option(
       StringBuilder::new("lang".into(), "The language to change to".to_owned())
         .choices(vec![

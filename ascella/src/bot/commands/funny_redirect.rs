@@ -55,7 +55,7 @@ lazy_static! {
 }
 
 pub fn command(domain_options: impl IntoIterator<Item = (String, String)>) -> Command {
-  CommandBuilder::new("funny_redirect".into(), "Creates a very long funny redirect".into(), CommandType::ChatInput)
+  CommandBuilder::new("funny_redirect".into(), Lang::En.funny_redirect_desc().into(), CommandType::ChatInput)
     .option(StringBuilder::new("url".into(), "Url you want to redirect to.".into()).required(true))
     .option(StringBuilder::new("domain".into(), "Domain to be used.".into()).required(true).choices(domain_options))
     .localize()
