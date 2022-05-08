@@ -50,10 +50,6 @@ twilight-util = { git = "https://github.com/baptiste0928/twilight", branch = "co
 
 openssl = { version = "0.10.40", optional = true }
 
-sentry = { version = "0.25.0", default-features = false, features = ["backtrace", "contexts", "panic", "reqwest", "rustls"] }
-sentry-panic = "0.25.0"
-sentry-tracing = "0.25.0"
-
 serde = { version = "1.0.137", features = ["derive"] }
 serde_json = "1.0.81"
 

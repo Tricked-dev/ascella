@@ -9,22 +9,8 @@ use tsunami::http::start_actix;
 use tsunami::prelude::START_TIME;
 
 fn main() -> std::io::Result<()> {
-  if let Ok(url) = dotenv::var("SENTRY_URL") {
-    tracing_subscriber::registry().with(tracing_subscriber::fmt::layer()).with(sentry_tracing::layer()).try_init().unwrap();
-    let _guard = sentry::init((
-      url,
-      sentry::ClientOptions {
-        release: sentry::release_name!(),
-        attach_stacktrace: true,
+  tracing_subscriber::fmt().init();
 
-        ..Default::default()
-      },
-    ));
-
-    log::info!("Sentry is enabled");
-  } else {
-    tracing_subscriber::fmt().init();
-  }
   if START_TIME.get().is_none() {
     START_TIME.set(Instant::now()).expect("Failed to set starttime");
   }
