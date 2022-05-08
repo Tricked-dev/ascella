@@ -3,6 +3,7 @@ use twilight_model::application::interaction::application_command::CommandOption
 pub fn command() -> Command {
   CommandBuilder::new("autodelete".into(), "auto delete images older than a certain amount of days.".into(), CommandType::ChatInput)
     .option(IntegerBuilder::new("days".into(), "days after which the image will get deleted".into()))
+    .localize()
     .build()
 }
 

@@ -1,6 +1,8 @@
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new("delete_latest".into(), "Delete your latest upload".into(), CommandType::ChatInput).build()
+  CommandBuilder::new("delete_latest".into(), "Delete your latest upload".into(), CommandType::ChatInput)
+    .localize()
+    .build()
 }
 
 pub async fn execute(_client: &Client, _cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {

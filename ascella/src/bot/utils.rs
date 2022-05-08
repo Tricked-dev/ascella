@@ -1,3 +1,4 @@
+use strum::IntoEnumIterator;
 use twilight_model::channel::embed::Embed;
 use twilight_util::builder::embed::EmbedBuilder;
 
@@ -28,11 +29,40 @@ impl Language for ApplicationCommand {
         if let Ok(user) = get_user_discord::exec(user.id.to_string()).await {
           return Ok(user.lang());
         } else if let Some(locale) = &user.locale {
-          return Ok(locale_to_lang(&locale));
+          return Ok(locale_to_lang(locale));
         }
       }
     };
     Ok(Lang::En)
+  }
+}
+
+pub trait Localize {
+  fn localize(self) -> Self
+  where
+    Self: std::marker::Sized,
+  {
+    self
+  }
+}
+impl Localize for CommandBuilder {
+  fn localize(self) -> Self {
+    let name = self.clone().build().name;
+    let mut names = HashMap::new();
+    let mut description = HashMap::new();
+    for lang in Lang::iter() {
+      let lang_code = format!("{:?}", lang).to_lowercase().replace("en", "en-US");
+      names.insert(lang_code.clone(), lang.from_str(format!("{name}_name").as_ref()).expect("NOT LOCALIZED").to_owned());
+      description.insert(lang_code, lang.from_str(format!("{name}_desc").as_ref()).unwrap().to_owned());
+    }
+    self.name_localizations(names).description_localizations(description)
+  }
+}
+
+#[test]
+fn test_localize_shit() {
+  for lang in Lang::iter() {
+    println!("{}", format!("{:?}", lang).to_lowercase())
   }
 }
 

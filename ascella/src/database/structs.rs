@@ -1,4 +1,5 @@
 use crate::Lang;
+use rosetta_i18n::{Language, LanguageId};
 use serde::{Deserialize, Serialize};
 use tokio_pg_mapper_derive::PostgresMapper;
 
@@ -71,15 +72,7 @@ pub struct Users {
 }
 
 pub fn locale_to_lang(locale: &str) -> Lang {
-  match locale {
-    "en" => Lang::En,
-    "pl" => Lang::Pl,
-    "nl" => Lang::Nl,
-    "es" => Lang::Es,
-    "fr" => Lang::Fr,
-    "bg" => Lang::Bg,
-    _ => Lang::En,
-  }
+  Lang::from_language_id(&LanguageId::new(locale)).unwrap_or(Lang::En)
 }
 
 impl Users {

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new("help".into(), "Ascella bot help command.".into(), CommandType::ChatInput).build()
+  CommandBuilder::new("help".into(), "Ascella bot help command.".into(), CommandType::ChatInput).localize().build()
 }
 
 pub async fn execute(_client: &Client, _cmd: &ApplicationCommand) -> Result<BotResponse> {

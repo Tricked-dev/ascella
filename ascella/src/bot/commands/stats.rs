@@ -17,6 +17,7 @@ fn bytes_to(bytes: u128) -> String {
 pub fn command() -> twilight_model::application::command::Command {
   CommandBuilder::new("stats".into(), "View some stats about the uploader.".into(), CommandType::ChatInput).build()
 }
+
 #[derive(Serialize, Deserialize, Apiv2Schema)]
 
 pub struct AscellaStats {

@@ -19,6 +19,7 @@ pub fn command() -> Command {
         ])
         .required(true),
     )
+    .localize()
     .build()
 }
 

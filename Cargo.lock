@@ -4187,8 +4187,7 @@ dependencies = [
 [[package]]
 name = "rosetta-build"
 version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f697b8b3f19bee20f30dc87213d05ce091c43bc733ab1bfc98b0e5cdd9943f3"
+source = "git+https://github.com/Tricked-dev/rosetta#dba29a510e8ebd96891ba6762bd0c6b54a2d57fd"
 dependencies = [
  "convert_case",
  "lazy_static",
@@ -4201,8 +4200,7 @@ dependencies = [
 [[package]]
 name = "rosetta-i18n"
 version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c5298de832602aecc9458398f435d9bff0be57da7aac11221b6ff3d4ef9503de"
+source = "git+https://github.com/Tricked-dev/rosetta#dba29a510e8ebd96891ba6762bd0c6b54a2d57fd"
 
 [[package]]
 name = "rust-embed"
@@ -5523,6 +5521,8 @@ dependencies = [
  "sentry-tracing",
  "serde",
  "serde_json",
+ "strum",
+ "strum_macros",
  "thiserror",
  "tokio 1.18.1",
  "tokio-cron-scheduler",
@@ -5571,8 +5571,7 @@ dependencies = [
 [[package]]
 name = "twilight-embed-builder"
 version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7290d2ba2e7e1677bee70f007ae1b6992d606515669b9e4399bfa431d3867a8a"
+source = "git+https://github.com/baptiste0928/twilight?branch=command-localization#6004efd7fc467d6a3b1af167db7e10397f07b60c"
 dependencies = [
  "twilight-model",
 ]
@@ -5580,8 +5579,7 @@ dependencies = [
 [[package]]
 name = "twilight-gateway"
 version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aa5c2c66706ce4bdb31d743a563df70d5cc8ef9cbe00bb55b56c4bffe759cb56"
+source = "git+https://github.com/baptiste0928/twilight?branch=command-localization#6004efd7fc467d6a3b1af167db7e10397f07b60c"
 dependencies = [
  "bitflags",
  "flate2",
@@ -5603,8 +5601,7 @@ dependencies = [
 [[package]]
 name = "twilight-gateway-queue"
 version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "31f73345cb12508b57b819cb8b225644965753d2e65f3637d19824bfcb8b03e5"
+source = "git+https://github.com/baptiste0928/twilight?branch=command-localization#6004efd7fc467d6a3b1af167db7e10397f07b60c"
 dependencies = [
  "tokio 1.18.1",
  "twilight-http",
@@ -5613,8 +5610,7 @@ dependencies = [
 [[package]]
 name = "twilight-http"
 version = "0.10.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0694105645b492fedd8c91db912f013fc751e601eca093c7e43b33973eeec115"
+source = "git+https://github.com/baptiste0928/twilight?branch=command-localization#6004efd7fc467d6a3b1af167db7e10397f07b60c"
 dependencies = [
  "brotli",
  "hyper 0.14.18",
@@ -5633,8 +5629,7 @@ dependencies = [
 [[package]]
 name = "twilight-http-ratelimiting"
 version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c76f96c1fce31154d071b692a50c3471a8cf8b60ad29fa1720259f57423a8750"
+source = "git+https://github.com/baptiste0928/twilight?branch=command-localization#6004efd7fc467d6a3b1af167db7e10397f07b60c"
 dependencies = [
  "futures-util",
  "http 0.2.7",
@@ -5644,8 +5639,7 @@ dependencies = [
 [[package]]
 name = "twilight-model"
 version = "0.10.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c12bc7c176a3a1c65b8c998d6d8ff9ea72586f9c28504ceee78ab50d3a3d9fbf"
+source = "git+https://github.com/baptiste0928/twilight?branch=command-localization#6004efd7fc467d6a3b1af167db7e10397f07b60c"
 dependencies = [
  "bitflags",
  "serde",
@@ -5658,8 +5652,7 @@ dependencies = [
 [[package]]
 name = "twilight-util"
 version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9d65ae88fff2c9f64d8d4cd6513924895f9c475b0f62754cb4cdd304612f5ed7"
+source = "git+https://github.com/baptiste0928/twilight?branch=command-localization#6004efd7fc467d6a3b1af167db7e10397f07b60c"
 dependencies = [
  "twilight-model",
  "twilight-validate",
@@ -5668,8 +5661,7 @@ dependencies = [
 [[package]]
 name = "twilight-validate"
 version = "0.10.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7457e1215814c7848ffbad19f577dcec783af3d18ca3ca6c335b3fbfdae6d163"
+source = "git+https://github.com/baptiste0928/twilight?branch=command-localization#6004efd7fc467d6a3b1af167db7e10397f07b60c"
 dependencies = [
  "twilight-model",
 ]

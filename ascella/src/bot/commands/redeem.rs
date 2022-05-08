@@ -4,6 +4,7 @@ use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new("redeem".into(), "Redeem a code.".into(), CommandType::ChatInput)
     .option(StringBuilder::new("code".into(), "Code your looking to redeem.".into()).required(true))
+    .localize()
     .build()
 }
 

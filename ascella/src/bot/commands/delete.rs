@@ -3,6 +3,7 @@ pub fn command() -> Command {
   CommandBuilder::new("delete".into(), "Delete a image".into(), CommandType::ChatInput)
     .option(StringBuilder::new("id".into(), "Id of the image you want to delete use vanity if you don't know the id".into()))
     .option(StringBuilder::new("vanity".into(), "Vanity of the image".into()))
+    .localize()
     .build()
 }
 pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {

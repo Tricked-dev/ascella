@@ -6,6 +6,7 @@ pub fn command() -> Command {
     .option(StringBuilder::new("author".into(), "Set the author of the embed".into()))
     .option(StringBuilder::new("description".into(), "Description of the embed.".into()))
     .option(StringBuilder::new("color".into(), "Embed color to be used.".into()))
+    .localize()
     .build()
 }
 

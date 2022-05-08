@@ -11,12 +11,15 @@ name = "ascella"
 path = "src/main.rs"
 
 [build-dependencies]
-rosetta-build = "0.1"
+rosetta-build = { git = "https://github.com/Tricked-dev/rosetta" }
 
 [dependencies]
 actix-cors = "0.6.1"
 actix-multipart = "0.4.0"
 actix-web = "4.0.1"
+
+strum = "0.24.0"
+strum_macros = "0.24.0"
 
 tokio = { version = "1.18.1", features = ["rt-multi-thread", "macros"] }
 tokio-cron-scheduler = "0.7.0"
@@ -30,15 +33,20 @@ thiserror = "1.0.31"
 tracing = "0.1.34"
 tracing-subscriber = "0.3.11"
 
-rosetta-i18n = "0.1"
+rosetta-i18n = { git = "https://github.com/Tricked-dev/rosetta" }
 rust-embed = "6.4.0"
 
 # TODO: someone else this sucks update twilight libraries
-twilight-embed-builder = "0.10.1"
-twilight-gateway = "0.10.1"
-twilight-http = "0.10.2"
-twilight-model = "0.10.2"
-twilight-util = { version = "0.10.1", features = ["builder"] }
+twilight-embed-builder = { git = "https://github.com/baptiste0928/twilight", branch = "command-localization" }
+twilight-gateway = { git = "https://github.com/baptiste0928/twilight", branch = "command-localization" }
+twilight-http = { git = "https://github.com/baptiste0928/twilight", branch = "command-localization" }
+twilight-model = { git = "https://github.com/baptiste0928/twilight", branch = "command-localization" }
+twilight-util = { git = "https://github.com/baptiste0928/twilight", branch = "command-localization", features = ["builder"] }
+# twilight-embed-builder = "0.10.1"
+# twilight-gateway = "0.10.1"
+# twilight-http = "0.10.2"
+# twilight-model = "0.10.2"
+# twilight-util = { version = "0.10.1", features = ["builder"] }
 
 openssl = { version = "0.10.40", optional = true }
 
@@ -49,6 +57,7 @@ sentry-tracing = "0.25.0"
 serde = { version = "1.0.137", features = ["derive"] }
 serde_json = "1.0.81"
 
+async-trait = "0.1.53"
 byte-unit = "4.0.14"
 bytes = "1.1.0"
 cached = "0.34.0"
@@ -63,8 +72,6 @@ paste = "1.0.7"
 rand = "0.8.5"
 reqwest = { version = "0.11.10", features = ["gzip", "brotli"] }
 rust-s3 = { version = "0.31.0", features = ["with-tokio", "tokio-native-tls", "tags"] }
-
 tree_magic = "0.2.3"
 ts-rs = "6.1.2"
 ulid = "0.5.0"
-async-trait = "0.1.53"

@@ -3,6 +3,7 @@ pub fn command(domain_options: impl IntoIterator<Item = (String, String)>) -> Co
   CommandBuilder::new("domain".into(), "Select a domain to be used when uploading.".into(), CommandType::ChatInput)
     .option(StringBuilder::new("domain".into(), "Select the domain here".into()).required(true).choices(domain_options))
     .option(StringBuilder::new("subdomain".into(), "Funny subdomain to add.".into()).required(false))
+    .localize()
     .build()
 }
 
