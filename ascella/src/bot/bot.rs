@@ -27,12 +27,20 @@ pub async fn start_bot() -> Result<()> {
   let (cluster, mut events) = Cluster::builder(token.clone(), Intents::GUILD_MESSAGES)
     .presence(
       UpdatePresencePayload::new(
-        vec![MinimalActivity {
-          kind: ActivityType::Playing,
-          name: "Ascella best bot".to_string(),
-          url: None,
-        }
-        .into()],
+        vec![
+          MinimalActivity {
+            kind: ActivityType::Playing,
+            name: "Ascella best bot".to_string(),
+            url: None,
+          }
+          .into(),
+          MinimalActivity {
+            kind: ActivityType::Competing,
+            name: "Being the fastest uploader".to_string(),
+            url: None,
+          }
+          .into(),
+        ],
         false,
         None,
         Status::Idle,
@@ -44,19 +52,23 @@ pub async fn start_bot() -> Result<()> {
     .await?;
 
   cluster.up().await;
-  log::info!("Bot started");
   let http = Arc::new(Client::new(token));
-  // http.set_application_id(ApplicationId(env::var("APPLICATION_ID").unwrap().parse::<core::num::NonZeroU64>().unwrap()));
-
-  let commands = get_commands(domain_options);
 
   HTTP.set(Arc::clone(&http)).unwrap();
+  tokio::spawn(async move {
+    let commands = get_commands(domain_options);
 
-  http
-    .interaction(Id::new(env::var("APPLICATION_ID").unwrap().parse::<u64>().unwrap()))
-    .set_guild_commands(Id::new(748956745409232945), commands.as_ref())
-    .exec()
-    .await?;
+    HTTP
+      .get()
+      .unwrap()
+      .interaction(Id::new(env::var("APPLICATION_ID").unwrap().parse::<u64>().unwrap()))
+      .set_guild_commands(Id::new(748956745409232945), commands.as_ref())
+      .exec()
+      .await
+      .ok();
+    log::info!("Set commands!")
+  });
+
   if START_TIME.get().is_none() {
     START_TIME.set(Instant::now()).expect("Failed to set starttime");
   }
@@ -81,6 +93,8 @@ pub async fn start_bot() -> Result<()> {
         _ => {}
       },
       Event::Ready(_) => {
+        log::info!("Bot connected");
+
         if REVIEWS.get().is_none() {
           let pins = http
             .pins(Id::new(937239935545663498))
@@ -107,8 +121,6 @@ pub async fn start_bot() -> Result<()> {
             .collect::<Vec<Comment>>();
           REVIEWS.set(pins).ok();
         };
-
-        log::info!("Bot connected")
       }
       _ => {}
     }
