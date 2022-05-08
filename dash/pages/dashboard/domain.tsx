@@ -85,7 +85,7 @@ export default function Dashboard({ user, domains }: any) {
         `Successfully updated your embed check it out by making a new screenshot!`,
       );
     } else {
-      setMessage(`Failed to update your domain ${await r.text()}`);
+      setMessage(`Failed to update your emvbed ${await r.text()}`);
     }
   }
 

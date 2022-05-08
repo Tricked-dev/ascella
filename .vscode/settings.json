@@ -34,6 +34,7 @@
   "editor.bracketPairColorization.enabled": true,
   "explorer.compactFolders": true,
   "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.js",
     "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
