@@ -97,7 +97,7 @@ pub async fn execute(_client: &Client, _cmd: &ApplicationCommand) -> Result<BotR
     // .field(EmbedFieldBuilder::new("Upload's Size", &stats.upload_size).inline())
     .field(EmbedFieldBuilder::new("Discord-API version", &stats.discord_api_version.to_string()).inline())
     .field(EmbedFieldBuilder::new("Uptime", &stats.uptime).inline())
-    .field(EmbedFieldBuilder::new("Fast", &stats.fast.inline()))
+    .field(EmbedFieldBuilder::new("Fast", &stats.fast.to_string()).inline())
     .field(EmbedFieldBuilder::new("Rustc info", &stats.rustc).inline())
     .field(EmbedFieldBuilder::new("Commit Hash", format!("[{}]({})", &env!("GIT_HASH")[..7], &stats.commit_hash)).inline())
     .build();
