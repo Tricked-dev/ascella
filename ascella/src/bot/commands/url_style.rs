@@ -7,7 +7,7 @@ use crate::prelude::*;
 /// 4 = hacker
 
 pub fn command() -> Command {
-  CommandBuilder::new("url_style".into(), Lang::En.url_style_desc().into(), CommandType::ChatInput)
+  CommandBuilder::new(Lang::fallback().url_style_name().into(), Lang::fallback().url_style_desc().into(), CommandType::ChatInput)
     .option(
       IntegerBuilder::new("style".into(), "Change your url style!".to_owned())
         .choices(vec![

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 pub fn command(domain_options: impl IntoIterator<Item = (String, String)>) -> Command {
-  CommandBuilder::new("domain".into(), Lang::En.domain_desc().into(), CommandType::ChatInput)
+  CommandBuilder::new(Lang::fallback().domain_name().into(), Lang::fallback().domain_desc().into(), CommandType::ChatInput)
     .option(StringBuilder::new("domain".into(), "Select the domain here".into()).required(true).choices(domain_options))
     .option(StringBuilder::new("subdomain".into(), "Funny subdomain to add.".into()).required(false))
     .localize()

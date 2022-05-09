@@ -16,12 +16,12 @@ use crate::Lang;
 use async_trait::async_trait;
 
 #[async_trait]
-pub trait Language {
+pub trait AscellaLanguage {
   async fn lang(&self) -> Result<Lang>;
 }
 
 #[async_trait]
-impl Language for ApplicationCommand {
+impl AscellaLanguage for ApplicationCommand {
   async fn lang(&self) -> Result<Lang> {
     let self_clone = self.clone();
     if let Some(member) = self_clone.member.as_ref() {

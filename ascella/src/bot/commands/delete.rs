@@ -1,6 +1,6 @@
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new("delete".into(), Lang::En.delete_desc().into(), CommandType::ChatInput)
+  CommandBuilder::new(Lang::fallback().delete_name().into(), Lang::fallback().delete_desc().into(), CommandType::ChatInput)
     .option(StringBuilder::new("id".into(), "Id of the image you want to delete use vanity if you don't know the id".into()))
     .option(StringBuilder::new("vanity".into(), "Vanity of the image".into()))
     .localize()

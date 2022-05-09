@@ -1,4 +1,4 @@
-use crate::prelude::{BotResponse, Language};
+use crate::prelude::{AscellaLanguage, BotResponse};
 use anyhow::Result;
 use twilight_http::Client;
 use twilight_model::application::interaction::ApplicationCommand;

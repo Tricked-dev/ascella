@@ -15,7 +15,6 @@ pub mod prelude {
     pub static ref HTTP: OnceCell<Arc<Client>> = OnceCell::new();
     pub static ref REVIEWS: OnceCell<Vec<Comment>> = OnceCell::new();
   }
-
   pub use super::Lang;
   pub use crate::bot::bot::Comment;
   pub use crate::bot::utils::*;
@@ -37,6 +36,7 @@ pub mod prelude {
   pub use once_cell::sync::OnceCell;
   pub use paperclip::actix::*;
   pub use rand::{prelude::SliceRandom, Rng};
+  pub use rosetta_i18n::Language;
   pub use serde::{Deserialize, Serialize};
   pub use serde_json::{from_str, json, Value};
   pub use std::collections::HashMap;

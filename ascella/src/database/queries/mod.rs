@@ -15,6 +15,7 @@ pub mod get_images;
 pub mod get_invite_count;
 pub mod get_latest_image;
 pub mod get_paste_content;
+pub mod get_total_views;
 pub mod get_user;
 pub mod get_user_auth;
 pub mod get_user_code;

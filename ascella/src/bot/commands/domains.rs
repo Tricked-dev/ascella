@@ -1,6 +1,8 @@
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new("domains".into(), Lang::En.domains_desc().into(), CommandType::ChatInput).localize().build()
+  CommandBuilder::new(Lang::fallback().domain_name().into(), Lang::fallback().domains_desc().into(), CommandType::ChatInput)
+    .localize()
+    .build()
 }
 
 pub async fn execute(_client: &Client, cmd: &ApplicationCommand) -> Result<BotResponse> {

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new("user".into(), Lang::En.user_desc().into(), CommandType::ChatInput)
+  CommandBuilder::new(Lang::fallback().user_name().into(), Lang::fallback().user_desc().into(), CommandType::ChatInput)
     .option(UserBuilder::new("user".into(), "The user you want to view the profile of.".into()).required(true))
     .localize()
     .build()

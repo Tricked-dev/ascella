@@ -1,6 +1,6 @@
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new("embed".into(), Lang::En.embed_desc().into(), CommandType::ChatInput)
+  CommandBuilder::new(Lang::fallback().embed_name().into(), Lang::fallback().embed_desc().into(), CommandType::ChatInput)
     .option(StringBuilder::new("title".into(), "Title of the embed".into()))
     .option(StringBuilder::new("link".into(), "Link appended to your url.".into()))
     .option(StringBuilder::new("author".into(), "Set the author of the embed".into()))

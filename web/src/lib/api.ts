@@ -9,7 +9,7 @@ export async function getDomains(): Promise<any> {
     .catch(() => ({}));
 }
 export async function getReviews(): Promise<any> {
-  return await fetch(`https://ascella.wtf/v2/ascella/reviews`)
+  return await fetch(`https://ascella.wtf/v2/ascella/reviews.json`)
     .then((r) => r.json())
     .catch(() => []);
 }

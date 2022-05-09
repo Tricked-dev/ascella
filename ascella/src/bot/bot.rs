@@ -12,8 +12,11 @@ use crate::prelude::*;
 
 #[derive(Serialize, Deserialize, Clone, Apiv2Schema)]
 pub struct Comment {
+  #[openapi(example = "https://cdn.discordapp.com/embed/avatars/5.png")]
   avatar: String,
+  #[openapi(example = "havent heard any voices since i started using ascella!")]
   comment: String,
+  #[openapi(example = "Deleted User")]
   name: String,
 }
 

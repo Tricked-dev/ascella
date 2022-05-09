@@ -2,7 +2,7 @@ use twilight_http::request::AuditLogReason;
 
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new("redeem".into(), Lang::En.redeem_desc().into(), CommandType::ChatInput)
+  CommandBuilder::new(Lang::fallback().redeem_name().into(), Lang::fallback().redeem_desc().into(), CommandType::ChatInput)
     .option(StringBuilder::new("code".into(), "Code your looking to redeem.".into()).required(true))
     .localize()
     .build()
