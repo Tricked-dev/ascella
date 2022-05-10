@@ -235,9 +235,13 @@ impl SendMessage {
 
 #[derive(Serialize, Deserialize, Apiv2Schema)]
 pub struct UploadSuccess {
+  #[openapi(example = "200")]
   code: i32,
+  #[openapi(example = "true")]
   success: bool,
+  #[openapi(example = "https://ascella.host/tdaCZHo1")]
   url: String,
+  #[openapi(example = "https://ascella.wtf/v2/ascella/view/tdaCZHo1.png")]
   raw: String,
 }
 impl UploadSuccess {
