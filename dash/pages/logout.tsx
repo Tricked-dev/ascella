@@ -60,8 +60,8 @@ export default function Index() {
           <ModalCloseButton />
           <ModalBody>
             Its likely that you don&apos;t have a account you can obtain one in the discord{" "}
-            <Link color="blue.400" href="https://discord.gg/mY8zTARu4g">
-              https://discord.gg/mY8zTARu4g
+            <Link color="blue.400" href="https://discord.gg/KkMKCchJb8">
+              https://discord.gg/KkMKCchJb8
             </Link>
           </ModalBody>
 

@@ -77,5 +77,5 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
     .build();
   create_redirect::exec(user.id, url, vanity).await?;
 
-  Ok(BotResponse::new().embed(embed).content(data))
+  Ok(BotResponse::wembed(embed).content(data))
 }

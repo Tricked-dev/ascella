@@ -23,10 +23,10 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand) -> Result<BotRe
 
       let embed = create_embed().title(cmd.lang().await?.user_title(&user.name)).description(message).build();
 
-      return Ok(BotResponse::new().embed(embed));
+      return Ok(BotResponse::wembed(embed));
     }
   }
   let embed = create_embed().title(cmd.lang().await?.profile_name()).description(cmd.lang().await?.user_no_exist()).build();
 
-  Ok(BotResponse::new().embed(embed))
+  Ok(BotResponse::wembed(embed))
 }

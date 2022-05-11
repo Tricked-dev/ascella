@@ -29,5 +29,5 @@ pub async fn execute(_client: &Client, _cmd: &ApplicationCommand, user: Users) -
   );
 
   let embed = create_embed().title(user.lang().profile_embed_name()).description(message).build();
-  Ok(BotResponse::new().embed(embed).private())
+  Ok(BotResponse::wembed(embed).private())
 }

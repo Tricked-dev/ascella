@@ -14,5 +14,5 @@ pub async fn execute(_client: &Client, _cmd: &ApplicationCommand, user: Users) -
     .description(user.lang().delete_image_desc(&img.id, img.vanity))
     .build();
 
-  Ok(BotResponse::new().private().embed(embed))
+  Ok(BotResponse::wembed(embed).private())
 }

@@ -93,7 +93,7 @@ install [scrot](https://github.com/resurrecting-open-source-projects/scrot),
 [gnome-screenshot](https://apps.gnome.org/app/org.gnome.Screenshot/) or
 [grim](https://github.com/emersion/grim) any of these screenshot tools should
 work with ascella if theres any issues please report them in the
-[Discord](https://discord.gg/mY8zTARu4g)
+[Discord](https://discord.gg/KkMKCchJb8)
 
 And rebind your prnt+screen to `ascella area` or whatever you prefer see
 [kde](https://www.addictivetips.com/ubuntu-linux-tips/customize-keyboard-shortcuts-on-kde-plasma-5/)

@@ -102,5 +102,5 @@ pub async fn execute(_client: &Client, _cmd: &ApplicationCommand) -> Result<BotR
     .field(EmbedFieldBuilder::new("Commit Hash", format!("[{}]({})", &env!("GIT_HASH")[..7], &stats.commit_hash)).inline())
     .build();
 
-  Ok(BotResponse::new().embed(embed))
+  Ok(BotResponse::wembed(embed))
 }

@@ -20,5 +20,5 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
 
   set_domain_discord::exec(user.discord_id, data).await?;
 
-  Ok(BotResponse::new().embed(embed))
+  Ok(BotResponse::wembed(embed))
 }

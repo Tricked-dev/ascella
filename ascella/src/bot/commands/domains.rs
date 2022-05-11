@@ -20,5 +20,5 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand) -> Result<BotRe
 
   let embed = create_embed().title(cmd.lang().await?.domains()).description(message.join("\n")).build();
 
-  Ok(BotResponse::new().embed(embed))
+  Ok(BotResponse::wembed(embed))
 }

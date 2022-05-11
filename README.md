@@ -13,7 +13,7 @@ Ascella is the fastest opensource image uploader.
 - Awesome Dashboard with features (it sucks)
 - Fully opensource
 - Linux & Mac support using our custom desktop app!
-- Awesome community at the [discord](https://discord.gg/mY8zTARu4g)
+- Awesome community at the [discord](https://discord.gg/KkMKCchJb8)
 
 ## Contributing
 
@@ -23,7 +23,7 @@ see [contributing](https://dosc.ascella.host/contributing)
 
 ### Ascella - Backend
 
-Discord: https://discord.gg/mY8zTARu4g
+Discord: https://discord.gg/KkMKCchJb8
 
 ### Stack
 

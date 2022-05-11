@@ -31,5 +31,5 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, mut user: Users
   user.set_lang(language);
   let embed = create_embed().title(user.lang().language_updated()).build();
 
-  Ok(BotResponse::new().embed(embed))
+  Ok(BotResponse::wembed(embed))
 }

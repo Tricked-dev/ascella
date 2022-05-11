@@ -31,14 +31,14 @@ pub async fn execute(client: &Client, cmd: &ApplicationCommand) -> Result<BotRes
 
       let embed = create_embed().title(cmd.lang().await?.redeem_claimed()).description(message).build();
 
-      BotResponse::new().embed(embed).private()
+      BotResponse::wembed(embed).private()
     } else {
-      BotResponse::new().content(cmd.lang().await?.redeem_invalid()).private()
+      BotResponse::wcontent(cmd.lang().await?.redeem_invalid()).private()
     }
   } else if let Ok(user) = data {
-    BotResponse::new().content(user.lang().redeem_exists()).private()
+    BotResponse::wcontent(user.lang().redeem_exists()).private()
   } else {
-    BotResponse::new().content(cmd.lang().await?.redeem_error()).private()
+    BotResponse::wcontent(cmd.lang().await?.redeem_error()).private()
   };
 
   Ok(response)

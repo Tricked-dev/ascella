@@ -30,5 +30,5 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
 
   let embed = create_embed().title(user.lang().url_style_success()).build();
 
-  Ok(BotResponse::new().embed(embed))
+  Ok(BotResponse::wembed(embed))
 }

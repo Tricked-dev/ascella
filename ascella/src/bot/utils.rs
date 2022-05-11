@@ -155,6 +155,20 @@ impl BotResponse {
       private: false,
     }
   }
+  pub fn wembed(embed: Embed) -> Self {
+    Self {
+      content: None,
+      embed: Some(embed),
+      private: false,
+    }
+  }
+  pub fn wcontent<T: Into<String>>(content: T) -> Self {
+    Self {
+      content: Some(content.into()),
+      embed: None,
+      private: false,
+    }
+  }
   pub fn content<T: Into<String>>(mut self, content: T) -> Self {
     self.content = Some(content.into());
     self

@@ -9,9 +9,5 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
   let code = get_arg(cmd.data.options.iter(), "code");
   let res = get_tokio_postgres().await.query(&code.unwrap(), &[]).await?;
 
-  Ok(
-    BotResponse::new()
-      .content(format!("{}\n```js\n{:?}\n```", user.name, res.iter().map(|row| { row.columns() })))
-      .private(),
-  )
+  Ok(BotResponse::wcontent(format!("{}\n```js\n{:?}\n```", user.name, res.iter().map(|row| { row.columns() }))).private())
 }

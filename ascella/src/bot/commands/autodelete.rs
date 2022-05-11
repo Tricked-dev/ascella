@@ -28,5 +28,5 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand, user: Users) ->
       .build()
   };
 
-  Ok(BotResponse::new().embed(embed))
+  Ok(BotResponse::wembed(embed))
 }

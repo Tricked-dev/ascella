@@ -24,5 +24,5 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand) -> Result<BotRe
     .collect::<Vec<String>>()
     .join("\n");
 
-  Ok(BotResponse::new().content(desc))
+  Ok(BotResponse::wcontent(desc))
 }

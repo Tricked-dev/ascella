@@ -44,7 +44,7 @@
 	];
 	const topLinks = [
 		{
-			href: 'https://discord.gg/mY8zTARu4g',
+			href: 'https://discord.gg/KkMKCchJb8',
 			a: 'Discord'
 		},
 		{ href: 'https://dash.ascella.host', a: 'Dashboard' },
