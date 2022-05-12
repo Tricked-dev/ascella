@@ -46,5 +46,8 @@
     "set_autodelete.rs": "set_*.rs",
     "Cargo.toml": "rust-toolchain.toml, Cargo.lock, .deepsource.toml, dprint.json",
     "package.json": "package-lock.json, yarn.lock"
+  },
+  "[properties]": {
+    "editor.defaultFormatter": "dprint.dprint"
   }
 }
