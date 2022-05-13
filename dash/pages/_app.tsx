@@ -27,24 +27,15 @@ function UploadApp({ Component, pageProps }: any) {
 
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
-        {/* <link rel="icon" href={meta.icon} type="image/ico" /> */}
-        {
-          /* <meta
-					property="og:url"
-					content={`https://tricked.pro${router.asPath}`}
-				/> */
-        }
+        <link rel="icon" href="logo.svg"  />
+        <link rel="icon" href="logo.png"  />
+   
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content={meta.title} />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
-        {/* <meta property="og:image" content={meta.image} /> */}
-
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        {/* <meta name="twitter:site" content="@tricked" /> */}
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:description" content={meta.description} />
-        {/* <meta name="twitter:image" content={meta.image} /> */}
       </Head>
       <Script
         id="umami"

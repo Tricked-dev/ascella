@@ -101,9 +101,10 @@
 			<div class="flex items-center">
 				<div class="flex flex-col md:flex-row gap-4 p-2">
 					<a class="text-slate-200 text-lg px-2 py-0.5" href="https://ascella.host"><b>Ascella.host</b></a>
+					
 					{#each topLinks as link}
 						<a
-							class="hover:text-slate-100 text-slate-300 text-lg hover:bg-slate-800 rounded-lg px-2 py-0.5 duration-150"
+							class= "hover:text-slate-100 text-slate-300 text-lg hover:bg-slate-800 rounded-lg px-2 py-0.5 duration-150"
 							href={link.href}>{link.a}</a
 						>
 					{/each}

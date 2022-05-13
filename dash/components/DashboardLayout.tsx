@@ -1,4 +1,4 @@
-import { Box, BoxProps, CloseButton, Drawer, DrawerContent, Flex, FlexProps, Icon, IconButton, Link, Text, useColorModeValue, useDisclosure } from "@chakra-ui/react";
+import { Box, BoxProps, CloseButton, Drawer, DrawerContent, Flex, FlexProps, Icon, IconButton, Image, Link, Text, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { ReactNode } from "react";
 import { ReactText } from "react";
@@ -65,8 +65,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Ascella
+       <Image height={"8"} src="/logo.svg"/><Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" >
+        <b>Ascella</b> 
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -140,7 +140,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       />
 
       <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-        Logo
+        <Image height={"10"} src="/logo.svg"/>
       </Text>
     </Flex>
   );

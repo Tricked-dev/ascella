@@ -8,8 +8,8 @@ use crate::prelude::*;
 pub fn create_embed() -> EmbedBuilder {
   EmbedBuilder::new().color(0x0e1b98).footer(EmbedFooter {
     proxy_icon_url: None,
-    text: "© Tricked".to_string(),
-    icon_url: Some("https://cdn.discordapp.com/attachments/811240979918618634/877975737141960724/a_a4ecfac9730946b91da3d40b0490b30f.gif".to_string()),
+    text: "© Ascella".to_string(),
+    icon_url: Some("https://cdn.discordapp.com/attachments/748957504666599507/974777620422074468/logo_but_png.png".to_string()),
   })
 }
 use crate::Lang;
