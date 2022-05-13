@@ -1,6 +1,6 @@
 use crate::prelude::*;
 pub fn command() -> Command {
-  CommandBuilder::new(Lang::fallback().domain_name().into(), Lang::fallback().domains_desc().into(), CommandType::ChatInput)
+  CommandBuilder::new(Lang::fallback().domains_name().into(), Lang::fallback().domains_desc().into(), CommandType::ChatInput)
     .localize()
     .build()
 }

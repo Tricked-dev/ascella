@@ -11,15 +11,18 @@ pub async fn execute(_client: &Client, cmd: &ApplicationCommand) -> Result<BotRe
   if let CommandOptionValue::User(user) = id.value {
     if let Ok(user) = get_user_discord::exec(user.to_string()).await {
       let images = get_user_image_count::exec(user.id).await?;
+      let flags = get_flags_str(&user);
 
       let message = format!(
-        "name: `{name}`\ndiscord_id: `{discord}`\nInvites: `{invites}`\n\ndomain: `{domain}`\nimages: `{images}`",
+        "{flags}\nname: `{name}`\ndiscord_id: `{discord}`\nInvites: `{invites}`\n\ndomain: `{domain}`\nimages: `{images}`",
         name = user.name,
         invites = get_invite_count::exec(user.id).await?,
         discord = user.discord_id,
         domain = user.domain,
         images = images,
-      );
+      )
+      .trim()
+      .to_owned();
 
       let embed = create_embed().title(cmd.lang().await?.user_title(&user.name)).description(message).build();
 

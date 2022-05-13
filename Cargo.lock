@@ -5365,6 +5365,7 @@ dependencies = [
  "actix-web",
  "anyhow",
  "async-trait",
+ "bitflags",
  "byte-unit",
  "bytes 1.1.0",
  "cached",

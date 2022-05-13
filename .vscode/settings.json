@@ -44,7 +44,7 @@
     "create_image.rs": "create_*.rs",
     "get_all_users.rs": "get_*.rs",
     "set_autodelete.rs": "set_*.rs",
-    "Cargo.toml": "rust-toolchain.toml, Cargo.lock, .deepsource.toml, dprint.json",
+    "Cargo.toml": "rust-toolchain.toml, Cargo.lock, .deepsource.toml, dprint.json, .gitignore, .gitattributes, package.json, crowdin.yml, .env",
     "package.json": "package-lock.json, yarn.lock"
   },
   "[properties]": {

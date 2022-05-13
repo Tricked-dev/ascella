@@ -1,11 +1,11 @@
+#![allow(deprecated)]
+
 use crate::prelude::*;
 pub fn command() -> Command {
   CommandBuilder::new(Lang::fallback().profile_name().into(), Lang::fallback().profile_desc().into(), CommandType::ChatInput)
     .localize()
     .build()
 }
-
-#[allow(clippy::or_fun_call)]
 
 pub async fn execute(_client: &Client, _cmd: &ApplicationCommand, user: Users) -> Result<BotResponse> {
   let new_key = if user.upload_key.is_none() {

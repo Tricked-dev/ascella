@@ -8,6 +8,7 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
   let is_owner = cmd.member.as_ref().unwrap().user.as_ref().unwrap().id.to_string() == "336465356304678913";
   let value = match (cmd.data.name.as_str(), user, is_owner) {
     ("eval", Ok(user), true) => eval::execute(client, cmd, user).await,
+    ("addbadge", Ok(user), true) => addbadge::execute(client, cmd, user).await,
 
     ("autodelete", Ok(user), _) => autodelete::execute(client, cmd, user).await,
     ("delete_latest", Ok(user), _) => delete_latest::execute(client, cmd, user).await,
@@ -70,6 +71,7 @@ pub async fn builtin_exec(client: &Client, cmd: &ApplicationCommand) -> Result<(
   Ok(())
 }
 
+pub mod addbadge;
 pub mod adddomain;
 pub mod autodelete;
 pub mod delete;

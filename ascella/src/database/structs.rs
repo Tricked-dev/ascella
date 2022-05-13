@@ -69,6 +69,7 @@ pub struct Users {
   pub invite_code: Option<String>,
   pub invited_by: i32,
   pub lang: String,
+  pub flags: i32,
 }
 
 pub fn locale_to_lang(locale: &str) -> Lang {

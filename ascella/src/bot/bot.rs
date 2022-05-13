@@ -58,19 +58,17 @@ pub async fn start_bot() -> Result<()> {
   let http = Arc::new(Client::new(token));
 
   HTTP.set(Arc::clone(&http)).unwrap();
-  tokio::spawn(async move {
-    let commands = get_commands(domain_options);
+  let commands = get_commands(domain_options);
 
-    HTTP
-      .get()
-      .unwrap()
-      .interaction(Id::new(env::var("APPLICATION_ID").unwrap().parse::<u64>().unwrap()))
-      .set_guild_commands(Id::new(748956745409232945), commands.as_ref())
-      .exec()
-      .await
-      .ok();
-    log::info!("Set commands!")
-  });
+  HTTP
+    .get()
+    .unwrap()
+    .interaction(Id::new(env::var("APPLICATION_ID").unwrap().parse::<u64>().unwrap()))
+    .set_guild_commands(Id::new(748956745409232945), commands.as_ref())
+    .exec()
+    .await
+    .unwrap();
+  log::info!("Set commands!");
 
   if START_TIME.get().is_none() {
     START_TIME.set(Instant::now()).expect("Failed to set starttime");

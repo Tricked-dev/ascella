@@ -1,6 +1,6 @@
 use crate::prelude::*;
 pub fn command(domain_options: impl IntoIterator<Item = (String, String)>) -> Command {
-  CommandBuilder::new(Lang::fallback().redeem_name().into(), Lang::fallback().redeem_desc().into(), CommandType::ChatInput)
+  CommandBuilder::new(Lang::fallback().redirect_name().into(), Lang::fallback().redeem_desc().into(), CommandType::ChatInput)
     .option(StringBuilder::new("url".into(), "Url you want to redirect to.".into()).required(true))
     .option(StringBuilder::new("vanity".into(), "Vanity to be created for the url.".into()).required(true))
     .option(StringBuilder::new("domain".into(), "Domain to be used.".into()).required(true).choices(domain_options))

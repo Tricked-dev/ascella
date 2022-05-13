@@ -33,4 +33,5 @@ pub mod set_invite_code;
 pub mod set_language;
 pub mod set_upload_key;
 pub mod set_url_style;
+pub mod set_user_flags;
 pub mod update_image_views;
