@@ -8,3 +8,5 @@ pub mod public;
 pub mod redirect;
 pub mod report;
 pub mod stats;
+pub mod upload_style;
+pub mod user;

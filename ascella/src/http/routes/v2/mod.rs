@@ -12,5 +12,7 @@ pub mod report;
 pub mod reviews;
 pub mod stats;
 pub mod upload;
+pub mod upload_style;
+pub mod user;
 pub mod verify;
 pub mod view;

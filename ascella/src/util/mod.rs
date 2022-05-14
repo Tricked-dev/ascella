@@ -9,7 +9,7 @@ use actix_web::{body::BoxBody, dev::Payload, http::header::HeaderMap, FromReques
 use anyhow::Result;
 use futures::Future;
 use paperclip::{
-  actix::{Apiv2Schema, Apiv2Security, OperationModifier},
+  actix::{web, Apiv2Schema, Apiv2Security, OperationModifier},
   v2::{
     models::{DefaultOperationRaw, DefaultSchemaRaw, Either},
     schema::Apiv2Errors,
@@ -20,9 +20,11 @@ use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::{
+  collections::HashMap,
   fmt::{self, Display},
   pin::Pin,
 };
+use validator::{ValidationError, ValidationErrors, ValidationErrorsKind};
 
 //Users
 
@@ -74,12 +76,18 @@ impl GetHeaderFn for HeaderMap {
   }
 }
 
+#[derive(Deserialize, Clone)]
+pub struct Auth {
+  pub auth: String,
+}
+
 impl FromRequest for AccessToken {
   type Error = Error;
 
   type Future = Pin<Box<dyn Future<Output = Result<Self, Self::Error>>>>;
 
   fn from_request(req: &HttpRequest, _payload: &mut Payload) -> Self::Future {
+    let path = req.query_string().to_owned();
     let headers = req.headers();
 
     let auth = headers.get_hdr("Authorization").unwrap_or_default();
@@ -98,6 +106,11 @@ impl FromRequest for AccessToken {
           return Ok(Self { inner: user });
         }
       }
+      if let Ok(res) = web::Query::<Auth>::from_query(&path) {
+        if let Ok(user) = get_user_auth::exec(res.auth.to_owned()).await {
+          return Ok(Self { inner: user });
+        }
+      }
 
       Err(Error::BadRequest)
     })
@@ -113,11 +126,13 @@ pub enum Error {
   FileTooLarge { max_size: usize },
   FileTypeNotAllowed,
   FailedToReceive,
+  ValidationError(HashMap<&'static str, ValidationErrorsKind>),
   NotAuthorized,
   BlockingError,
   DatabaseError,
   MissingData,
   UnknownTag,
+  BadAnyhowRequest { message: String },
   BadRequest,
   ProbeError,
   RateLimit { message: String },
@@ -125,6 +140,18 @@ pub enum Error {
   IOError,
   LabelMe,
   Four04 { message: String },
+}
+
+impl From<ValidationErrors> for Error {
+  fn from(err: ValidationErrors) -> Self {
+    Error::ValidationError(err.errors().to_owned())
+  }
+}
+
+impl From<anyhow::Error> for Error {
+  fn from(err: anyhow::Error) -> Self {
+    Error::BadAnyhowRequest { message: err.to_string() }
+  }
 }
 
 impl Apiv2Errors for Error {}
@@ -150,22 +177,23 @@ impl std::error::Error for Error {
 }
 
 impl Error {
-  const fn message(&self) -> &str {
+  fn message(&self) -> String {
     match &self {
-      Error::FileTooLarge { .. } => "File too large",
-      Error::FileTypeNotAllowed => "Bad request",
-      Error::NotAuthorized => "Not authorized",
-      Error::FailedToReceive => "Failed to receive",
-      Error::DatabaseError => "Database Error",
-      Error::MissingData => "Missing data",
-      Error::ProbeError => "Probe error",
-      Error::NotFound => "Not found",
-      Error::BlockingError => "Internal server error",
-      Error::IOError => "",
-      Error::BadRequest => "Bad request",
-      Error::RateLimit { .. } => "Rate limit exceeded",
-      Error::Four04 { .. } => "404",
-      _ => "",
+      Error::FileTooLarge { max_size } => format!("File too large {max_size}"),
+      Error::FileTypeNotAllowed => "Bad request".into(),
+      Error::NotAuthorized => "Not authorized".into(),
+      Error::FailedToReceive => "Failed to receive".into(),
+      Error::DatabaseError => "Database Error".into(),
+      Error::MissingData => "Missing data".into(),
+      Error::ProbeError => "Probe error".into(),
+      Error::NotFound => "Not found".into(),
+      Error::BlockingError => "Internal server error".into(),
+      Error::BadRequest => "Bad request".into(),
+      Error::RateLimit { message } => format!("Rate limit exceeded {message}"),
+      Error::Four04 { message } => format!("404: {message}"),
+      Error::BadAnyhowRequest { message } => format!("{message}"),
+      Error::ValidationError(..) => "Validation error".into(),
+      _ => "".into(),
     }
   }
 }
@@ -186,6 +214,8 @@ impl ResponseError for Error {
       Error::IOError => StatusCode::INTERNAL_SERVER_ERROR,
       Error::LabelMe => StatusCode::INTERNAL_SERVER_ERROR,
       Error::BadRequest => StatusCode::BAD_REQUEST,
+      Error::BadAnyhowRequest { .. } => StatusCode::BAD_REQUEST,
+      Error::ValidationError(..) => StatusCode::BAD_REQUEST,
       Error::RateLimit { .. } => StatusCode::TOO_MANY_REQUESTS,
       Error::Four04 { .. } => StatusCode::NOT_FOUND,
     }

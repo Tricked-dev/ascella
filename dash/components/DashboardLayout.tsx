@@ -65,7 +65,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-       <Image height={"8"} src="/logo.svg"/><Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" >
+       <Image height={"8"} src="https://ascella.host/logo.svg"/><Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" >
         <b>Ascella</b> 
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
@@ -140,7 +140,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       />
 
       <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-        <Image height={"10"} src="/logo.svg"/>
+        <Image height={"10"} src="https://ascella.host/logo.svg"/>
       </Text>
     </Flex>
   );

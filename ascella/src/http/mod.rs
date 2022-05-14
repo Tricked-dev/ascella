@@ -58,6 +58,7 @@ pub fn set_endpoints(cfg: &mut web::ServiceConfig) {
     .service(images::post)
     .service(ascella_stats::get)
     .service(lang::get)
+    .service(upload_style::post)
     .service(
       web::scope("")
         .wrap(Governor::new(&GovernorConfigBuilder::default().per_second(120).burst_size(10).finish().unwrap()))

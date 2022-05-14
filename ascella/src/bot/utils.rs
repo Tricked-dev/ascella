@@ -9,7 +9,7 @@ pub fn create_embed() -> EmbedBuilder {
   EmbedBuilder::new().color(0x0e1b98).footer(EmbedFooter {
     proxy_icon_url: None,
     text: "© Ascella".to_string(),
-    icon_url: Some("https://cdn.discordapp.com/attachments/748957504666599507/974777620422074468/logo_but_png.png".to_string()),
+    icon_url: Some("https://ascella.host/logo.png".to_string()),
   })
 }
 use crate::Lang;

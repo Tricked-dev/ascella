@@ -11,7 +11,7 @@ const config = {
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "logo.svg",
+  favicon: "https://ascella.host/logo.svg",
   organizationName: "tricked-dev", // Usually your GitHub org/user name.
   projectName: "ascella", // Usually your repo name.
 
@@ -54,7 +54,7 @@ const config = {
         title: "Ascella",
         logo: {
           alt: "Ascella Logo",
-          src: "logo.svg",
+          src: "https://ascella.host/logo.svg",
         },
         items: [
           {
