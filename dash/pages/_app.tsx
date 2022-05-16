@@ -27,9 +27,9 @@ function UploadApp({ Component, pageProps }: any) {
 
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
-        <link rel="icon" href="https://ascella.host/logo.svg"  />
-        <link rel="icon" href="https://ascella.host/logo.png"  />
-   
+        <link rel="icon" href="https://ascella.host/logo.svg" />
+        <link rel="icon" href="https://ascella.host/logo.png" />
+
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content={meta.title} />
         <meta property="og:description" content={meta.description} />

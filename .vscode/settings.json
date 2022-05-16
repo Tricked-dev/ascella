@@ -49,5 +49,8 @@
   },
   "[properties]": {
     "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[ignore]": {
+    "editor.defaultFormatter": "dprint.dprint"
   }
 }

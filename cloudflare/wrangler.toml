@@ -1,0 +1,14 @@
+name = "ascella"
+# type = "javascript" is required to use the `[build]` section
+account_id = ""
+compatibility_date = "2022-05-16"
+route = ""
+type = "javascript"
+workers_dev = true
+zone_id = ""
+
+[build]
+command = "yarn && yarn build"
+[build.upload]
+format = "modules"
+main = "./index.mjs"
