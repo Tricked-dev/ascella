@@ -12,6 +12,8 @@
     "@fontsource/material-icons": "^4.5.4",
     "@fontsource/roboto": "^4.5.1",
     "@fontsource/roboto-mono": "^4.5.5",
+    "@sveltejs/adapter-auto": "^1.0.0-next.43",
+    "@sveltejs/adapter-cloudflare": "^1.0.0-next.19",
     "@sveltejs/adapter-vercel": "^1.0.0-next.47",
     "@sveltejs/kit": "^1.0.0-next.305",
     "@tailwindcss/typography": "^0.5.0",

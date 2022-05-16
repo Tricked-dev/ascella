@@ -1,4 +1,4 @@
-import vercel from "@sveltejs/adapter-vercel";
+import adapt from "@sveltejs/adapter-auto";
 import preprocess from "svelte-preprocess";
 // import cloudflare from '@sveltejs/adapter-cloudflare';
 /** @type {import('@sveltejs/kit').Config} */
@@ -19,7 +19,7 @@ const config = {
   },
 
   kit: {
-    adapter: vercel(),
+    adapter: adapt(),
     prerender: {
       crawl: true,
       enabled: true,
