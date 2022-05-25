@@ -100,7 +100,7 @@ export default function Dashboard({ user, domains }: any) {
               >
                 <Image
                   objectFit={"contain"}
-                  src={`https://ascella.wtf/v2/ascella/view/${x.vanity}`}
+                  src={`https://ascella.wtf/v2/ascella/view/${x.vanity}.png`}
                   border="2px"
                   borderColor={"cyan.200"}
                   onError={(_) => {
